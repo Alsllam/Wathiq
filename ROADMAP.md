@@ -61,11 +61,11 @@ the schema mid-phase.
       that rejects an expiry before the issue date; `Attachment` stored via `Shared.IFileStore`;
       migration. *Topics: value objects vs. primitive obsession, EF Core owned types / value
       conversions, aggregate-internal collections.* — FR-DOC-002, FR-DOC-003, FR-DOC-004.
-- [ ] **1.6 Application services, DTOs and permissions** — `DocumentTypeAppService` (read),
+- [x] **1.6 Application services, DTOs and permissions** — `DocumentTypeAppService` (read),
       `HolderAppService` and `DocumentAppService` (CRUD) with request/response DTOs and object
       mapping; ABP permission definitions gating each action. *Topics: ABP application services,
       DTO mapping (AutoMapper or manual), the ABP permission system.*
-- [ ] **1.7 OpenAPI surface** — confirm ABP's auto API controllers expose the Documents endpoints
+- [x] **1.7 OpenAPI surface** — confirm ABP's auto API controllers expose the Documents endpoints
       correctly in `swagger.json`; adjust route/group names for clarity; write `api.md` v0.1 from
       the real generated spec. *Topics: ABP auto API controllers, OpenAPI/Swagger customization.*
       *Docs: `api`.*

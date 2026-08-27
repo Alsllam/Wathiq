@@ -16,7 +16,19 @@ public class WathiqDocumentsHttpApiModule : AbpModule
             // Auto API controllers for this module's app services, grouped under /api/documents/*.
             options.ConventionalControllers.Create(
                 typeof(WathiqDocumentsApplicationModule).Assembly,
-                o => o.RootPath = "documents");
+                o =>
+                {
+                    o.RootPath = "documents";
+                    // The convention derives "document" from DocumentAppService; REST resources
+                    // read better plural, so map each controller to its plural segment.
+                    o.UrlControllerNameNormalizer = context => context.ControllerName switch
+                    {
+                        "Document" => "documents",
+                        "DocumentType" => "document-types",
+                        "Holder" => "holders",
+                        _ => context.ControllerName
+                    };
+                });
         });
     }
 }

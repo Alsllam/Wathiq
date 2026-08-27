@@ -2,6 +2,20 @@
   "Culture": "en",
   "Texts": {
     "Wathiq.Documents:ExpiryBeforeIssue": "The expiry date cannot be earlier than the issue date.",
-    "Wathiq.Documents:HolderNotOwned": "The selected holder does not belong to you."
+    "Wathiq.Documents:HolderNotOwned": "The selected holder does not belong to you.",
+    "Wathiq.Documents:DocumentTypeNotActive": "This document type is not available.",
+    "Wathiq.Documents:SelfHolderIsAutomatic": "Your own holder record is created automatically and cannot be added manually.",
+    "Wathiq.Documents:CannotDeleteSelfHolder": "You cannot delete your own holder record.",
+    "Wathiq.Documents:HolderHasDocuments": "This holder still has documents. Delete or reassign them first.",
+    "Permission:Documents": "Wathiq Documents",
+    "Permission:DocumentTypes": "View document type catalogue",
+    "Permission:Holders": "View holders",
+    "Permission:Holders.Create": "Add holders",
+    "Permission:Holders.Update": "Edit holders",
+    "Permission:Holders.Delete": "Delete holders",
+    "Permission:Documents.Manage": "View documents",
+    "Permission:Documents.Create": "Add documents",
+    "Permission:Documents.Update": "Edit documents",
+    "Permission:Documents.Delete": "Delete documents"
   }
 }

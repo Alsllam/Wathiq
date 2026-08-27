@@ -18,6 +18,9 @@
     <PackageReference Include="Volo.Abp.Autofac" Version="10.3.0" />
     <ProjectReference Include="..\Wathiq.EntityFrameworkCore\Wathiq.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.EntityFrameworkCore\Wathiq.Documents.EntityFrameworkCore.csproj" />
+    <!-- The permission definition provider lives in Application; without it in the migrator's
+         module graph, ABP's "grant all defined permissions to admin" seeder can't see ours. -->
+    <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.Application\Wathiq.Documents.Application.csproj" />
     <ProjectReference Include="..\Wathiq.Application.Contracts\Wathiq.Application.Contracts.csproj" />
   </ItemGroup>
 
