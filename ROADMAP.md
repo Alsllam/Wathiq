@@ -69,7 +69,7 @@ the schema mid-phase.
       correctly in `swagger.json`; adjust route/group names for clarity; write `api.md` v0.1 from
       the real generated spec. *Topics: ABP auto API controllers, OpenAPI/Swagger customization.*
       *Docs: `api`.*
-- [ ] **1.8 Tests, then close the loop on docs** — xUnit: a domain test for `ExpiryDate`
+- [x] **1.8 Tests, then close the loop on docs** — xUnit: a domain test for `ExpiryDate`
       validation and one integration test (ABP test host + LocalDB/Sqlite) exercising the full
       "create document → confirm it's stored" happy path. Flip the FR-DOC/FR-IDM rows this phase
       implements from *Planned* to *Implemented* in `srs.md`, and append this phase's migrations

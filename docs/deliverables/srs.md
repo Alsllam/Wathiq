@@ -2,7 +2,7 @@
 title: "Wathiq — Software Requirements Specification"
 subtitle: "وثيق — مواصفات متطلبات البرمجيات"
 author: "Abdulsalam"
-version: "0.1"
+version: "0.1.1"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -12,6 +12,7 @@ status: "Draft"
 | Version | Date | Author | Change |
 | --- | --- | --- | --- |
 | 0.1 | 2026-08-27 | Abdulsalam | Initial SRS: actors, UC-01…UC-06, FR/NFR baseline, glossary (roadmap step 0.4) |
+| 0.1.1 | 2026-08-27 | Abdulsalam | Phase 1 status flips: FR-IDM-001/002 and FR-DOC-001/002/003/006/007 *Implemented*, FR-DOC-004 *Partly implemented* (roadmap step 1.8) |
 
 **Status:** Draft · **Structure:** IEEE 830-1998 adapted · **Related:** Vision (`vision`),
 Architecture (`architecture`), Database (`database`).
@@ -153,21 +154,21 @@ Columns: ID · Requirement · Priority · Source · Status.
 
 | ID | Requirement | Pri | Source | Status |
 | --- | --- | --- | --- | --- |
-| FR-IDM-001 | The system shall allow registration and login with email + password and issue OAuth2/OIDC tokens for web and mobile clients. | M | UC-01 | Planned (P1) |
-| FR-IDM-002 | The system shall support the roles *Resident* and *Admin*; every API shall be permission-checked. | M | UC-06 | Planned (P1) |
+| FR-IDM-001 | The system shall allow registration and login with email + password and issue OAuth2/OIDC tokens for web and mobile clients. | M | UC-01 | Implemented (1.1: OpenIddict, register + password/auth-code tokens) |
+| FR-IDM-002 | The system shall support the roles *Resident* and *Admin*; every API shall be permission-checked. | M | UC-06 | Implemented (1.6: default `user` + `admin` roles, permission per action) |
 | FR-IDM-003 | The system shall require re-authentication before account deletion. | M | UC-05 | Planned (P8) |
 
 ## Documents (FR-DOC)
 
 | ID | Requirement | Pri | Source | Status |
 | --- | --- | --- | --- | --- |
-| FR-DOC-001 | The system shall maintain a catalogue of document types with Arabic and English names and a default validity period. | M | UC-01 | Planned (P1) |
-| FR-DOC-002 | The system shall store a document with holder, type, number, issue date, expiry date, status and notes, owned by exactly one user. | M | UC-01 | Planned (P1) |
-| FR-DOC-003 | The system shall reject an expiry date earlier than the issue date and any non-calendar date. | M | UC-01, PLAN P3 question | Planned (P1) |
-| FR-DOC-004 | The system shall store attachments (image/PDF) encrypted at rest and serve them only to the owner. | M | UC-01, C1 | Planned (P1; encryption P8) |
+| FR-DOC-001 | The system shall maintain a catalogue of document types with Arabic and English names and a default validity period. | M | UC-01 | Implemented (1.4 catalogue + seed, 1.6 endpoint) |
+| FR-DOC-002 | The system shall store a document with holder, type, number, issue date, expiry date, status and notes, owned by exactly one user. | M | UC-01 | Implemented (1.5 aggregate, 1.6 CRUD API) |
+| FR-DOC-003 | The system shall reject an expiry date earlier than the issue date and any non-calendar date. | M | UC-01, PLAN P3 question | Implemented (1.5: `ValidityPeriod` value object) |
+| FR-DOC-004 | The system shall store attachments (image/PDF) encrypted at rest and serve them only to the owner. | M | UC-01, C1 | Partly implemented (1.5: aggregate + `IFileStore`; upload API P3, encryption P8) |
 | FR-DOC-005 | The system shall record each AI extraction result (provider, prompt version, JSON, confidence, accepted/edited) linked to its attachment. | M | UC-01 | Planned (P3) |
-| FR-DOC-006 | The system shall let a user mark a document as renewed by entering the new expiry date, keeping the previous one in history. | S | UC-02 | Planned (P2) |
-| FR-DOC-007 | The system shall support holders (family members) per user; a document belongs to one holder. | M | UC-04 | Planned (P1) |
+| FR-DOC-006 | The system shall let a user mark a document as renewed by entering the new expiry date, keeping the previous one in history. | S | UC-02 | Implemented (1.6: renew endpoint keeps `PreviousExpiryDate`) |
+| FR-DOC-007 | The system shall support holders (family members) per user; a document belongs to one holder. | M | UC-04 | Implemented (1.4 entity + self-holder rule, 1.6 CRUD API) |
 | FR-DOC-008 | The system shall create revocable share links for a document with a maximum lifetime of 7 days. | C | UC-04 | Planned (P8) |
 
 ## Reminders (FR-REM)

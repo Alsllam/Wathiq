@@ -10,6 +10,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Wathiq.Application\Wathiq.Application.csproj" />
+    <!-- 1.7's lesson applied: the test host is its own executable, so the module whose services
+         we test must be in ITS graph - the host's Application project does not bring it. -->
+    <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.Application\Wathiq.Documents.Application.csproj" />
     <ProjectReference Include="..\Wathiq.Domain.Tests\Wathiq.Domain.Tests.csproj" />
   </ItemGroup>
 
