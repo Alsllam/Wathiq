@@ -22,7 +22,7 @@ Phases beyond the active one stay coarse; the first step of each phase (`N.0`) e
 - [x] **0.5 Architecture & DB v0.1** — C4 context + container diagrams (Mermaid), module map,
       ERD v0.1 → `architecture.docx`, `database.docx`.
       *Topics: C4 model, modular monolith boundaries, ERD notation, schema-per-module.*
-- [ ] **0.6 Repo layout & tooling** — `backend/`, `frontend/`, `mobile/` folders with READMEs,
+- [x] **0.6 Repo layout & tooling** — `backend/`, `frontend/`, `mobile/` folders with READMEs,
       `.editorconfig`, `.gitattributes`, root `README.md`; Docker Compose skeleton (SQL Server only).
       *Topics: monorepo layout for 3 apps, Docker Compose basics.*
 - [ ] **0.CP Checkpoint** — "Name the six modules and the one rule that keeps them decoupled."

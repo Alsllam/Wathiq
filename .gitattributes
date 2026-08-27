@@ -1,0 +1,19 @@
+# Normalise line endings: LF in the repo, native on checkout (silences the CRLF warnings on Windows).
+* text=auto eol=lf
+
+# Windows-only scripts must stay CRLF or cmd.exe misparses them
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary — never diff or normalise
+*.docx binary
+*.png binary
+*.jpg binary
+*.ico binary
+*.ttf binary
+*.woff2 binary
+*.pdf binary
+
+# Generated / bulky files: hide from diffs
+docs/deliverables/out/*.docx -diff

@@ -1,0 +1,49 @@
+# One file for three toolchains: dotnet format, Prettier/ESLint and dart format all read it.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# C# — 4 spaces like the reference ABP backend; a few naming/style rules the compiler enforces
+[*.cs]
+indent_size = 4
+dotnet_sort_system_directives_first = true
+csharp_style_namespace_declarations = file_scoped:warning
+csharp_prefer_braces = true:warning
+dotnet_diagnostic.CA2007.severity = none            # ConfigureAwait not needed in ASP.NET Core
+dotnet_naming_rule.private_fields_underscore.symbols = private_fields
+dotnet_naming_rule.private_fields_underscore.style = underscore_camel
+dotnet_naming_rule.private_fields_underscore.severity = suggestion
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_style.underscore_camel.capitalization = camel_case
+dotnet_naming_style.underscore_camel.required_prefix = _
+
+[*.{csproj,props,targets,xml}]
+indent_size = 2
+
+# TypeScript / Angular — matches the Nx defaults Prettier will use
+[*.{ts,js,json,html,scss,css}]
+indent_size = 2
+max_line_length = 100
+
+# Dart — dart format is opinionated (2 spaces, 80 cols); do not fight it
+[*.dart]
+indent_size = 2
+max_line_length = 80
+
+[*.md]
+trim_trailing_whitespace = false   # two trailing spaces = hard line break in Markdown
+max_line_length = 100
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.ps1]
+end_of_line = crlf
+indent_size = 4
