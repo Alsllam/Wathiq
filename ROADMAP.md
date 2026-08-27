@@ -56,7 +56,7 @@ the schema mid-phase.
       catalogue (ar/en names, default validity) and each user's default `Holder` (self).
       *Topics: ABP aggregate root base classes, EF `IEntityTypeConfiguration`, ABP data seeding
       contributors.* — FR-DOC-001, FR-DOC-007.
-- [ ] **1.5 `Document` aggregate with `ExpiryDate` value object** — `Document` (owner, holder,
+- [x] **1.5 `Document` aggregate with `ExpiryDate` value object** — `Document` (owner, holder,
       type, number, issue/expiry dates, status, notes) with `ExpiryDate` as an owned value type
       that rejects an expiry before the issue date; `Attachment` stored via `Shared.IFileStore`;
       migration. *Topics: value objects vs. primitive obsession, EF Core owned types / value

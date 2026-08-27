@@ -14,6 +14,7 @@ status: "Draft"
 | 0.1 | 2026-08-27 | Abdulsalam | ERD v0.1 (five schemas), data dictionary, index plan, retention notes (roadmap step 0.5) |
 | 0.1.1 | 2026-08-27 | Abdulsalam | Migrations log: host initial migration (1.1), `documents` schema initial migration (1.3) |
 | 0.1.2 | 2026-08-27 | Abdulsalam | Migrations log row 3: `DocumentType` + `Holder` tables and indexes (1.4); those two tables are now *Implemented* |
+| 0.1.3 | 2026-08-27 | Abdulsalam | Migrations log row 4: `Document` + `Attachment` (1.5); `IssueDate`/`ExpiryDate` documented as the owned value object `ValidityPeriod` |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
 Tables in this version are *Planned* until their migration appears in the migrations log, which
@@ -104,7 +105,7 @@ identity, so that Identity stays a stock module.
 | BirthDate | date | yes | |
 | IsSelf | bit | no | Exactly one per user (filtered UQ on UserId where IsSelf=1) |
 
-### `documents.Document` (E-Document)
+### `documents.Document` (E-Document) — *Implemented (1.5)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -113,17 +114,17 @@ identity, so that Identity stays a stock module.
 | HolderId | uniqueidentifier | no | FK → Holder |
 | DocumentTypeId | uniqueidentifier | no | FK → DocumentType |
 | Number | nvarchar(64) | yes | Encrypted at rest (P8) |
-| IssueDate | date | yes | |
-| ExpiryDate | date | yes | Value object in domain; `ExpiryDate >= IssueDate` enforced in code (FR-DOC-003) |
+| IssueDate | date | yes | Owned value object `ValidityPeriod` (EF `OwnsOne`) flattens to these two columns |
+| ExpiryDate | date | yes | Same value object; `ExpiryDate >= IssueDate` enforced in its constructor (FR-DOC-003); `IX_Document_ExpiryDate` |
 | Status | tinyint | no | enum: Active=0, Expired, Renewed, Archived |
 | Notes | nvarchar(1024) | yes | Encrypted at rest (P8) |
 | PreviousExpiryDate | date | yes | Kept when marked renewed (FR-DOC-006) |
 | ConcurrencyStamp | nvarchar(40) | no | ABP optimistic concurrency |
 
-Indexes: `IX_Document_OwnerUserId_ExpiryDate` (timeline query, NFR-PRF-001),
-`IX_Document_HolderId`.
+Indexes: `IX_Document_OwnerUserId`, `IX_Document_ExpiryDate` (timeline query, NFR-PRF-001 — a composite
+`OwnerUserId, ExpiryDate` index is deferred until the timeline query exists in step 1.6), `IX_Document_HolderId`.
 
-### `documents.Attachment` (E-Attachment)
+### `documents.Attachment` (E-Attachment) — *Implemented (1.5)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -320,6 +321,7 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 | 1 | 2026-08-27 | host (`WathiqDbContext`, dbo) | `20260827120335_InitialMigration` — ABP Identity, OpenIddict, permissions, settings, audit, background jobs, blobs | 1.1 |
 | 2 | 2026-08-27 | Documents (`DocumentsDbContext`, schema `documents`) | `20260827131340_Initial` — empty; creates the schema and `documents.__EFMigrationsHistory` | 1.3 |
 | 3 | 2026-08-27 | Documents | `20260827131957_AddDocumentTypeAndHolder` — tables `DocumentType`, `Holder`; `UQ_DocumentType_Code`; `IX_Holder_UserId`; filtered `UQ_Holder_UserId_IsSelf`; catalogue seeded (8 types) | 1.4 |
+| 4 | 2026-08-27 | Documents | `20260827133140_AddDocumentAndAttachment` — tables `Document` (FKs to Holder/DocumentType, Restrict), `Attachment` (FK to Document, Cascade); `IX_Document_OwnerUserId`, `IX_Document_HolderId`, `IX_Document_ExpiryDate`, `IX_Attachment_DocumentId` | 1.5 |
 
 # Retention, encryption and backups
 

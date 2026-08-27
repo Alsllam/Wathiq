@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
+using Wathiq.Documents.Documents;
 using Wathiq.Documents.DocumentTypes;
 using Wathiq.Documents.Holders;
 
@@ -14,6 +15,8 @@ public class DocumentsDbContext : AbpDbContext<DocumentsDbContext>
 {
     public DbSet<DocumentType> DocumentTypes { get; set; } = default!;
     public DbSet<Holder> Holders { get; set; } = default!;
+    public DbSet<Document> Documents { get; set; } = default!;
+    // No DbSet<Attachment>: it is reached through Document only (aggregate boundary).
 
     public DocumentsDbContext(DbContextOptions<DocumentsDbContext> options)
         : base(options)

@@ -1,0 +1,7 @@
+{
+  "Culture": "en",
+  "Texts": {
+    "Wathiq.Documents:ExpiryBeforeIssue": "The expiry date cannot be earlier than the issue date.",
+    "Wathiq.Documents:HolderNotOwned": "The selected holder does not belong to you."
+  }
+}

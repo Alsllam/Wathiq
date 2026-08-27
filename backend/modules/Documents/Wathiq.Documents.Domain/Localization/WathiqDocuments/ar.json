@@ -1,0 +1,7 @@
+{
+  "Culture": "ar",
+  "Texts": {
+    "Wathiq.Documents:ExpiryBeforeIssue": "لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ الإصدار.",
+    "Wathiq.Documents:HolderNotOwned": "صاحب المستند المحدد لا يخصك."
+  }
+}
