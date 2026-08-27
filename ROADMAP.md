@@ -27,7 +27,7 @@ Phases beyond the active one stay coarse; the first step of each phase (`N.0`) e
       *Topics: monorepo layout for 3 apps, Docker Compose basics.*
 - [x] **0.CP Checkpoint** — "Name the six modules and the one rule that keeps them decoupled."
 
-## Phase 1 — Backend core (ABP + SQL Server)  `active`
+## Phase 1 — Backend core (ABP + SQL Server)  `steps done · 1.CP pending`
 
 ABP solution `Wathiq` (open-source modules only), `Documents` module end-to-end: `DocumentType`,
 `Document` aggregate with `ExpiryDate` value object, EF migration on LocalDB, CRUD app service,
@@ -76,15 +76,58 @@ the schema mid-phase.
       to the migrations log in `database.md`. *Topics: ABP integration testing (`AbpIntegratedTest`),
       xUnit, keeping deliverable status columns honest.* *Docs: `srs`, `database`.*
 - [ ] 1.CP Checkpoint — "Why is `ExpiryDate` a value object with validation instead of a
-      nullable DateTime on the entity?"
+      nullable DateTime on the entity?" *(deferred by user; run `/checkpoint` any time)*
 
-## Phase 2 — Reminders & background jobs  *(expand at start)*
+## Phase 2 — Reminders & background jobs  `active`
 
-`Reminders` module, Hangfire recurring job, email channel (MailKit + local smtp4dev),
-domain event `DocumentExpiryChanged` → reschedule. Tests for scheduling math.
+`Reminders` module end-to-end: `ReminderRule` (offsets value object, channels, quiet hours,
+time zone), `Reminder` + `DeliveryLog`, scheduling domain service, `DocumentExpiryChanged` local
+event → reschedule, Hangfire nightly job (idempotent, FR-REM-002), email via MailKit + smtp4dev.
 *Topics: Hangfire, idempotent jobs, domain events, time zones, testing time.*
+Entities and fields follow `docs/deliverables/database.md` §schema `reminders` exactly — the
+unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, not an afterthought.
 
-- [ ] 2.0 Expand phase into steps
+- [x] 2.0 Expand phase into steps
+- [ ] **2.1 `Reminders` module skeleton** — the four projects under `backend/modules/Reminders/`,
+      `RemindersDbContext` on schema `reminders`, empty first migration, registered in the host
+      **and** the DbMigrator in the same commit (the 1.7 lesson: every executable's module graph).
+      *Topics: repeating the ABP module recipe unaided, per-executable module graphs.*
+      *Docs: `database` (migrations log).*
+- [ ] **2.2 `ReminderRule` with the `ReminderOffsets` value object** — one rule per user
+      (UQ UserId): offsets as a value object over CSV storage (EF value converter, e.g.
+      `90,30,7,1`), `ReminderChannels` flags enum, quiet hours, IANA `TimeZoneId`; default rule
+      materialised on first use (the self-holder pattern); migration.
+      *Topics: value converters vs owned types, flags enums in EF, defaults-on-first-use.*
+      — FR-REM-001. *Docs: `database` (migrations log + status).*
+- [ ] **2.3 `Reminder`, `DeliveryLog` and the scheduling math** — entities per DB doc with
+      `UQ_Reminder_DocumentId_OffsetDays` and `IX_Reminder_Status_DueDate`; `ReminderScheduler`
+      domain service computing due dates from expiry − offsets in the user's time zone, skipping
+      past dates; pure domain tests for the math (year boundaries, `Asia/Riyadh` vs UTC).
+      *Topics: time-zone-safe date math, domain services, testing time without the clock.*
+      — FR-REM-001. *Docs: `database` (migrations log + status).*
+- [ ] **2.4 Reschedule via local events** — `DocumentExpiryChangedEto` contract in `Shared`,
+      published by `Documents` on create/update/renew/delete; `Reminders` handler upserts or
+      cancels reminders. No project reference between the two modules.
+      *Topics: ABP local event bus, module decoupling through event contracts.* — FR-REM-004.
+- [ ] **2.5 Hangfire nightly job** — Hangfire + SQL Server storage in the host, dashboard in dev,
+      recurring job scanning `Pending` reminders with `DueDate <= today`; safe to run twice by
+      design (unique index + status transition, no side effect before the state claim).
+      *Topics: Hangfire recurring jobs, idempotent job design, at-least-once thinking.*
+      — FR-REM-002.
+- [ ] **2.6 Email channel** — ABP MailKit emailing against smtp4dev (added to Docker Compose),
+      bilingual ar/en reminder template, one `DeliveryLog` row per attempt, failures mark the
+      reminder `Failed`; quiet hours defer delivery. *Topics: ABP `IEmailSender`/MailKit, email
+      templates, smtp4dev as a free local SMTP sink.* — FR-REM-003 (email), FR-REM-005.
+- [ ] **2.7 App services and API** — `ReminderRuleAppService` (get/update own rule) and
+      `ReminderAppService` (upcoming reminders list); permissions under `WathiqReminders`;
+      plural routes under `/api/reminders/*`; api.md §reminders from the regenerated spec.
+      *Topics: second lap on app services/permissions, now with an existing pattern to match.*
+      *Docs: `api`.*
+- [ ] **2.8 Tests, then close the loop on docs** — integration tests: nightly job run twice on
+      the same day sends once (FR-REM-002); changing an expiry reschedules (FR-REM-004); flip the
+      FR-REM rows in `srs.md`; verify the migrations log. *Topics: testing background jobs
+      deterministically, keeping deliverable statuses honest.* *Docs: `srs`, `database`.*
+- [ ] 2.CP Checkpoint — "How do you make the nightly reminder job safe to run twice?"
 
 ## Phase 3 — AI: OCR + extraction (local, free)  *(expand at start)*
 
