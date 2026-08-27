@@ -2,6 +2,20 @@
   "Culture": "ar",
   "Texts": {
     "Wathiq.Documents:ExpiryBeforeIssue": "لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ الإصدار.",
-    "Wathiq.Documents:HolderNotOwned": "صاحب المستند المحدد لا يخصك."
+    "Wathiq.Documents:HolderNotOwned": "صاحب المستند المحدد لا يخصك.",
+    "Wathiq.Documents:DocumentTypeNotActive": "نوع المستند هذا غير متاح.",
+    "Wathiq.Documents:SelfHolderIsAutomatic": "سجلّك الشخصي يُنشأ تلقائيًا ولا يمكن إضافته يدويًا.",
+    "Wathiq.Documents:CannotDeleteSelfHolder": "لا يمكنك حذف سجلّك الشخصي.",
+    "Wathiq.Documents:HolderHasDocuments": "لا يزال لدى هذا الشخص مستندات. احذفها أو انقلها أولًا.",
+    "Permission:Documents": "مستندات وثيق",
+    "Permission:DocumentTypes": "عرض أنواع المستندات",
+    "Permission:Holders": "عرض أصحاب المستندات",
+    "Permission:Holders.Create": "إضافة أصحاب مستندات",
+    "Permission:Holders.Update": "تعديل أصحاب المستندات",
+    "Permission:Holders.Delete": "حذف أصحاب المستندات",
+    "Permission:Documents.Manage": "عرض المستندات",
+    "Permission:Documents.Create": "إضافة مستندات",
+    "Permission:Documents.Update": "تعديل المستندات",
+    "Permission:Documents.Delete": "حذف المستندات"
   }
 }
