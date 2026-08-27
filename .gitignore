@@ -1,0 +1,43 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.user
+*.suo
+
+# secrets
+.env
+.env.*
+appsettings.*.Local.json
+**/secrets.json
+
+# .NET
+bin/
+obj/
+TestResults/
+.vs/
+
+# Node / Nx
+node_modules/
+dist/
+.nx/cache
+.nx/workspace-data
+.angular/
+coverage/
+
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+*.iml
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Data / AI
+uploads/
+*.log
+models/
+
+# Docs build scratch (out/ stays committed)
+docs/deliverables/.tmp/
