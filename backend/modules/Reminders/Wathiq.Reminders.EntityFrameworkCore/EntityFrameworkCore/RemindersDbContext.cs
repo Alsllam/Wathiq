@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
+using Wathiq.Reminders.Rules;
 
 namespace Wathiq.Reminders.EntityFrameworkCore;
 
@@ -9,7 +10,8 @@ namespace Wathiq.Reminders.EntityFrameworkCore;
 [ConnectionStringName(RemindersDbProperties.ConnectionStringName)]
 public class RemindersDbContext : AbpDbContext<RemindersDbContext>
 {
-    // DbSets arrive with the entities: ReminderRule (2.2), Reminder + DeliveryLog (2.3).
+    public DbSet<ReminderRule> ReminderRules { get; set; } = default!;
+    // Reminder + DeliveryLog arrive in 2.3.
 
     public RemindersDbContext(DbContextOptions<RemindersDbContext> options)
         : base(options)

@@ -93,7 +93,7 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
       **and** the DbMigrator in the same commit (the 1.7 lesson: every executable's module graph).
       *Topics: repeating the ABP module recipe unaided, per-executable module graphs.*
       *Docs: `database` (migrations log).*
-- [ ] **2.2 `ReminderRule` with the `ReminderOffsets` value object** — one rule per user
+- [x] **2.2 `ReminderRule` with the `ReminderOffsets` value object** — one rule per user
       (UQ UserId): offsets as a value object over CSV storage (EF value converter, e.g.
       `90,30,7,1`), `ReminderChannels` flags enum, quiet hours, IANA `TimeZoneId`; default rule
       materialised on first use (the self-holder pattern); migration.

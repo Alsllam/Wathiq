@@ -1,4 +1,8 @@
 {
   "Culture": "en",
-  "Texts": {}
+  "Texts": {
+    "Wathiq.Reminders:InvalidOffsets": "Reminder offsets must be between 1 and 3650 days, with at most {Max} entries.",
+    "Wathiq.Reminders:QuietHoursIncomplete": "Quiet hours need both a start and an end time, or neither.",
+    "Wathiq.Reminders:UnknownTimeZone": "The time zone '{TimeZoneId}' is not recognized."
+  }
 }
