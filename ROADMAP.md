@@ -51,7 +51,7 @@ the schema mid-phase.
       module in the host, its own `DocumentsDbContext` mapped to schema `documents` (ADR-001),
       first (empty) migration applied to LocalDB. *Topics: ABP module system & dependency graph,
       DbContext-per-module in practice, first EF Core migration.*
-- [ ] **1.4 `DocumentType` and `Holder` entities** — aggregate roots (`FullAuditedAggregateRoot`),
+- [x] **1.4 `DocumentType` and `Holder` entities** — aggregate roots (`FullAuditedAggregateRoot`),
       EF configuration classes, migration, a data seed contributor for the document-type
       catalogue (ar/en names, default validity) and each user's default `Holder` (self).
       *Topics: ABP aggregate root base classes, EF `IEntityTypeConfiguration`, ABP data seeding

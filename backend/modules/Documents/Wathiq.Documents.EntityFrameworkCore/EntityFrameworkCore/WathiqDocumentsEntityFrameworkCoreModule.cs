@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.Modularity;
 
 namespace Wathiq.Documents.EntityFrameworkCore;
 
 [DependsOn(
     typeof(WathiqDocumentsDomainModule),
-    typeof(AbpEntityFrameworkCoreSqlServerModule)
+    typeof(AbpEntityFrameworkCoreModule)
 )]
 public class WathiqDocumentsEntityFrameworkCoreModule : AbpModule
 {
@@ -20,14 +19,12 @@ public class WathiqDocumentsEntityFrameworkCoreModule : AbpModule
             options.AddDefaultRepositories(includeAllEntities: false);
         });
 
-        Configure<AbpDbContextOptions>(options =>
-        {
-            // Scoped to this context only; the host's global UseSqlServer() still applies to WathiqDbContext.
-            options.Configure<DocumentsDbContext>(ctx => ctx.UseSqlServer(ConfigureSqlServer));
-        });
+        // Deliberately no provider here. A per-context AbpDbContextOptions.Configure<DocumentsDbContext>
+        // *replaces* the global default, which broke the Sqlite test host; the DBMS is the host's
+        // decision (composition root), and it calls ConfigureSqlServer for this context.
     }
 
-    // Shared by the runtime module and the design-time factory so both agree on the history table.
+    // Shared by the host module and the design-time factory so both agree on the history table.
     public static void ConfigureSqlServer(SqlServerDbContextOptionsBuilder sql)
     {
         // Each module tracks its own migrations: documents.__EFMigrationsHistory, not the dbo one.

@@ -57,6 +57,13 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
             {
                 context.DbContextOptions.UseSqlite(_sqliteConnection);
             });
+
+            // The host EF module registers a per-context provider for DocumentsDbContext (own migrations
+            // history). Per-context config replaces the global one, so the test host must override it too.
+            options.Configure<DocumentsDbContext>(context =>
+            {
+                context.DbContextOptions.UseSqlite(_sqliteConnection);
+            });
         });
     }
 

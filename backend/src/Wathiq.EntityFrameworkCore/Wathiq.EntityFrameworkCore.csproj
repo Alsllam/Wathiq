@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wathiq.Domain\Wathiq.Domain.csproj" />
+    <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.EntityFrameworkCore\Wathiq.Documents.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

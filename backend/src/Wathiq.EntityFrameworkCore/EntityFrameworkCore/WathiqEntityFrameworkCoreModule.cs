@@ -57,6 +57,10 @@ public class WathiqEntityFrameworkCoreModule : AbpModule
 
             options.UseSqlServer();
 
+            // Module contexts keep their own migrations history table (ADR-001); the provider stays SQL Server.
+            options.Configure<Wathiq.Documents.EntityFrameworkCore.DocumentsDbContext>(ctx =>
+                ctx.UseSqlServer(Wathiq.Documents.EntityFrameworkCore.WathiqDocumentsEntityFrameworkCoreModule.ConfigureSqlServer));
+
         });
         
     }

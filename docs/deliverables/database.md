@@ -13,6 +13,7 @@ status: "Draft"
 | --- | --- | --- | --- |
 | 0.1 | 2026-08-27 | Abdulsalam | ERD v0.1 (five schemas), data dictionary, index plan, retention notes (roadmap step 0.5) |
 | 0.1.1 | 2026-08-27 | Abdulsalam | Migrations log: host initial migration (1.1), `documents` schema initial migration (1.3) |
+| 0.1.2 | 2026-08-27 | Abdulsalam | Migrations log row 3: `DocumentType` + `Holder` tables and indexes (1.4); those two tables are now *Implemented* |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
 Tables in this version are *Planned* until their migration appears in the migrations log, which
@@ -79,7 +80,7 @@ identity, so that Identity stays a stock module.
 
 ## Schema `documents`
 
-### `documents.DocumentType` (E-DocumentType)
+### `documents.DocumentType` (E-DocumentType) — *Implemented (1.4)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -92,7 +93,7 @@ identity, so that Identity stays a stock module.
 | SortOrder | int | no | |
 | IsActive | bit | no | |
 
-### `documents.Holder` (E-Holder)
+### `documents.Holder` (E-Holder) — *Implemented (1.4)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -318,6 +319,7 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 | --- | --- | --- | --- | --- |
 | 1 | 2026-08-27 | host (`WathiqDbContext`, dbo) | `20260827120335_InitialMigration` — ABP Identity, OpenIddict, permissions, settings, audit, background jobs, blobs | 1.1 |
 | 2 | 2026-08-27 | Documents (`DocumentsDbContext`, schema `documents`) | `20260827131340_Initial` — empty; creates the schema and `documents.__EFMigrationsHistory` | 1.3 |
+| 3 | 2026-08-27 | Documents | `20260827131957_AddDocumentTypeAndHolder` — tables `DocumentType`, `Holder`; `UQ_DocumentType_Code`; `IX_Holder_UserId`; filtered `UQ_Holder_UserId_IsSelf`; catalogue seeded (8 types) | 1.4 |
 
 # Retention, encryption and backups
 

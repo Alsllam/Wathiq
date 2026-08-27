@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
+using Wathiq.Documents.DocumentTypes;
+using Wathiq.Documents.Holders;
 
 namespace Wathiq.Documents.EntityFrameworkCore;
 
@@ -10,6 +12,9 @@ namespace Wathiq.Documents.EntityFrameworkCore;
 [ConnectionStringName(DocumentsDbProperties.ConnectionStringName)]
 public class DocumentsDbContext : AbpDbContext<DocumentsDbContext>
 {
+    public DbSet<DocumentType> DocumentTypes { get; set; } = default!;
+    public DbSet<Holder> Holders { get; set; } = default!;
+
     public DocumentsDbContext(DbContextOptions<DocumentsDbContext> options)
         : base(options)
     {
@@ -21,7 +26,6 @@ public class DocumentsDbContext : AbpDbContext<DocumentsDbContext>
 
         builder.HasDefaultSchema(DocumentsDbProperties.DbSchema);
 
-        // Entity configurations are added per step (1.4 DocumentType/Holder, 1.5 Document...).
         builder.ApplyConfigurationsFromAssembly(typeof(DocumentsDbContext).Assembly);
     }
 }
