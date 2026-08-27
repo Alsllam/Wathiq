@@ -65,7 +65,7 @@ the schema mid-phase.
       `HolderAppService` and `DocumentAppService` (CRUD) with request/response DTOs and object
       mapping; ABP permission definitions gating each action. *Topics: ABP application services,
       DTO mapping (AutoMapper or manual), the ABP permission system.*
-- [ ] **1.7 OpenAPI surface** — confirm ABP's auto API controllers expose the Documents endpoints
+- [x] **1.7 OpenAPI surface** — confirm ABP's auto API controllers expose the Documents endpoints
       correctly in `swagger.json`; adjust route/group names for clarity; write `api.md` v0.1 from
       the real generated spec. *Topics: ABP auto API controllers, OpenAPI/Swagger customization.*
       *Docs: `api`.*
