@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/Wathiq.Domain/Wathiq.Domain.csproj" />
+        <Project Path="src/Wathiq.Application/Wathiq.Application.csproj" />
+        <Project Path="src/Wathiq.EntityFrameworkCore/Wathiq.EntityFrameworkCore.csproj" />
+        <Project Path="src/Wathiq.Domain.Shared/Wathiq.Domain.Shared.csproj" />
+        <Project Path="src/Wathiq.Application.Contracts/Wathiq.Application.Contracts.csproj" />
+        <Project Path="src/Wathiq.HttpApi/Wathiq.HttpApi.csproj" />
+        <Project Path="src/Wathiq.HttpApi.Client/Wathiq.HttpApi.Client.csproj" />
+        <Project Path="src/Wathiq.DbMigrator/Wathiq.DbMigrator.csproj" />
+        <Project Path="src/Wathiq.HttpApi.Host/Wathiq.HttpApi.Host.csproj" />
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/Wathiq.Application.Tests/Wathiq.Application.Tests.csproj" />
+        <Project Path="test/Wathiq.EntityFrameworkCore.Tests/Wathiq.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/Wathiq.TestBase/Wathiq.TestBase.csproj" />
+        <Project Path="test/Wathiq.Domain.Tests/Wathiq.Domain.Tests.csproj" />
+        <Project Path="test/Wathiq.HttpApi.Client.ConsoleTestApp/Wathiq.HttpApi.Client.ConsoleTestApp.csproj" />
+    </Folder>
+</Solution>

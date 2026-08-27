@@ -11,12 +11,15 @@ Thumbs.db
 .env.*
 !.env.example
 appsettings.*.Local.json
+appsettings.secrets.json
 **/secrets.json
 
 # .NET
 bin/
 obj/
 TestResults/
+*.pfx
+backend/**/Logs/
 .vs/
 
 # Node / Nx

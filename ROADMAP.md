@@ -37,7 +37,7 @@ Entities and fields below follow `docs/deliverables/database.md` v0.1 exactly �
 the schema mid-phase.
 
 - [x] 1.0 Expand phase into steps
-- [ ] **1.1 Scaffold the ABP solution** — `dotnet new abp` (or ABP CLI) app template: `Wathiq.sln`,
+- [x] **1.1 Scaffold the ABP solution** — `dotnet new abp` (or ABP CLI) app template: `Wathiq.sln`,
       `Wathiq.Host` (OpenIddict, Swagger, Serilog), Identity module working end-to-end against
       LocalDB (register, log in, get a token). No custom modules yet — this proves the shell boots.
       *Topics: ABP application template, host project composition, LocalDB connection string.*

@@ -1,0 +1,104 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "5.3.0",
+      "isInstalled": true,
+      "creationTime": "08/27/2026 11:55:51 +00:00"
+    },
+    "Volo.Abp.Account": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "08/27/2026 11:55:51 +00:00"
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "08/27/2026 11:55:51 +00:00"
+    },
+    "Volo.Abp.Identity": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "08/27/2026 11:55:51 +00:00"
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "08/27/2026 11:55:51 +00:00"
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "08/27/2026 11:55:51 +00:00"
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "10.3.0",
+      "isInstalled": true,
+      "creationTime": "08/27/2026 11:55:51 +00:00"
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "Wathiq.Application": {
+      "path": "src/Wathiq.Application/Wathiq.Application.abppkg",
+      "folder": "src"
+    },
+    "Wathiq.Application.Tests": {
+      "path": "test/Wathiq.Application.Tests/Wathiq.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "Wathiq.Domain.Shared": {
+      "path": "src/Wathiq.Domain.Shared/Wathiq.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "Wathiq.Application.Contracts": {
+      "path": "src/Wathiq.Application.Contracts/Wathiq.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "Wathiq.HttpApi": {
+      "path": "src/Wathiq.HttpApi/Wathiq.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "Wathiq.HttpApi.Client": {
+      "path": "src/Wathiq.HttpApi.Client/Wathiq.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "Wathiq.EntityFrameworkCore.Tests": {
+      "path": "test/Wathiq.EntityFrameworkCore.Tests/Wathiq.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "Wathiq.EntityFrameworkCore": {
+      "path": "src/Wathiq.EntityFrameworkCore/Wathiq.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "Wathiq.TestBase": {
+      "path": "test/Wathiq.TestBase/Wathiq.TestBase.abppkg",
+      "folder": "test"
+    },
+    "Wathiq.Domain.Tests": {
+      "path": "test/Wathiq.Domain.Tests/Wathiq.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "Wathiq.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/Wathiq.HttpApi.Client.ConsoleTestApp/Wathiq.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "Wathiq.DbMigrator": {
+      "path": "src/Wathiq.DbMigrator/Wathiq.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "Wathiq.HttpApi.Host": {
+      "path": "src/Wathiq.HttpApi.Host/Wathiq.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "Wathiq.Domain": {
+      "path": "src/Wathiq.Domain/Wathiq.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}
