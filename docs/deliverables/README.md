@@ -21,3 +21,6 @@ Each document has a front-matter block (title, version, date, status) and a revi
 - Front matter `title`/`subtitle`/`author`/`date` render on the title page; `version`/`status`
   are metadata only — the revision-history table is the visible version record.
 - `smoke.md` is the pipeline's smoke test; re-render it after touching the template.
+- Diagrams: write Mermaid in a fence directly under its `![caption](assets/name.png)` line and run
+  `python docs/deliverables/_template/render-diagrams.py <key>` before `build.ps1` (uses
+  `npx @mermaid-js/mermaid-cli`; the source stays in the `.md`, the PNG is what Word shows).
