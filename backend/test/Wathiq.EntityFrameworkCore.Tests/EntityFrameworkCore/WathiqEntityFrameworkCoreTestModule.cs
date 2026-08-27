@@ -10,12 +10,14 @@ using Volo.Abp.FeatureManagement;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.Uow;
+using Wathiq.Documents.EntityFrameworkCore;
 
 namespace Wathiq.EntityFrameworkCore;
 
 [DependsOn(
     typeof(WathiqApplicationTestModule),
     typeof(WathiqEntityFrameworkCoreModule),
+    typeof(WathiqDocumentsEntityFrameworkCoreModule),
     typeof(AbpEntityFrameworkCoreSqliteModule)
 )]
 public class WathiqEntityFrameworkCoreTestModule : AbpModule
@@ -73,6 +75,13 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
             .Options;
 
         using (var context = new WathiqDbContext(options))
+        {
+            context.GetService<IRelationalDatabaseCreator>().CreateTables();
+        }
+
+        // Each module context creates its own tables on the same in-memory connection.
+        var documentsOptions = new DbContextOptionsBuilder<DocumentsDbContext>().UseSqlite(connection).Options;
+        using (var context = new DocumentsDbContext(documentsOptions))
         {
             context.GetService<IRelationalDatabaseCreator>().CreateTables();
         }

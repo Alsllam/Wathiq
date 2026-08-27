@@ -46,7 +46,7 @@ the schema mid-phase.
       ABP localization sources for `ar`/`en`. No entities — pure cross-cutting services consumed
       by later modules. *Topics: cross-cutting module with no aggregates, ABP virtual file
       system, localization resources.*
-- [ ] **1.3 `Documents` module skeleton** — the four projects (`Domain`, `Application`,
+- [x] **1.3 `Documents` module skeleton** — the four projects (`Domain`, `Application`,
       `EntityFrameworkCore`, `HttpApi`) under `backend/modules/Documents/`, registered as an ABP
       module in the host, its own `DocumentsDbContext` mapped to schema `documents` (ADR-001),
       first (empty) migration applied to LocalDB. *Topics: ABP module system & dependency graph,

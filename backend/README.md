@@ -23,7 +23,16 @@ backend/
 
   modules/
     Shared/Wathiq.Shared/       IFileStore (+ LocalDiskFileStore), FileStoreOptions, ar/en localization — no entities
+    Documents/Wathiq.Documents.{Domain,Application,EntityFrameworkCore,HttpApi}/
+                                DocumentsDbContext -> schema `documents`, own migrations history; auto-API under /api/documents
 ```
+
+Module migrations (each context has its own history table):
+
+```
+cd modules/Documents/Wathiq.Documents.EntityFrameworkCore
+dotnet ef migrations add <Name> --context DocumentsDbContext --output-dir Migrations
+cd ../../../src/Wathiq.DbMigrator && dotnet run      # applies host + every module context
 
 Each future module (`Documents`, `Reminders`, `Guides`, `Ai`) gets its own
 `Domain`/`Application`/`EntityFrameworkCore`/`HttpApi` set under `backend/modules/<Name>/` with

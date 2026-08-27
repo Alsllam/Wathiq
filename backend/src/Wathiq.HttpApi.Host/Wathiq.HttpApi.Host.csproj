@@ -43,6 +43,8 @@
     <ProjectReference Include="..\Wathiq.Application\Wathiq.Application.csproj" />
     <ProjectReference Include="..\Wathiq.HttpApi\Wathiq.HttpApi.csproj" />
     <ProjectReference Include="..\Wathiq.EntityFrameworkCore\Wathiq.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.HttpApi\Wathiq.Documents.HttpApi.csproj" />
+    <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.EntityFrameworkCore\Wathiq.Documents.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

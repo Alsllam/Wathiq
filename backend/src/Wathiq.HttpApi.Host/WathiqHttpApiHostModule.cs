@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using OpenIddict.Validation.AspNetCore;
 using OpenIddict.Server.AspNetCore;
+using Wathiq.Documents;
+using Wathiq.Documents.EntityFrameworkCore;
 using Wathiq.EntityFrameworkCore;
 using Wathiq.MultiTenancy;
 using Wathiq.HealthChecks;
@@ -51,6 +53,9 @@ namespace Wathiq;
     typeof(AbpAspNetCoreMultiTenancyModule),
     typeof(WathiqApplicationModule),
     typeof(WathiqEntityFrameworkCoreModule),
+    // Business modules plug in here, host-side only: the host is the composition root (like AppModule imports).
+    typeof(WathiqDocumentsHttpApiModule),
+    typeof(WathiqDocumentsEntityFrameworkCoreModule),
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpSwashbuckleModule),
     typeof(AbpAspNetCoreSerilogModule)

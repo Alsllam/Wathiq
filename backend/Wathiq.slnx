@@ -2,6 +2,12 @@
     <Folder Name="/modules/">
         <Project Path="modules/Shared/Wathiq.Shared/Wathiq.Shared.csproj" />
     </Folder>
+    <Folder Name="/modules/Documents/">
+        <Project Path="modules/Documents/Wathiq.Documents.Application/Wathiq.Documents.Application.csproj" />
+        <Project Path="modules/Documents/Wathiq.Documents.Domain/Wathiq.Documents.Domain.csproj" />
+        <Project Path="modules/Documents/Wathiq.Documents.EntityFrameworkCore/Wathiq.Documents.EntityFrameworkCore.csproj" />
+        <Project Path="modules/Documents/Wathiq.Documents.HttpApi/Wathiq.Documents.HttpApi.csproj" />
+    </Folder>
     <Folder Name="/src/">
         <Project Path="src/Wathiq.Domain/Wathiq.Domain.csproj" />
         <Project Path="src/Wathiq.Application/Wathiq.Application.csproj" />

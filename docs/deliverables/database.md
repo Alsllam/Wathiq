@@ -12,10 +12,11 @@ status: "Draft"
 | Version | Date | Author | Change |
 | --- | --- | --- | --- |
 | 0.1 | 2026-08-27 | Abdulsalam | ERD v0.1 (five schemas), data dictionary, index plan, retention notes (roadmap step 0.5) |
+| 0.1.1 | 2026-08-27 | Abdulsalam | Migrations log: host initial migration (1.1), `documents` schema initial migration (1.3) |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
-Everything in this version is *Planned*: no migration exists yet. The migrations log (§ 6) is
-appended in the same commit as each migration from Phase 1 on.
+Tables in this version are *Planned* until their migration appears in the migrations log, which
+is appended in the same commit as each migration.
 
 # Principles
 
@@ -315,7 +316,8 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 
 | # | Date | Module | Migration name | Roadmap step |
 | --- | --- | --- | --- | --- |
-| — | — | — | *None yet — first migration lands in Phase 1* | 1.x |
+| 1 | 2026-08-27 | host (`WathiqDbContext`, dbo) | `20260827120335_InitialMigration` — ABP Identity, OpenIddict, permissions, settings, audit, background jobs, blobs | 1.1 |
+| 2 | 2026-08-27 | Documents (`DocumentsDbContext`, schema `documents`) | `20260827131340_Initial` — empty; creates the schema and `documents.__EFMigrationsHistory` | 1.3 |
 
 # Retention, encryption and backups
 
