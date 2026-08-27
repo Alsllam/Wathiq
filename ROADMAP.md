@@ -27,14 +27,56 @@ Phases beyond the active one stay coarse; the first step of each phase (`N.0`) e
       *Topics: monorepo layout for 3 apps, Docker Compose basics.*
 - [x] **0.CP Checkpoint** — "Name the six modules and the one rule that keeps them decoupled."
 
-## Phase 1 — Backend core (ABP + SQL Server)  `active`  *(expand at start: step 1.0)*
+## Phase 1 — Backend core (ABP + SQL Server)  `active`
 
 ABP solution `Wathiq` (open-source modules only), `Documents` module end-to-end: `DocumentType`,
 `Document` aggregate with `ExpiryDate` value object, EF migration on LocalDB, CRUD app service,
 permissions, OpenAPI, seed data, one integration test. Update `srs`, `database`, `api` docs.
 *Topics: ABP layering, aggregates/value objects, EF Core migrations, DTOs, permissions, xUnit.*
+Entities and fields below follow `docs/deliverables/database.md` v0.1 exactly — no re-deriving
+the schema mid-phase.
 
-- [ ] 1.0 Expand phase into steps
+- [x] 1.0 Expand phase into steps
+- [ ] **1.1 Scaffold the ABP solution** — `dotnet new abp` (or ABP CLI) app template: `Wathiq.sln`,
+      `Wathiq.Host` (OpenIddict, Swagger, Serilog), Identity module working end-to-end against
+      LocalDB (register, log in, get a token). No custom modules yet — this proves the shell boots.
+      *Topics: ABP application template, host project composition, LocalDB connection string.*
+- [ ] **1.2 `Shared` module skeleton** — `IFileStore` abstraction + local-disk implementation
+      (unencrypted; a `// TODO(P8)` marks where encryption plugs in per DB1/NFR-SEC-001),
+      ABP localization sources for `ar`/`en`. No entities — pure cross-cutting services consumed
+      by later modules. *Topics: cross-cutting module with no aggregates, ABP virtual file
+      system, localization resources.*
+- [ ] **1.3 `Documents` module skeleton** — the four projects (`Domain`, `Application`,
+      `EntityFrameworkCore`, `HttpApi`) under `backend/modules/Documents/`, registered as an ABP
+      module in the host, its own `DocumentsDbContext` mapped to schema `documents` (ADR-001),
+      first (empty) migration applied to LocalDB. *Topics: ABP module system & dependency graph,
+      DbContext-per-module in practice, first EF Core migration.*
+- [ ] **1.4 `DocumentType` and `Holder` entities** — aggregate roots (`FullAuditedAggregateRoot`),
+      EF configuration classes, migration, a data seed contributor for the document-type
+      catalogue (ar/en names, default validity) and each user's default `Holder` (self).
+      *Topics: ABP aggregate root base classes, EF `IEntityTypeConfiguration`, ABP data seeding
+      contributors.* — FR-DOC-001, FR-DOC-007.
+- [ ] **1.5 `Document` aggregate with `ExpiryDate` value object** — `Document` (owner, holder,
+      type, number, issue/expiry dates, status, notes) with `ExpiryDate` as an owned value type
+      that rejects an expiry before the issue date; `Attachment` stored via `Shared.IFileStore`;
+      migration. *Topics: value objects vs. primitive obsession, EF Core owned types / value
+      conversions, aggregate-internal collections.* — FR-DOC-002, FR-DOC-003, FR-DOC-004.
+- [ ] **1.6 Application services, DTOs and permissions** — `DocumentTypeAppService` (read),
+      `HolderAppService` and `DocumentAppService` (CRUD) with request/response DTOs and object
+      mapping; ABP permission definitions gating each action. *Topics: ABP application services,
+      DTO mapping (AutoMapper or manual), the ABP permission system.*
+- [ ] **1.7 OpenAPI surface** — confirm ABP's auto API controllers expose the Documents endpoints
+      correctly in `swagger.json`; adjust route/group names for clarity; write `api.md` v0.1 from
+      the real generated spec. *Topics: ABP auto API controllers, OpenAPI/Swagger customization.*
+      *Docs: `api`.*
+- [ ] **1.8 Tests, then close the loop on docs** — xUnit: a domain test for `ExpiryDate`
+      validation and one integration test (ABP test host + LocalDB/Sqlite) exercising the full
+      "create document → confirm it's stored" happy path. Flip the FR-DOC/FR-IDM rows this phase
+      implements from *Planned* to *Implemented* in `srs.md`, and append this phase's migrations
+      to the migrations log in `database.md`. *Topics: ABP integration testing (`AbpIntegratedTest`),
+      xUnit, keeping deliverable status columns honest.* *Docs: `srs`, `database`.*
+- [ ] 1.CP Checkpoint — "Why is `ExpiryDate` a value object with validation instead of a
+      nullable DateTime on the entity?"
 
 ## Phase 2 — Reminders & background jobs  *(expand at start)*
 
