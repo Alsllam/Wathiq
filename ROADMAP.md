@@ -16,7 +16,7 @@ Phases beyond the active one stay coarse; the first step of each phase (`N.0`) e
 - [x] **0.3 Vision & Charter doc** — `docs/deliverables/vision.md` → `.docx`: problem, users,
       scope, non-goals, success metrics, operating model (solo), roadmap summary.
       *Topics: project charter, scope/non-goals discipline.*
-- [ ] **0.4 SRS v0.1** — actors, use cases (UC-01…UC-06), functional reqs (FR-xx) for
+- [x] **0.4 SRS v0.1** — actors, use cases (UC-01…UC-06), functional reqs (FR-xx) for
       Documents/Reminders/Guides/AI, non-functional (privacy, performance, i18n), glossary ar/en.
       *Topics: IEEE 830 structure, testable requirement wording, traceability IDs.*
 - [ ] **0.5 Architecture & DB v0.1** — C4 context + container diagrams (Mermaid), module map,
