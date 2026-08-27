@@ -56,6 +56,8 @@ namespace Wathiq;
     // Business modules plug in here, host-side only: the host is the composition root (like AppModule imports).
     typeof(WathiqDocumentsHttpApiModule),
     typeof(WathiqDocumentsEntityFrameworkCoreModule),
+    typeof(Wathiq.Reminders.WathiqRemindersHttpApiModule),
+    typeof(Wathiq.Reminders.EntityFrameworkCore.WathiqRemindersEntityFrameworkCoreModule),
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpSwashbuckleModule),
     typeof(AbpAspNetCoreSerilogModule)

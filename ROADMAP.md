@@ -88,7 +88,7 @@ Entities and fields follow `docs/deliverables/database.md` §schema `reminders` 
 unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, not an afterthought.
 
 - [x] 2.0 Expand phase into steps
-- [ ] **2.1 `Reminders` module skeleton** — the four projects under `backend/modules/Reminders/`,
+- [x] **2.1 `Reminders` module skeleton** — the four projects under `backend/modules/Reminders/`,
       `RemindersDbContext` on schema `reminders`, empty first migration, registered in the host
       **and** the DbMigrator in the same commit (the 1.7 lesson: every executable's module graph).
       *Topics: repeating the ABP module recipe unaided, per-executable module graphs.*

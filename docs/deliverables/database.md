@@ -2,7 +2,7 @@
 title: "Wathiq — Database Design"
 subtitle: "وثيق — تصميم قاعدة البيانات"
 author: "Abdulsalam"
-version: "0.1"
+version: "0.1.4"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -15,6 +15,7 @@ status: "Draft"
 | 0.1.1 | 2026-08-27 | Abdulsalam | Migrations log: host initial migration (1.1), `documents` schema initial migration (1.3) |
 | 0.1.2 | 2026-08-27 | Abdulsalam | Migrations log row 3: `DocumentType` + `Holder` tables and indexes (1.4); those two tables are now *Implemented* |
 | 0.1.3 | 2026-08-27 | Abdulsalam | Migrations log row 4: `Document` + `Attachment` (1.5); `IssueDate`/`ExpiryDate` documented as the owned value object `ValidityPeriod` |
+| 0.1.4 | 2026-08-27 | Abdulsalam | Migrations log row 5: `reminders` schema initial (empty) migration — Reminders module skeleton (2.1) |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
 Tables in this version are *Planned* until their migration appears in the migrations log, which
@@ -322,6 +323,7 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 | 2 | 2026-08-27 | Documents (`DocumentsDbContext`, schema `documents`) | `20260827131340_Initial` — empty; creates the schema and `documents.__EFMigrationsHistory` | 1.3 |
 | 3 | 2026-08-27 | Documents | `20260827131957_AddDocumentTypeAndHolder` — tables `DocumentType`, `Holder`; `UQ_DocumentType_Code`; `IX_Holder_UserId`; filtered `UQ_Holder_UserId_IsSelf`; catalogue seeded (8 types) | 1.4 |
 | 4 | 2026-08-27 | Documents | `20260827133140_AddDocumentAndAttachment` — tables `Document` (FKs to Holder/DocumentType, Restrict), `Attachment` (FK to Document, Cascade); `IX_Document_OwnerUserId`, `IX_Document_HolderId`, `IX_Document_ExpiryDate`, `IX_Attachment_DocumentId` | 1.5 |
+| 5 | 2026-08-27 | Reminders (`RemindersDbContext`, schema `reminders`) | `20260827145205_Initial` — empty; creates the schema and `reminders.__EFMigrationsHistory` | 2.1 |
 
 # Retention, encryption and backups
 

@@ -21,6 +21,8 @@
     <!-- The permission definition provider lives in Application; without it in the migrator's
          module graph, ABP's "grant all defined permissions to admin" seeder can't see ours. -->
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.Application\Wathiq.Documents.Application.csproj" />
+    <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.EntityFrameworkCore\Wathiq.Reminders.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.Application\Wathiq.Reminders.Application.csproj" />
     <ProjectReference Include="..\Wathiq.Application.Contracts\Wathiq.Application.Contracts.csproj" />
   </ItemGroup>
 

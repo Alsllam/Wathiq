@@ -45,6 +45,8 @@
     <ProjectReference Include="..\Wathiq.EntityFrameworkCore\Wathiq.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.HttpApi\Wathiq.Documents.HttpApi.csproj" />
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.EntityFrameworkCore\Wathiq.Documents.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.HttpApi\Wathiq.Reminders.HttpApi.csproj" />
+    <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.EntityFrameworkCore\Wathiq.Reminders.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
