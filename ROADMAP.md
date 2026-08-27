@@ -6,7 +6,7 @@ Phases beyond the active one stay coarse; the first step of each phase (`N.0`) e
 
 ---
 
-## Phase 0 — Bootstrap & docs foundation  `active`
+## Phase 0 — Bootstrap & docs foundation  `done`
 
 - [x] **0.1 Repo bootstrap** — git init, CLAUDE.md, skills, plan, roadmap, learning template.
       *Topics: learning-by-building workflow; modular monolith on paper.*
@@ -25,9 +25,9 @@ Phases beyond the active one stay coarse; the first step of each phase (`N.0`) e
 - [x] **0.6 Repo layout & tooling** — `backend/`, `frontend/`, `mobile/` folders with READMEs,
       `.editorconfig`, `.gitattributes`, root `README.md`; Docker Compose skeleton (SQL Server only).
       *Topics: monorepo layout for 3 apps, Docker Compose basics.*
-- [ ] **0.CP Checkpoint** — "Name the six modules and the one rule that keeps them decoupled."
+- [x] **0.CP Checkpoint** — "Name the six modules and the one rule that keeps them decoupled."
 
-## Phase 1 — Backend core (ABP + SQL Server)  *(expand at start: step 1.0)*
+## Phase 1 — Backend core (ABP + SQL Server)  `active`  *(expand at start: step 1.0)*
 
 ABP solution `Wathiq` (open-source modules only), `Documents` module end-to-end: `DocumentType`,
 `Document` aggregate with `ExpiryDate` value object, EF migration on LocalDB, CRUD app service,
