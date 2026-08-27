@@ -13,7 +13,7 @@ Phases beyond the active one stay coarse; the first step of each phase (`N.0`) e
 - [x] **0.2 Docs pipeline** — `docs/deliverables/_template/` (Pandoc reference `.docx` with
       Arabic-capable fonts, RTL paragraph support), `make-doc` script, render a smoke-test doc.
       *Topics: Pandoc Markdown→docx, reference templates, bilingual documents.*
-- [ ] **0.3 Vision & Charter doc** — `docs/deliverables/vision.md` → `.docx`: problem, users,
+- [x] **0.3 Vision & Charter doc** — `docs/deliverables/vision.md` → `.docx`: problem, users,
       scope, non-goals, success metrics, operating model (solo), roadmap summary.
       *Topics: project charter, scope/non-goals discipline.*
 - [ ] **0.4 SRS v0.1** — actors, use cases (UC-01…UC-06), functional reqs (FR-xx) for
