@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Wathiq.Shared</RootNamespace>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Volo.Abp.Localization transitively brings Volo.Abp.Core (modularity, DI, BusinessException),
+         Volo.Abp.VirtualFileSystem (embedded JSON) and Volo.Abp.ExceptionHandling. No entity/DB
+         package is needed for a module with no aggregates. -->
+    <PackageReference Include="Volo.Abp.Localization" Version="10.3.0" />
+    <!-- Required for GenerateEmbeddedFilesManifest to actually emit a manifest; without it the
+         embedded JSON compiles in but ABP's virtual file system cannot resolve its path. -->
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\WathiqShared\*.json" />
+    <Content Remove="Localization\WathiqShared\*.json" />
+  </ItemGroup>
+
+</Project>

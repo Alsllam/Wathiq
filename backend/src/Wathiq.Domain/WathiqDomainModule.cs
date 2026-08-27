@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Wathiq.Localization;
 using Wathiq.MultiTenancy;
+using Wathiq.Shared;
 using System;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
@@ -22,6 +23,7 @@ namespace Wathiq;
 
 [DependsOn(
     typeof(WathiqDomainSharedModule),
+    typeof(WathiqSharedModule),
     typeof(AbpAuditLoggingDomainModule),
     typeof(AbpCachingModule),
     typeof(AbpBackgroundJobsDomainModule),

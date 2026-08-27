@@ -20,9 +20,12 @@ backend/
     Wathiq.DbMigrator/          console app: applies migrations + seeds admin user & OpenIddict clients
   test/
     Wathiq.{Domain,Application,EntityFrameworkCore}.Tests/, Wathiq.TestBase/
+
+  modules/
+    Shared/Wathiq.Shared/       IFileStore (+ LocalDiskFileStore), FileStoreOptions, ar/en localization — no entities
 ```
 
-Each future module (`Documents`, `Reminders`, `Guides`, `Ai`, `Shared`) gets its own
+Each future module (`Documents`, `Reminders`, `Guides`, `Ai`) gets its own
 `Domain`/`Application`/`EntityFrameworkCore`/`HttpApi` set under `backend/modules/<Name>/` with
 its own `DbContext` and SQL schema — **no cross-module DB joins** (ADR-001). See
 `docs/deliverables/architecture.md`.
@@ -52,6 +55,8 @@ its own `DbContext` and SQL schema — **no cross-module DB joins** (ADR-001). S
    cd src/Wathiq.HttpApi.Host && dotnet run
    ```
    Health check: `https://localhost:44352/health-status`. Swagger: `/swagger`.
+   Uploaded files land in `src/Wathiq.HttpApi.Host/bin/.../App_Data/wathiq-files/` (config
+   section `FileStore`, git-ignored).
 
 ### Dev credentials (LocalDB only — never used in production)
 

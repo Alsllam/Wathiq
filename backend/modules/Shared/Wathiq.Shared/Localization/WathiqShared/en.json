@@ -1,0 +1,7 @@
+{
+  "Culture": "en",
+  "Texts": {
+    "Wathiq.Shared:FileTooLarge": "The file exceeds the maximum allowed size.",
+    "Wathiq.Shared:FileNotFound": "The requested file could not be found."
+  }
+}

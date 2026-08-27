@@ -1,7 +1,7 @@
 <Solution>
-    <Configurations>
-        <Platform Name="Any CPU" />
-    </Configurations>
+    <Folder Name="/modules/">
+        <Project Path="modules/Shared/Wathiq.Shared/Wathiq.Shared.csproj" />
+    </Folder>
     <Folder Name="/src/">
         <Project Path="src/Wathiq.Domain/Wathiq.Domain.csproj" />
         <Project Path="src/Wathiq.Application/Wathiq.Application.csproj" />

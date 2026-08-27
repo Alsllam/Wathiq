@@ -41,7 +41,7 @@ the schema mid-phase.
       `Wathiq.Host` (OpenIddict, Swagger, Serilog), Identity module working end-to-end against
       LocalDB (register, log in, get a token). No custom modules yet — this proves the shell boots.
       *Topics: ABP application template, host project composition, LocalDB connection string.*
-- [ ] **1.2 `Shared` module skeleton** — `IFileStore` abstraction + local-disk implementation
+- [x] **1.2 `Shared` module skeleton** — `IFileStore` abstraction + local-disk implementation
       (unencrypted; a `// TODO(P8)` marks where encryption plugs in per DB1/NFR-SEC-001),
       ABP localization sources for `ar`/`en`. No entities — pure cross-cutting services consumed
       by later modules. *Topics: cross-cutting module with no aggregates, ABP virtual file

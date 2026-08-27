@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wathiq.Domain.Shared\Wathiq.Domain.Shared.csproj" />
+    <ProjectReference Include="..\..\modules\Shared\Wathiq.Shared\Wathiq.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
