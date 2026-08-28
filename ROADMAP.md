@@ -78,7 +78,7 @@ the schema mid-phase.
 - [ ] 1.CP Checkpoint — "Why is `ExpiryDate` a value object with validation instead of a
       nullable DateTime on the entity?" *(deferred by user; run `/checkpoint` any time)*
 
-## Phase 2 — Reminders & background jobs  `active`
+## Phase 2 — Reminders & background jobs  `steps done · 2.CP pending`
 
 `Reminders` module end-to-end: `ReminderRule` (offsets value object, channels, quiet hours,
 time zone), `Reminder` + `DeliveryLog`, scheduling domain service, `DocumentExpiryChanged` local
@@ -128,15 +128,59 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
       FR-REM rows in `srs.md`; verify the migrations log. *Topics: testing background jobs
       deterministically, keeping deliverable statuses honest.* *Docs: `srs`, `database`.*
 - [ ] 2.CP Checkpoint — "How do you make the nightly reminder job safe to run twice?"
+      *(deferred by user; run `/checkpoint` any time — 1.CP is also still open)*
 
-## Phase 3 — AI: OCR + extraction (local, free)  *(expand at start)*
+## Phase 3 — AI: OCR + extraction (local, free)  `active`
 
-Install Ollama, pull `qwen2.5:7b`, `qwen2.5vl:7b`, `bge-m3`; Tesseract ara+eng; `Ai` module with
-`IChatClient` routing; extraction prompt v1 with JSON schema; validators; usage caps; eval set of
-10 synthetic sample documents. Update `ai-safety` doc.
+The pipeline of UC-01: upload an attachment → Tesseract OCR → local LLM structures it → validated
+proposal → user confirms → document fields set (and 2.4's event reschedules reminders for free).
+Privacy rails are the spine: extraction talks ONLY to Ollama (FR-AI-002/C1), every call is logged
+and capped (FR-AI-004), prompts are versioned files (FR-AI-005), and nothing the model says is
+trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes behind
+`IChatClient`; live-model verification concentrates in 3.4 and rides along afterwards.
 *Topics: Microsoft.Extensions.AI, structured output, prompt versioning, validation, evals.*
 
-- [ ] 3.0 Expand phase into steps
+- [x] 3.0 Expand phase into steps
+- [ ] **3.1 Attachment upload/download API** — the missing Documents endpoints: upload to a
+      document (`IRemoteStreamContent`, MIME/size limits from `FileStore` config, sha256 computed
+      server-side), download, delete (blob removed via `IFileStore` after the UoW commits — the
+      1.5 promise). *Topics: streaming uploads in ABP, content-type allow-lists, post-commit
+      side effects.* — FR-DOC-004 (API part). *Docs: `api`.*
+- [ ] **3.2 `Ai` module skeleton + `ai.Usage`** — fourth module lap (all graphs in one commit,
+      per the 2.1 checklist), schema `ai`, `Usage` entity per DB doc + migration. No model calls
+      yet: the module exists so routing/caps have a home. *Topics: the module recipe from memory,
+      usage as an append-only ledger.* *Docs: `database`.*
+- [ ] **3.3 Provider routing behind `IChatClient`** — `Microsoft.Extensions.AI` packages; named
+      clients from config (`Ai:Extraction` → Ollama only — the privacy wall; `Ai:Guides` may
+      later point at a free cloud tier); a delegating `UsageTrackingChatClient` that writes
+      `ai.Usage` rows and enforces the per-user daily cap before the call leaves the process.
+      *Topics: M.E.AI abstractions (`IChatClient`), delegating decorators, options-bound
+      provider selection.* — FR-AI-001, FR-AI-002, FR-AI-004.
+- [ ] **3.4 Ollama + models on the machine** — install Ollama, pull `qwen2.5:7b` and `bge-m3`
+      (`qwen2.5vl` optional fallback per D5), wire `Ai:Extraction` endpoint config, add an AI
+      health check; one real round-trip smoke test through `IChatClient`. Environment step:
+      whatever this machine cannot run gets recorded honestly and re-verified on the dev box.
+      *Topics: Ollama serving, model pulls, health checks for stateful dependencies.*
+- [ ] **3.5 Tesseract OCR into `Attachment.OcrText`** — Tesseract (ara+eng) behind an `IOcrService`
+      port; `AttachmentUploaded` local event → Hangfire background job OCRs the blob and fills
+      `OcrText` (the 2.5 job disciplines re-applied). *Topics: Tesseract on server, OCR as a
+      background pipeline stage, second local-event lap.* — feeds FR-DOC-005.
+- [ ] **3.6 Extraction: prompt v1 → validated proposal** — `documents.ExtractionResult` entity +
+      migration; `extract-document@v1` prompt as a versioned file with a strict JSON schema;
+      `IDocumentDataExtractor` (contract in `Shared`, implementation in `Ai`) turns OcrText into
+      a proposal; parsers re-validate every date/number (bad values → empty + warning, never
+      trusted). *Topics: structured output, prompt-as-artifact, defense against model output.*
+      — FR-DOC-005, FR-AI-003, FR-AI-005. *Docs: `database`.*
+- [ ] **3.7 Extraction endpoints + confirm flow** — trigger extraction for an attachment, fetch
+      the proposal, confirm/edit applies fields through `Document.SetValidity` (reminders resync
+      arrives free via 2.4); outcome recorded on `ExtractionResult` (Accepted/Edited/Rejected).
+      *Topics: proposal-review-confirm API shape, closing the UC-01 loop.* *Docs: `api`.*
+- [ ] **3.8 Caps, evals, and the docs loop** — cap-exceeded path tested end to end; eval set of
+      10 synthetic OCR-text documents (ar/en) with expected JSON + an eval runner that scores
+      field accuracy; flip FR-AI/FR-DOC-005 rows in `srs.md`; write `ai-safety.md` v0.1
+      (routing, prompts, validation, caps, eval method + results). *Topics: evals as regression
+      tests for prompts, honest safety documentation.* *Docs: `ai-safety`, `srs`.*
+- [ ] 3.CP Checkpoint — "The model returns an expiry date of 30/02/2027 — where is it caught?"
 
 ## Phase 4 — Angular portal  *(expand at start)*
 
