@@ -200,6 +200,11 @@ sequenceDiagram
 Idempotency: `Reminder` has a unique index on `(DocumentId, OffsetDays)`; sending is gated by
 status, so a second run on the same day finds nothing Pending (FR-REM-002).
 
+> **As built (Phase 2):** the run needs no `Documents.IDocumentLookup` — the
+> `DocumentExpiryChanged` local event (2.4) keeps `Reminder` rows synced *ahead of time*, so the
+> job only dispatches what is already due; and it runs **hourly**, not nightly, so quiet hours
+> can defer delivery (2.6). Diagram refresh comes with the Phase 3 architecture update (PLAN §7).
+
 ## Grounded renewal answer (UC-03)
 
 ![RAG answer](assets/flow-rag-answer.png)

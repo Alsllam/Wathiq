@@ -2,7 +2,7 @@
 title: "Wathiq — Software Requirements Specification"
 subtitle: "وثيق — مواصفات متطلبات البرمجيات"
 author: "Abdulsalam"
-version: "0.1.1"
+version: "0.1.2"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -13,6 +13,7 @@ status: "Draft"
 | --- | --- | --- | --- |
 | 0.1 | 2026-08-27 | Abdulsalam | Initial SRS: actors, UC-01…UC-06, FR/NFR baseline, glossary (roadmap step 0.4) |
 | 0.1.1 | 2026-08-27 | Abdulsalam | Phase 1 status flips: FR-IDM-001/002 and FR-DOC-001/002/003/006/007 *Implemented*, FR-DOC-004 *Partly implemented* (roadmap step 1.8) |
+| 0.1.2 | 2026-08-28 | Abdulsalam | Phase 2 status flips: FR-REM-001/002/004/005 *Implemented*, FR-REM-003 *Partly implemented* (email done, push P6) (roadmap step 2.8) |
 
 **Status:** Draft · **Structure:** IEEE 830-1998 adapted · **Related:** Vision (`vision`),
 Architecture (`architecture`), Database (`database`).
@@ -175,11 +176,11 @@ Columns: ID · Requirement · Priority · Source · Status.
 
 | ID | Requirement | Pri | Source | Status |
 | --- | --- | --- | --- | --- |
-| FR-REM-001 | The system shall schedule reminders at configurable offsets before expiry, defaulting to 90, 30, 7 and 1 days. | M | UC-02 | Planned (P2) |
-| FR-REM-002 | The nightly reminder job shall be idempotent: running it twice on the same day shall not send a reminder twice. | M | UC-02, PLAN P2 question | Planned (P2) |
-| FR-REM-003 | The system shall deliver reminders by email and push, honouring the user's channel choice and quiet hours. | M | UC-02 | Planned (P2 email, P6 push) |
-| FR-REM-004 | The system shall reschedule reminders whenever a document's expiry date changes. | M | UC-02 | Planned (P2) |
-| FR-REM-005 | The system shall keep a delivery log (channel, status, sent-at, error) per reminder. | S | UC-02 | Planned (P2) |
+| FR-REM-001 | The system shall schedule reminders at configurable offsets before expiry, defaulting to 90, 30, 7 and 1 days. | M | UC-02 | Implemented (2.2 rule + offsets, 2.3 scheduling, 2.7 settings API) |
+| FR-REM-002 | The nightly reminder job shall be idempotent: running it twice on the same day shall not send a reminder twice. | M | UC-02, PLAN P2 question | Implemented (2.3 unique index + status claim, 2.5 dispatch job; proven by run-twice tests and live) |
+| FR-REM-003 | The system shall deliver reminders by email and push, honouring the user's channel choice and quiet hours. | M | UC-02 | Partly implemented (2.6: email channel + quiet hours, hourly dispatch; push P6) |
+| FR-REM-004 | The system shall reschedule reminders whenever a document's expiry date changes. | M | UC-02 | Implemented (2.4: `DocumentExpiryChanged` local event → resync) |
+| FR-REM-005 | The system shall keep a delivery log (channel, status, sent-at, error) per reminder. | S | UC-02 | Implemented (2.3 `DeliveryLog`, written per attempt by 2.5/2.6) |
 
 ## Guides (FR-GDE)
 

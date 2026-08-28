@@ -123,7 +123,7 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
       plural routes under `/api/reminders/*`; api.md §reminders from the regenerated spec.
       *Topics: second lap on app services/permissions, now with an existing pattern to match.*
       *Docs: `api`.*
-- [ ] **2.8 Tests, then close the loop on docs** — integration tests: nightly job run twice on
+- [x] **2.8 Tests, then close the loop on docs** — integration tests: nightly job run twice on
       the same day sends once (FR-REM-002); changing an expiry reschedules (FR-REM-004); flip the
       FR-REM rows in `srs.md`; verify the migrations log. *Topics: testing background jobs
       deterministically, keeping deliverable statuses honest.* *Docs: `srs`, `database`.*
