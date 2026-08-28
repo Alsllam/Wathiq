@@ -1,4 +1,5 @@
 using Volo.Abp.Application;
+using Volo.Abp.Emailing;
 using Volo.Abp.Modularity;
 
 namespace Wathiq.Reminders;
@@ -7,6 +8,7 @@ namespace Wathiq.Reminders;
 // executable's graph (host, DbMigrator, test host) is wired before code lands in it.
 [DependsOn(
     typeof(AbpDddApplicationModule),
+    typeof(AbpEmailingModule),
     typeof(WathiqRemindersDomainModule)
 )]
 public class WathiqRemindersApplicationModule : AbpModule

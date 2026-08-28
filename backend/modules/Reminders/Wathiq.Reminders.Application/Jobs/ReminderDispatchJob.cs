@@ -82,6 +82,15 @@ public class ReminderDispatchJob : IUnitOfWorkEnabled, Volo.Abp.DependencyInject
                 continue;   // due tomorrow in THIS user's time zone; the pre-filter was just coarse
             }
 
+            // Quiet hours (FR-REM-003): leave it Pending - the dispatch runs hourly, so the
+            // reminder goes out at the first non-quiet hour instead of waking anyone at night.
+            var localNow = TimeOnly.FromDateTime(TimeZoneInfo.ConvertTimeFromUtc(
+                DateTime.SpecifyKind(utcNow, DateTimeKind.Utc), TimeZoneInfo.FindSystemTimeZoneById(rule.TimeZoneId)));
+            if (rule.IsQuietAt(localNow))
+            {
+                continue;
+            }
+
             foreach (var channel in _channels.Where(c => rule.Channels.HasFlag(c.Channel)))
             {
                 try

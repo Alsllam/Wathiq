@@ -67,6 +67,29 @@ public abstract class ReminderDispatchJobTests<TStartupModule> : WathiqApplicati
     }
 
     [Fact]
+    public async Task Quiet_Hours_Defer_Delivery_Leaving_The_Reminder_Pending()
+    {
+        var userId = Guid.NewGuid();
+        var due = await SeedReminderAsync(userId, DateOnly.FromDateTime(DateTime.UtcNow).AddDays(-1));
+
+        // A window centered on the rule's local NOW (±1h): deterministically quiet while the
+        // test runs, and it exercises the same wrap logic real windows use.
+        await WithUnitOfWorkAsync(async () =>
+        {
+            var rules = GetRequiredService<Volo.Abp.Domain.Repositories.IRepository<ReminderRule, Guid>>();
+            var rule = await rules.GetAsync(r => r.UserId == userId);
+            var localNow = TimeOnly.FromDateTime(TimeZoneInfo.ConvertTimeFromUtc(
+                DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(rule.TimeZoneId)));
+            rule.SetQuietHours(localNow.AddHours(-1), localNow.AddHours(1));
+        });
+
+        await _job.RunAsync();
+
+        _channel.SentReminderIds.ShouldNotContain(due.Id);
+        (await _reminders.GetAsync(due.Id)).Status.ShouldBe(ReminderStatus.Pending);   // deferred, not dropped
+    }
+
+    [Fact]
     public async Task A_Failing_Send_Marks_Failed_And_Never_Kills_The_Run()
     {
         var today = DateOnly.FromDateTime(DateTime.UtcNow);

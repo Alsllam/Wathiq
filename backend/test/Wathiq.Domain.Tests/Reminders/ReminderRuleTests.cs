@@ -41,6 +41,24 @@ public class ReminderRuleTests
     }
 
     [Fact]
+    public void Quiet_Hours_Window_Handles_Midnight_Wrap()
+    {
+        var rule = NewRule().SetQuietHours(new TimeOnly(22, 0), new TimeOnly(7, 0));
+
+        rule.IsQuietAt(new TimeOnly(23, 30)).ShouldBeTrue();   // before midnight
+        rule.IsQuietAt(new TimeOnly(6, 59)).ShouldBeTrue();    // after midnight
+        rule.IsQuietAt(new TimeOnly(7, 0)).ShouldBeFalse();    // end is exclusive
+        rule.IsQuietAt(new TimeOnly(12, 0)).ShouldBeFalse();
+
+        rule.SetQuietHours(new TimeOnly(13, 0), new TimeOnly(15, 0));   // same-day window
+        rule.IsQuietAt(new TimeOnly(14, 0)).ShouldBeTrue();
+        rule.IsQuietAt(new TimeOnly(15, 0)).ShouldBeFalse();
+
+        rule.SetQuietHours(null, null);
+        rule.IsQuietAt(new TimeOnly(3, 0)).ShouldBeFalse();    // no window, never quiet
+    }
+
+    [Fact]
     public void Channels_None_Pauses_Without_Losing_Offsets()
     {
         var rule = NewRule().SetChannels(ReminderChannels.None);

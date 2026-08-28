@@ -53,6 +53,8 @@
     <!-- Hangfire lives ONLY in the host (composition root); modules stay scheduler-agnostic. -->
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.21" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.21" />
+    <!-- Real SMTP implementation of IEmailSender - modules only ever see the abstraction. -->
+    <PackageReference Include="Volo.Abp.MailKit" Version="10.3.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -54,6 +54,19 @@ public class ReminderRule : FullAuditedAggregateRoot<Guid>
         return this;
     }
 
+    /// <summary>FR-REM-003: inside the window, delivery waits. From > To means over midnight (22:00 → 07:00).</summary>
+    public bool IsQuietAt(TimeOnly localTime)
+    {
+        if (!QuietFrom.HasValue || !QuietTo.HasValue)
+        {
+            return false;
+        }
+
+        return QuietFrom.Value <= QuietTo.Value
+            ? localTime >= QuietFrom.Value && localTime < QuietTo.Value
+            : localTime >= QuietFrom.Value || localTime < QuietTo.Value;   // wraps past midnight
+    }
+
     public ReminderRule SetTimeZone(string timeZoneId)
     {
         Check.NotNullOrWhiteSpace(timeZoneId, nameof(timeZoneId), ReminderRuleConsts.MaxTimeZoneIdLength);

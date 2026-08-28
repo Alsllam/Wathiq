@@ -60,6 +60,7 @@ namespace Wathiq;
     typeof(Wathiq.Reminders.WathiqRemindersHttpApiModule),
     typeof(Wathiq.Reminders.EntityFrameworkCore.WathiqRemindersEntityFrameworkCoreModule),
     typeof(AbpAccountWebOpenIddictModule),
+    typeof(Volo.Abp.MailKit.AbpMailKitModule),
     typeof(AbpSwashbuckleModule),
     typeof(AbpAspNetCoreSerilogModule)
     )]
@@ -339,8 +340,11 @@ public class WathiqHttpApiHostModule : AbpModule
         app.UseConfiguredEndpoints();
 
         // AddOrUpdate is idempotent by job id - every boot (re)asserts the schedule, config-as-code.
-        // 03:00 UTC = 06:00 Riyadh: after midnight in every target time zone, before anyone's morning.
+        // Hourly since 2.6: due-ness is date-based so extra runs are no-ops (idempotent by schema),
+        // and quiet hours (FR-REM-003) can actually defer - a reminder skipped at 03:00 goes out
+        // at the first non-quiet hour instead of waiting a whole day.
+        RecurringJob.RemoveIfExists("reminders-nightly");   // the 2.5 id, superseded
         RecurringJob.AddOrUpdate<Wathiq.Reminders.Jobs.ReminderDispatchJob>(
-            "reminders-nightly", job => job.RunAsync(), "0 3 * * *");
+            "reminders-dispatch", job => job.RunAsync(), "0 * * * *");
     }
 }

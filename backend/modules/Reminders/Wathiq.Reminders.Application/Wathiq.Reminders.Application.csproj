@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="10.3.0" />
+    <!-- Abstractions only (IEmailSender); the MailKit implementation stays in the host. -->
+    <PackageReference Include="Volo.Abp.Emailing" Version="10.3.0" />
   </ItemGroup>
 
 </Project>

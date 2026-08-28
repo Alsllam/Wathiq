@@ -114,7 +114,7 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
       design (unique index + status transition, no side effect before the state claim).
       *Topics: Hangfire recurring jobs, idempotent job design, at-least-once thinking.*
       — FR-REM-002.
-- [ ] **2.6 Email channel** — ABP MailKit emailing against smtp4dev (added to Docker Compose),
+- [x] **2.6 Email channel** — ABP MailKit emailing against smtp4dev (added to Docker Compose),
       bilingual ar/en reminder template, one `DeliveryLog` row per attempt, failures mark the
       reminder `Failed`; quiet hours defer delivery. *Topics: ABP `IEmailSender`/MailKit, email
       templates, smtp4dev as a free local SMTP sink.* — FR-REM-003 (email), FR-REM-005.

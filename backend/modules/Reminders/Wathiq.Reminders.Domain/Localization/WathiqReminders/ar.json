@@ -3,6 +3,9 @@
   "Texts": {
     "Wathiq.Reminders:InvalidOffsets": "يجب أن تكون فترات التذكير بين 1 و3650 يومًا، وبحد أقصى {Max} قيم.",
     "Wathiq.Reminders:QuietHoursIncomplete": "ساعات الهدوء تحتاج وقت بداية ونهاية معًا، أو لا شيء منهما.",
-    "Wathiq.Reminders:UnknownTimeZone": "المنطقة الزمنية '{TimeZoneId}' غير معروفة."
+    "Wathiq.Reminders:UnknownTimeZone": "المنطقة الزمنية '{TimeZoneId}' غير معروفة.",
+    "Wathiq.Reminders:NoEmailAddress": "لا يوجد بريد إلكتروني لهذا الحساب لإرسال التذكيرات إليه.",
+    "Email:ReminderSubject": "تذكير: مستند تنتهي صلاحيته في {0}",
+    "Email:ReminderBody": "أحد مستنداتك تنتهي صلاحيته في {0} — باقٍ {1} يوم/أيام. افتح وثيق لمراجعته وتحديثه بعد التجديد."
   }
 }

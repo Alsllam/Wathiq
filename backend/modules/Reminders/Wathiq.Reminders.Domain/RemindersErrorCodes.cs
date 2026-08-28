@@ -6,4 +6,5 @@ public static class RemindersErrorCodes
     public const string InvalidOffsets = "Wathiq.Reminders:InvalidOffsets";
     public const string QuietHoursIncomplete = "Wathiq.Reminders:QuietHoursIncomplete";
     public const string UnknownTimeZone = "Wathiq.Reminders:UnknownTimeZone";
+    public const string NoEmailAddress = "Wathiq.Reminders:NoEmailAddress";
 }
