@@ -7,6 +7,7 @@
     "Wathiq.Documents:SelfHolderIsAutomatic": "Your own holder record is created automatically and cannot be added manually.",
     "Wathiq.Documents:CannotDeleteSelfHolder": "You cannot delete your own holder record.",
     "Wathiq.Documents:HolderHasDocuments": "This holder still has documents. Delete or reassign them first.",
+    "Wathiq.Documents:UnsupportedFileType": "Only JPEG, PNG and PDF files can be attached.",
     "Permission:Documents": "Wathiq Documents",
     "Permission:DocumentTypes": "View document type catalogue",
     "Permission:Holders": "View holders",

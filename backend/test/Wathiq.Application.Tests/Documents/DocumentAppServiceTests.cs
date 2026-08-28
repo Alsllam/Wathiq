@@ -1,15 +1,19 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Shouldly;
 using Volo.Abp;
+using Volo.Abp.Content;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Modularity;
 using Volo.Abp.Security.Claims;
 using Wathiq.Documents.DocumentTypes;
 using Wathiq.Documents.Documents;
 using Wathiq.Documents.Holders;
+using Wathiq.Shared.Files;
 using Xunit;
 
 namespace Wathiq.Documents;
@@ -93,6 +97,57 @@ public abstract class DocumentAppServiceTests<TStartupModule> : WathiqApplicatio
             (await _documents.GetListAsync(new GetDocumentListInput())).TotalCount.ShouldBe(0);
             // 404, not 403: the service must not confirm the id exists (api.md §3.4).
             await Should.ThrowAsync<EntityNotFoundException>(() => _documents.GetAsync(foreignId));
+        }
+    }
+
+    [Fact]
+    public async Task Attachment_Upload_Download_Delete_Round_Trip()
+    {
+        var bytes = new byte[] { 0x89, 0x50, 0x4E, 0x47, 1, 2, 3, 4, 5 };   // fake PNG payload
+
+        using (ActAs(Guid.NewGuid(), "amina"))
+        {
+            var doc = await CreateSampleDocumentAsync();
+
+            var uploaded = await _documents.UploadAttachmentAsync(doc.Id,
+                new RemoteStreamContent(new MemoryStream(bytes), "scan.png", "image/png"));
+            uploaded.MimeType.ShouldBe("image/png");
+            uploaded.SizeBytes.ShouldBe(bytes.Length);
+
+            (await _documents.GetAsync(doc.Id)).Attachments.ShouldHaveSingleItem().Id.ShouldBe(uploaded.Id);
+
+            // Download returns the exact bytes the store holds.
+            var content = await _documents.GetAttachmentContentAsync(doc.Id, uploaded.Id);
+            using var downloaded = new MemoryStream();
+            await content.GetStream().CopyToAsync(downloaded);
+            downloaded.ToArray().ShouldBe(bytes);
+
+            // Grab the blob key before deletion so the post-commit file removal is verifiable.
+            var blobKey = (await GetRequiredService<IRepository<Document, Guid>>()
+                    .GetAsync(doc.Id)).Attachments.Single().BlobKey;
+
+            await _documents.DeleteAttachmentAsync(doc.Id, uploaded.Id);
+
+            (await _documents.GetAsync(doc.Id)).Attachments.ShouldBeEmpty();
+            // OnCompleted ran after the UoW committed: the bytes are gone from the store too.
+            var store = GetRequiredService<IFileStore>();
+            (await Should.ThrowAsync<BusinessException>(() => store.GetAsync(DocumentConsts.AttachmentContainer, blobKey)))
+                .Code.ShouldBe(WathiqSharedErrorCodes.FileNotFound);
+        }
+    }
+
+    [Fact]
+    public async Task Unsupported_File_Types_Are_Rejected_Before_Storage()
+    {
+        using (ActAs(Guid.NewGuid(), "amina"))
+        {
+            var doc = await CreateSampleDocumentAsync();
+
+            var ex = await Should.ThrowAsync<BusinessException>(() => _documents.UploadAttachmentAsync(doc.Id,
+                new RemoteStreamContent(new MemoryStream([1, 2, 3]), "notes.txt", "text/plain")));
+
+            ex.Code.ShouldBe(DocumentsErrorCodes.UnsupportedFileType);
+            (await _documents.GetAsync(doc.Id)).Attachments.ShouldBeEmpty();
         }
     }
 

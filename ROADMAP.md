@@ -141,7 +141,7 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
 *Topics: Microsoft.Extensions.AI, structured output, prompt versioning, validation, evals.*
 
 - [x] 3.0 Expand phase into steps
-- [ ] **3.1 Attachment upload/download API** — the missing Documents endpoints: upload to a
+- [x] **3.1 Attachment upload/download API** — the missing Documents endpoints: upload to a
       document (`IRemoteStreamContent`, MIME/size limits from `FileStore` config, sha256 computed
       server-side), download, delete (blob removed via `IFileStore` after the UoW commits — the
       1.5 promise). *Topics: streaming uploads in ABP, content-type allow-lists, post-commit

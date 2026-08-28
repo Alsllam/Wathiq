@@ -7,6 +7,7 @@
     "Wathiq.Documents:SelfHolderIsAutomatic": "سجلّك الشخصي يُنشأ تلقائيًا ولا يمكن إضافته يدويًا.",
     "Wathiq.Documents:CannotDeleteSelfHolder": "لا يمكنك حذف سجلّك الشخصي.",
     "Wathiq.Documents:HolderHasDocuments": "لا يزال لدى هذا الشخص مستندات. احذفها أو انقلها أولًا.",
+    "Wathiq.Documents:UnsupportedFileType": "يمكن إرفاق ملفات JPEG وPNG وPDF فقط.",
     "Permission:Documents": "مستندات وثيق",
     "Permission:DocumentTypes": "عرض أنواع المستندات",
     "Permission:Holders": "عرض أصحاب المستندات",

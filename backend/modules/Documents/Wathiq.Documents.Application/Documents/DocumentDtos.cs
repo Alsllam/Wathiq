@@ -1,8 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
 namespace Wathiq.Documents.Documents;
+
+/// <summary>No file name and no OCR text on the wire: the blob key stays server-internal and
+/// OcrText is pipeline input (3.5), not something every list view should drag along.</summary>
+public class AttachmentDto
+{
+    public Guid Id { get; set; }
+    public string MimeType { get; set; } = default!;
+    public long SizeBytes { get; set; }
+    public DateTime CreationTime { get; set; }
+}
 
 public class DocumentDto
 {
@@ -20,6 +31,7 @@ public class DocumentDto
     /// <summary>Negative when already expired; null when no expiry is known. Server-computed so every client agrees.</summary>
     public int? DaysUntilExpiry { get; set; }
     public DateTime CreationTime { get; set; }
+    public List<AttachmentDto> Attachments { get; set; } = [];
 }
 
 public class CreateDocumentDto

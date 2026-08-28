@@ -1,15 +1,19 @@
 using System;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Content;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Users;
 using Wathiq.Documents.DocumentTypes;
 using Wathiq.Documents.Holders;
 using Wathiq.Documents.Permissions;
+using Wathiq.Shared.Files;
 
 namespace Wathiq.Documents.Documents;
 
@@ -19,15 +23,18 @@ public class DocumentAppService : DocumentsAppServiceBase, IDocumentAppService
     private readonly IRepository<Document, Guid> _documents;
     private readonly IRepository<Holder, Guid> _holders;
     private readonly IRepository<DocumentType, Guid> _documentTypes;
+    private readonly IFileStore _fileStore;
 
     public DocumentAppService(
         IRepository<Document, Guid> documents,
         IRepository<Holder, Guid> holders,
-        IRepository<DocumentType, Guid> documentTypes)
+        IRepository<DocumentType, Guid> documentTypes,
+        IFileStore fileStore)
     {
         _documents = documents;
         _holders = holders;
         _documentTypes = documentTypes;
+        _fileStore = fileStore;
     }
 
     public async Task<DocumentDto> GetAsync(Guid id)
@@ -126,6 +133,72 @@ public class DocumentAppService : DocumentsAppServiceBase, IDocumentAppService
         await _documents.DeleteAsync(document, autoSave: true);
     }
 
+    [Authorize(DocumentsPermissions.Documents.Update)]
+    public async Task<AttachmentDto> UploadAttachmentAsync(Guid id, IRemoteStreamContent file)
+    {
+        var document = await GetOwnedAsync(id);
+
+        var mimeType = file.ContentType?.ToLowerInvariant();
+        if (mimeType == null || !DocumentConsts.AllowedMimeTypes.Contains(mimeType))
+        {
+            // Rejected before a single byte is stored - the allow-list is the first gate.
+            throw new BusinessException(DocumentsErrorCodes.UnsupportedFileType)
+                .WithData("ContentType", file.ContentType ?? "-");
+        }
+
+        // Buffer once so sha256 and the store read the same bytes (upload streams are generally
+        // not seekable). Size cap: Kestrel bounds the request; IFileStore enforces MaxSizeBytes.
+        using var buffer = new MemoryStream();
+        await file.GetStream().CopyToAsync(buffer);
+        var sha256 = SHA256.HashData(buffer.GetBuffer().AsSpan(0, (int)buffer.Length));
+
+        buffer.Position = 0;
+        var blobKey = await _fileStore.SaveAsync(
+            DocumentConsts.AttachmentContainer, file.FileName ?? "upload", buffer);
+
+        // Compensation: the blob exists but the row may never commit - if this UoW fails, remove
+        // the file again so a rolled-back upload leaves no orphan on disk.
+        UnitOfWorkManager.Current!.Failed += async (_, _) =>
+            await _fileStore.DeleteAsync(DocumentConsts.AttachmentContainer, blobKey);
+
+        var attachment = document.AddAttachment(GuidGenerator.Create(), blobKey, mimeType, buffer.Length, sha256);
+        await _documents.UpdateAsync(document, autoSave: true);
+
+        return ToDto(attachment);
+    }
+
+    public async Task<IRemoteStreamContent> GetAttachmentContentAsync(Guid id, Guid attachmentId)
+    {
+        var document = await GetOwnedAsync(id);   // ownership gate covers the child too
+        var attachment = document.Attachments.FirstOrDefault(a => a.Id == attachmentId)
+                         ?? throw new EntityNotFoundException(typeof(Attachment), attachmentId);
+
+        var stream = await _fileStore.GetAsync(DocumentConsts.AttachmentContainer, attachment.BlobKey);
+        return new RemoteStreamContent(stream, attachment.BlobKey, attachment.MimeType);
+    }
+
+    [Authorize(DocumentsPermissions.Documents.Update)]
+    public async Task DeleteAttachmentAsync(Guid id, Guid attachmentId)
+    {
+        var document = await GetOwnedAsync(id);
+        var blobKey = document.RemoveAttachment(attachmentId);   // returns the key for exactly this
+
+        // The 1.5 promise kept: the file dies only AFTER the row deletion commits, so a
+        // rolled-back transaction never loses bytes (OnCompleted = post-commit hook).
+        UnitOfWorkManager.Current!.OnCompleted(async () =>
+            await _fileStore.DeleteAsync(DocumentConsts.AttachmentContainer, blobKey));
+
+        await _documents.UpdateAsync(document, autoSave: true);
+    }
+
+    private static AttachmentDto ToDto(Attachment a) => new()
+    {
+        Id = a.Id,
+        MimeType = a.MimeType,
+        SizeBytes = a.SizeBytes,
+        CreationTime = a.CreationTime
+    };
+
     /// <summary>Not-found (404), not forbidden (403): a 403 would confirm the id exists for someone else.</summary>
     private async Task<Document> GetOwnedAsync(Guid id)
     {
@@ -153,6 +226,7 @@ public class DocumentAppService : DocumentsAppServiceBase, IDocumentAppService
         Notes = d.Notes,
         PreviousExpiryDate = d.PreviousExpiryDate,
         DaysUntilExpiry = d.Validity.DaysUntilExpiry(today),
-        CreationTime = d.CreationTime
+        CreationTime = d.CreationTime,
+        Attachments = d.Attachments.Select(ToDto).ToList()   // AutoInclude (1.5) loads them with the root
     };
 }
