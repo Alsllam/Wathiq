@@ -105,7 +105,7 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
       past dates; pure domain tests for the math (year boundaries, `Asia/Riyadh` vs UTC).
       *Topics: time-zone-safe date math, domain services, testing time without the clock.*
       — FR-REM-001. *Docs: `database` (migrations log + status).*
-- [ ] **2.4 Reschedule via local events** — `DocumentExpiryChangedEto` contract in `Shared`,
+- [x] **2.4 Reschedule via local events** — `DocumentExpiryChangedEto` contract in `Shared`,
       published by `Documents` on create/update/renew/delete; `Reminders` handler upserts or
       cancels reminders. No project reference between the two modules.
       *Topics: ABP local event bus, module decoupling through event contracts.* — FR-REM-004.

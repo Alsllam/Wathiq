@@ -33,8 +33,8 @@ public class Document : FullAuditedAggregateRoot<Guid>
         OwnerUserId = ownerUserId;
         HolderId = holderId;
         DocumentTypeId = documentTypeId;
-        Validity = Check.NotNull(validity, nameof(validity));
         Status = DocumentStatus.Active;
+        SetValidity(validity);   // goes through the setter so creation announces its expiry too
         SetNumber(number);
         SetNotes(notes);
     }
@@ -54,7 +54,17 @@ public class Document : FullAuditedAggregateRoot<Guid>
     /// <summary>Replaces the whole value object - there is no "set expiry only" because the rule needs both dates.</summary>
     public Document SetValidity(ValidityPeriod validity)
     {
-        Validity = Check.NotNull(validity, nameof(validity));
+        Check.NotNull(validity, nameof(validity));
+
+        // Value-object equality gates the event: an Update that re-sends the same dates is silent.
+        var expiryChanged = !validity.Equals(Validity);
+        Validity = validity;
+
+        if (expiryChanged)
+        {
+            PublishExpiryChanged();
+        }
+
         return this;
     }
 
@@ -62,12 +72,36 @@ public class Document : FullAuditedAggregateRoot<Guid>
     public Document MarkRenewed(ValidityPeriod newValidity)
     {
         PreviousExpiryDate = Validity.ExpiryDate;
-        Validity = Check.NotNull(newValidity, nameof(newValidity));
         Status = DocumentStatus.Active;
+        SetValidity(Check.NotNull(newValidity, nameof(newValidity)));
         return this;
     }
 
-    public Document Archive() { Status = DocumentStatus.Archived; return this; }
+    public Document Archive()
+    {
+        Status = DocumentStatus.Archived;
+        PublishRemindersStop();   // an archived document must not keep reminding (FR-REM-004)
+        return this;
+    }
+
+    // AddLocalEvent queues on the aggregate; ABP publishes at SaveChanges, INSIDE the same unit
+    // of work - the reminder sync and the document change commit or roll back together.
+    private void PublishExpiryChanged() =>
+        AddLocalEvent(new Wathiq.Shared.Events.DocumentExpiryChangedEto
+        {
+            OwnerUserId = OwnerUserId,
+            DocumentId = Id,
+            ExpiryDate = Validity.ExpiryDate
+        });
+
+    /// <summary>Deletion goes through the repository, not an aggregate method - the app service calls this first.</summary>
+    public void PublishRemindersStop() =>
+        AddLocalEvent(new Wathiq.Shared.Events.DocumentExpiryChangedEto
+        {
+            OwnerUserId = OwnerUserId,
+            DocumentId = Id,
+            ExpiryDate = null
+        });
 
     public Attachment AddAttachment(Guid attachmentId, string blobKey, string mimeType, long sizeBytes, byte[] sha256)
     {

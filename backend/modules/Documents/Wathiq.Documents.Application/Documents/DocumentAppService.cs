@@ -118,9 +118,12 @@ public class DocumentAppService : DocumentsAppServiceBase, IDocumentAppService
     [Authorize(DocumentsPermissions.Documents.Delete)]
     public async Task DeleteAsync(Guid id)
     {
+        var document = await GetOwnedAsync(id);
+
         // Soft delete (FullAudited): the row is flagged, attachments and their files stay for
-        // the Phase 8 "delete my data" hard-purge to handle.
-        await _documents.DeleteAsync(await GetOwnedAsync(id), autoSave: true);
+        // the Phase 8 "delete my data" hard-purge to handle. Reminders must stop, though (2.4).
+        document.PublishRemindersStop();
+        await _documents.DeleteAsync(document, autoSave: true);
     }
 
     /// <summary>Not-found (404), not forbidden (403): a 403 would confirm the id exists for someone else.</summary>
