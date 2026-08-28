@@ -94,3 +94,28 @@ curl -sk -X POST https://localhost:44352/api/account/register -H "Content-Type: 
 - `Volo.Abp.AspNetCore.Mvc.Libs.AbpMvcLibsOptions.CheckLibs = false` is required for `-u no-ui`
   hosts — otherwise every request 500s because the host probes for a non-existent `wwwroot/libs`
   (a leftover check meant for MVC/Blazor UI templates).
+
+## AI runtime (from step 3.4)
+
+The `Ai` module talks to a **local Ollama** through `Microsoft.Extensions.AI` — no cloud, no key.
+
+```powershell
+# Windows dev box (once):
+winget install Ollama.Ollama          # or the installer from ollama.com/download
+ollama pull qwen2.5:7b                # extraction + guides chat (~4.7 GB)
+ollama pull bge-m3                    # embeddings for Phase 5 RAG (~1.2 GB)
+# optional vision fallback (PLAN D5): ollama pull qwen2.5vl:7b
+```
+
+- Config lives under `Ai` in `appsettings.json` (endpoint `http://localhost:11434`, models,
+  `DailyCallCapPerUser`). Extraction refuses any provider but `ollama` at boot (FR-AI-002).
+- Health: `/health-status` includes an `Ollama Check` — **Degraded** while Ollama is down; every
+  non-AI feature keeps working.
+- Live smoke (needs Ollama running):
+  `WATHIQ_OLLAMA_SMOKE=1 dotnet test test/Wathiq.EntityFrameworkCore.Tests --filter OllamaSmoke~RoundTrip`
+  (or just run the `EfCoreAiRoundTripSmokeTests` test) — one real round-trip through the keyed
+  client, decorator and usage ledger included.
+
+> Note: the remote/cloud dev container cannot reach ollama.com or registry.ollama.ai (network
+> policy), so model pulls and the live smoke run on the dev box only. Everything else about the
+> AI stack is covered by the fake-backed test suites.

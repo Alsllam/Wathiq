@@ -156,7 +156,9 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
       `ai.Usage` rows and enforces the per-user daily cap before the call leaves the process.
       *Topics: M.E.AI abstractions (`IChatClient`), delegating decorators, options-bound
       provider selection.* — FR-AI-001, FR-AI-002, FR-AI-004.
-- [ ] **3.4 Ollama + models on the machine** — install Ollama, pull `qwen2.5:7b` and `bge-m3`
+- [x] **3.4 Ollama + models on the machine** *(code + docs done and verified here; model pulls
+      and the gated live smoke run on the dev box — this container's network blocks model
+      registries)* — install Ollama, pull `qwen2.5:7b` and `bge-m3`
       (`qwen2.5vl` optional fallback per D5), wire `Ai:Extraction` endpoint config, add an AI
       health check; one real round-trip smoke test through `IChatClient`. Environment step:
       whatever this machine cannot run gets recorded honestly and re-verified on the dev box.

@@ -92,5 +92,7 @@ Docs: Markdown → `.docx` via Pandoc (reference template in `docs/deliverables/
 
 - Windows 11, PowerShell primary. .NET 10.0.400, Node 22.16, Flutter 3.41.7, Docker Desktop,
   SQL Server LocalDB (`MSSQLLocalDB`) + sqlcmd, Python 3.14 (python-docx), Pandoc.
-- Ollama is **not installed yet** — installing it and pulling models is a roadmap step.
+- Ollama: install + model pulls documented in `backend/README.md` §AI runtime (step 3.4). The
+  remote dev container cannot reach model registries — live-model checks run on the dev box via
+  `WATHIQ_OLLAMA_SMOKE=1`; everything else is covered by fakes behind `IChatClient`.
 - Git: local only, branch `main`, commit directly. No remote until the "publish" phase.

@@ -15,6 +15,7 @@ public static class HealthChecksBuilderExtensions
         // Add your health checks here
         var healthChecksBuilder = services.AddHealthChecks();
         healthChecksBuilder.AddCheck<WathiqDatabaseCheck>("Wathiq DbContext Check", tags: new string[] { "database" });
+        healthChecksBuilder.AddCheck<AiHealthCheck>("Ollama Check", tags: new string[] { "ai" });
 
         services.ConfigureHealthCheckEndpoint("/health-status");
 
