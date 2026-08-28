@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
+using Hangfire;
 using OpenIddict.Validation.AspNetCore;
 using OpenIddict.Server.AspNetCore;
 using Wathiq.Documents;
@@ -139,6 +140,21 @@ public class WathiqHttpApiHostModule : AbpModule
         ConfigureSwagger(context, configuration);
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
+        ConfigureHangfire(context, configuration);
+    }
+
+    private static void ConfigureHangfire(ServiceConfigurationContext context, IConfiguration configuration)
+    {
+        // Same database, own "HangFire" schema (created on first start) - like a module's schema,
+        // but owned by infrastructure. Storage in SQL means jobs survive host restarts.
+        context.Services.AddHangfire(config => config
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(configuration.GetConnectionString("Default")));
+
+        // The server polls the storage and executes jobs in THIS process - no extra daemon.
+        context.Services.AddHangfireServer(options => options.WorkerCount = 2);
     }
 
     private void ConfigureStudio(IHostEnvironment hostingEnvironment)
@@ -308,8 +324,23 @@ public class WathiqHttpApiHostModule : AbpModule
             var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
             options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
         });
+        if (env.IsDevelopment())
+        {
+            // Dashboard only in dev: default authorization allows local requests only, which is
+            // exactly right for a developer machine and wrong for prod (P7 revisits this).
+            // BEFORE UseConfiguredEndpoints: endpoint routing owns the request otherwise and
+            // answers the dashboard's POSTs (trigger, delete) with 405 GET,HEAD.
+            // Antiforgery off: dev-only + local-requests-only; scripted "trigger now" must work.
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions { IgnoreAntiforgeryToken = true });
+        }
+
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+
+        // AddOrUpdate is idempotent by job id - every boot (re)asserts the schedule, config-as-code.
+        // 03:00 UTC = 06:00 Riyadh: after midnight in every target time zone, before anyone's morning.
+        RecurringJob.AddOrUpdate<Wathiq.Reminders.Jobs.ReminderDispatchJob>(
+            "reminders-nightly", job => job.RunAsync(), "0 3 * * *");
     }
 }

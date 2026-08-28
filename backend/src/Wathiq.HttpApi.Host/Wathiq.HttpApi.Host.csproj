@@ -50,6 +50,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Hangfire lives ONLY in the host (composition root); modules stay scheduler-agnostic. -->
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.21" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.21" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Volo.Abp.Studio.Client.AspNetCore" Version="2.2.7" />
   </ItemGroup>
 

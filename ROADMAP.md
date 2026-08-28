@@ -109,7 +109,7 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
       published by `Documents` on create/update/renew/delete; `Reminders` handler upserts or
       cancels reminders. No project reference between the two modules.
       *Topics: ABP local event bus, module decoupling through event contracts.* — FR-REM-004.
-- [ ] **2.5 Hangfire nightly job** — Hangfire + SQL Server storage in the host, dashboard in dev,
+- [x] **2.5 Hangfire nightly job** — Hangfire + SQL Server storage in the host, dashboard in dev,
       recurring job scanning `Pending` reminders with `DueDate <= today`; safe to run twice by
       design (unique index + status transition, no side effect before the state claim).
       *Topics: Hangfire recurring jobs, idempotent job design, at-least-once thinking.*
