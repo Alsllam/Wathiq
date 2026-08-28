@@ -8,6 +8,12 @@
         <Project Path="modules/Documents/Wathiq.Documents.EntityFrameworkCore/Wathiq.Documents.EntityFrameworkCore.csproj" />
         <Project Path="modules/Documents/Wathiq.Documents.HttpApi/Wathiq.Documents.HttpApi.csproj" />
     </Folder>
+    <Folder Name="/modules/Ai/">
+        <Project Path="modules/Ai/Wathiq.Ai.Application/Wathiq.Ai.Application.csproj" />
+        <Project Path="modules/Ai/Wathiq.Ai.Domain/Wathiq.Ai.Domain.csproj" />
+        <Project Path="modules/Ai/Wathiq.Ai.EntityFrameworkCore/Wathiq.Ai.EntityFrameworkCore.csproj" />
+        <Project Path="modules/Ai/Wathiq.Ai.HttpApi/Wathiq.Ai.HttpApi.csproj" />
+    </Folder>
     <Folder Name="/modules/Reminders/">
         <Project Path="modules/Reminders/Wathiq.Reminders.Application/Wathiq.Reminders.Application.csproj" />
         <Project Path="modules/Reminders/Wathiq.Reminders.Domain/Wathiq.Reminders.Domain.csproj" />

@@ -62,6 +62,8 @@ public class WathiqEntityFrameworkCoreModule : AbpModule
                 ctx.UseSqlServer(Wathiq.Documents.EntityFrameworkCore.WathiqDocumentsEntityFrameworkCoreModule.ConfigureSqlServer));
             options.Configure<Wathiq.Reminders.EntityFrameworkCore.RemindersDbContext>(ctx =>
                 ctx.UseSqlServer(Wathiq.Reminders.EntityFrameworkCore.WathiqRemindersEntityFrameworkCoreModule.ConfigureSqlServer));
+            options.Configure<Wathiq.Ai.EntityFrameworkCore.AiDbContext>(ctx =>
+                ctx.UseSqlServer(Wathiq.Ai.EntityFrameworkCore.WathiqAiEntityFrameworkCoreModule.ConfigureSqlServer));
 
         });
         

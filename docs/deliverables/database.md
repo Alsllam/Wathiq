@@ -2,7 +2,7 @@
 title: "Wathiq — Database Design"
 subtitle: "وثيق — تصميم قاعدة البيانات"
 author: "Abdulsalam"
-version: "0.1.6"
+version: "0.1.7"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -18,6 +18,7 @@ status: "Draft"
 | 0.1.4 | 2026-08-27 | Abdulsalam | Migrations log row 5: `reminders` schema initial (empty) migration — Reminders module skeleton (2.1) |
 | 0.1.5 | 2026-08-27 | Abdulsalam | Migrations log row 6: `ReminderRule` table (2.2); `ReminderRule` marked *Implemented*, `OffsetsDays` documented as the `ReminderOffsets` value object |
 | 0.1.6 | 2026-08-28 | Abdulsalam | Migrations log row 7: `Reminder` + `DeliveryLog` tables (2.3); both marked *Implemented* |
+| 0.1.7 | 2026-08-28 | Abdulsalam | Migrations log row 8: `ai` schema + `Usage` table (3.2); `Usage` marked *Implemented* |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
 Tables in this version are *Planned* until their migration appears in the migrations log, which
@@ -277,7 +278,7 @@ Indexes: `UQ_Reminder_DocumentId_OffsetDays` (idempotent upsert, FR-REM-002),
 | Body | nvarchar(max) | no | Loaded from versioned files at startup; stored for audit |
 | Sha256 | binary(32) | no | Detects file/DB drift |
 
-### `ai.Usage` (E-Usage)
+### `ai.Usage` (E-Usage) — *Implemented (3.2)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -328,6 +329,7 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 | 5 | 2026-08-27 | Reminders (`RemindersDbContext`, schema `reminders`) | `20260827145205_Initial` — empty; creates the schema and `reminders.__EFMigrationsHistory` | 2.1 |
 | 6 | 2026-08-27 | Reminders | `20260827150810_AddReminderRule` — table `ReminderRule` (`OffsetsDays` CSV via value conversion, `Channels` tinyint flags, quiet hours `time`, `TimeZoneId`); unique `UQ_ReminderRule_UserId` | 2.2 |
 | 7 | 2026-08-28 | Reminders | `20260828051505_AddReminderAndDeliveryLog` — tables `Reminder` (unique `UQ_Reminder_DocumentId_OffsetDays`, `IX_Reminder_Status_DueDate`, `IX_Reminder_UserId`), `DeliveryLog` (FK to Reminder, Cascade; `IX_DeliveryLog_ReminderId`) | 2.3 |
+| 8 | 2026-08-28 | Ai (`AiDbContext`, schema `ai`) | `20260828194653_Initial` — schema, `ai.__EFMigrationsHistory`, table `Usage` (`IX_Usage_UserId_At`) | 3.2 |
 
 # Retention, encryption and backups
 

@@ -19,6 +19,7 @@ namespace Wathiq.EntityFrameworkCore;
     typeof(WathiqEntityFrameworkCoreModule),
     typeof(WathiqDocumentsEntityFrameworkCoreModule),
     typeof(Wathiq.Reminders.EntityFrameworkCore.WathiqRemindersEntityFrameworkCoreModule),
+    typeof(Wathiq.Ai.EntityFrameworkCore.WathiqAiEntityFrameworkCoreModule),
     typeof(AbpEntityFrameworkCoreSqliteModule)
 )]
 public class WathiqEntityFrameworkCoreTestModule : AbpModule
@@ -69,6 +70,10 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
             {
                 context.DbContextOptions.UseSqlite(_sqliteConnection);
             });
+            options.Configure<Wathiq.Ai.EntityFrameworkCore.AiDbContext>(context =>
+            {
+                context.DbContextOptions.UseSqlite(_sqliteConnection);
+            });
         });
     }
 
@@ -101,6 +106,13 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
         var remindersOptions = new DbContextOptionsBuilder<Wathiq.Reminders.EntityFrameworkCore.RemindersDbContext>()
             .UseSqlite(connection).Options;
         using (var context = new Wathiq.Reminders.EntityFrameworkCore.RemindersDbContext(remindersOptions))
+        {
+            context.GetService<IRelationalDatabaseCreator>().CreateTables();
+        }
+
+        var aiOptions = new DbContextOptionsBuilder<Wathiq.Ai.EntityFrameworkCore.AiDbContext>()
+            .UseSqlite(connection).Options;
+        using (var context = new Wathiq.Ai.EntityFrameworkCore.AiDbContext(aiOptions))
         {
             context.GetService<IRelationalDatabaseCreator>().CreateTables();
         }

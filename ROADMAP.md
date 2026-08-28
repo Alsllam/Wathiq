@@ -146,7 +146,7 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
       server-side), download, delete (blob removed via `IFileStore` after the UoW commits — the
       1.5 promise). *Topics: streaming uploads in ABP, content-type allow-lists, post-commit
       side effects.* — FR-DOC-004 (API part). *Docs: `api`.*
-- [ ] **3.2 `Ai` module skeleton + `ai.Usage`** — fourth module lap (all graphs in one commit,
+- [x] **3.2 `Ai` module skeleton + `ai.Usage`** — fourth module lap (all graphs in one commit,
       per the 2.1 checklist), schema `ai`, `Usage` entity per DB doc + migration. No model calls
       yet: the module exists so routing/caps have a home. *Topics: the module recipe from memory,
       usage as an append-only ledger.* *Docs: `database`.*

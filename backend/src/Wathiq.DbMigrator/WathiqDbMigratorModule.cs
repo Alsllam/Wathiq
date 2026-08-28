@@ -14,6 +14,8 @@ namespace Wathiq.DbMigrator;
     // are already in this graph the day they exist (the 1.7 admin-403 lesson).
     typeof(Wathiq.Reminders.EntityFrameworkCore.WathiqRemindersEntityFrameworkCoreModule),
     typeof(Wathiq.Reminders.WathiqRemindersApplicationModule),
+    typeof(Wathiq.Ai.EntityFrameworkCore.WathiqAiEntityFrameworkCoreModule),
+    typeof(Wathiq.Ai.WathiqAiApplicationModule),
     typeof(WathiqApplicationContractsModule)
 )]
 public class WathiqDbMigratorModule : AbpModule
