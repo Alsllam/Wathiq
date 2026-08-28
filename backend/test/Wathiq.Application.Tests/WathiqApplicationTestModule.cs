@@ -8,6 +8,7 @@ namespace Wathiq;
     typeof(WathiqApplicationModule),
     typeof(Wathiq.Documents.WathiqDocumentsApplicationModule),
     typeof(Wathiq.Reminders.WathiqRemindersApplicationModule),
+    typeof(Wathiq.Ai.WathiqAiApplicationModule),
     typeof(WathiqDomainTestModule)
 )]
 public class WathiqApplicationTestModule : AbpModule

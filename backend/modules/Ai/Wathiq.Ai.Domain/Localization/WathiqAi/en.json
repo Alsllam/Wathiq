@@ -1,4 +1,6 @@
 {
   "Culture": "en",
-  "Texts": {}
+  "Texts": {
+    "Wathiq.Ai:DailyCapExceeded": "You have reached today's AI usage limit ({Cap} requests). Please try again tomorrow."
+  }
 }

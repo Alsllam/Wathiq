@@ -150,7 +150,7 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
       per the 2.1 checklist), schema `ai`, `Usage` entity per DB doc + migration. No model calls
       yet: the module exists so routing/caps have a home. *Topics: the module recipe from memory,
       usage as an append-only ledger.* *Docs: `database`.*
-- [ ] **3.3 Provider routing behind `IChatClient`** — `Microsoft.Extensions.AI` packages; named
+- [x] **3.3 Provider routing behind `IChatClient`** — `Microsoft.Extensions.AI` packages; named
       clients from config (`Ai:Extraction` → Ollama only — the privacy wall; `Ai:Guides` may
       later point at a free cloud tier); a delegating `UsageTrackingChatClient` that writes
       `ai.Usage` rows and enforces the per-user daily cap before the call leaves the process.

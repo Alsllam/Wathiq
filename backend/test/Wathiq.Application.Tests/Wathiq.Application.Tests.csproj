@@ -14,6 +14,7 @@
          we test must be in ITS graph - the host's Application project does not bring it. -->
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.Application\Wathiq.Documents.Application.csproj" />
     <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.Application\Wathiq.Reminders.Application.csproj" />
+    <ProjectReference Include="..\..\modules\Ai\Wathiq.Ai.Application\Wathiq.Ai.Application.csproj" />
     <ProjectReference Include="..\Wathiq.Domain.Tests\Wathiq.Domain.Tests.csproj" />
   </ItemGroup>
 
