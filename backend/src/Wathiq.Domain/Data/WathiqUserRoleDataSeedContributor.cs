@@ -51,7 +51,7 @@ public class WathiqUserRoleDataSeedContributor : IDataSeedContributor, ITransien
         await _permissionDataSeeder.SeedAsync(
             RolePermissionValueProvider.ProviderName,
             UserRoleName,
-            DocumentsPermissions.All,
+            [.. DocumentsPermissions.All, .. Wathiq.Reminders.RemindersPermissions.All],
             context.TenantId);
     }
 }

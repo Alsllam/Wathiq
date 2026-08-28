@@ -45,6 +45,23 @@ public class ReminderScheduler : DomainService
             TimeZoneInfo.FindSystemTimeZoneById(timeZoneId)));
 
     /// <summary>
+    /// Re-derives every document's schedule after the rule changed (new offsets). No call to the
+    /// Documents module: each row is self-describing - DueDate + OffsetDays IS the expiry date -
+    /// so the module can rebuild its own schedule from its own table (ADR-001 kept intact).
+    /// </summary>
+    public async Task ResyncForUserAsync(Guid userId)
+    {
+        var reminders = await _reminders.GetListAsync(r => r.UserId == userId);
+
+        foreach (var documentGroup in reminders.GroupBy(r => r.DocumentId))
+        {
+            // Max guards against stale cancelled rows from an older, shorter expiry.
+            var expiry = documentGroup.Max(r => r.DueDate.AddDays(r.OffsetDays));
+            await SyncForDocumentAsync(userId, documentGroup.Key, expiry);
+        }
+    }
+
+    /// <summary>
     /// Upserts toward the desired schedule. Rows are REUSED (unique DocumentId+OffsetDays):
     /// matching pending rows stay, changed dates re-arm via Reschedule, unwanted rows Cancel -
     /// never deleted, so history and the unique index both survive. Runs inside the caller's

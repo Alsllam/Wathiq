@@ -5,6 +5,10 @@
     "Wathiq.Reminders:QuietHoursIncomplete": "Quiet hours need both a start and an end time, or neither.",
     "Wathiq.Reminders:UnknownTimeZone": "The time zone '{TimeZoneId}' is not recognized.",
     "Wathiq.Reminders:NoEmailAddress": "This account has no email address to send reminders to.",
+    "Permission:Reminders": "Wathiq Reminders",
+    "Permission:Rule": "View reminder settings",
+    "Permission:Rule.Update": "Change reminder settings",
+    "Permission:Reminders.List": "View upcoming reminders",
     "Email:ReminderSubject": "Reminder: a document expires on {0}",
     "Email:ReminderBody": "One of your documents expires on {0} — {1} day(s) left. Open Wathiq to review it and mark it renewed."
   }

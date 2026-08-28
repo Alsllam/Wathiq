@@ -118,7 +118,7 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
       bilingual ar/en reminder template, one `DeliveryLog` row per attempt, failures mark the
       reminder `Failed`; quiet hours defer delivery. *Topics: ABP `IEmailSender`/MailKit, email
       templates, smtp4dev as a free local SMTP sink.* — FR-REM-003 (email), FR-REM-005.
-- [ ] **2.7 App services and API** — `ReminderRuleAppService` (get/update own rule) and
+- [x] **2.7 App services and API** — `ReminderRuleAppService` (get/update own rule) and
       `ReminderAppService` (upcoming reminders list); permissions under `WathiqReminders`;
       plural routes under `/api/reminders/*`; api.md §reminders from the regenerated spec.
       *Topics: second lap on app services/permissions, now with an existing pattern to match.*

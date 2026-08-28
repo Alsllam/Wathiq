@@ -13,11 +13,20 @@ public class WathiqRemindersHttpApiModule : AbpModule
     {
         Configure<AbpAspNetCoreMvcOptions>(options =>
         {
-            // Auto API controllers under /api/reminders/*; plural segment mapping arrives with
-            // the app services in 2.7 (same pattern as Documents 1.7).
+            // Auto API controllers under /api/reminders/* (same recipe as Documents 1.7).
             options.ConventionalControllers.Create(
                 typeof(WathiqRemindersApplicationModule).Assembly,
-                o => o.RootPath = "reminders");
+                o =>
+                {
+                    o.RootPath = "reminders";
+                    o.UrlControllerNameNormalizer = context => context.ControllerName switch
+                    {
+                        // Singular on purpose: the rule is a singleton resource (one per user).
+                        "ReminderRule" => "rule",
+                        "Reminder" => "reminders",
+                        _ => context.ControllerName
+                    };
+                });
         });
     }
 }

@@ -13,6 +13,7 @@
     <ProjectReference Include="..\..\modules\Shared\Wathiq.Shared\Wathiq.Shared.csproj" />
     <!-- Host-only edge: the role seeder needs the Documents permission names. Modules still never reference each other. -->
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.Domain\Wathiq.Documents.Domain.csproj" />
+    <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.Domain\Wathiq.Reminders.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
