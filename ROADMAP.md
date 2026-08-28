@@ -99,7 +99,7 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
       materialised on first use (the self-holder pattern); migration.
       *Topics: value converters vs owned types, flags enums in EF, defaults-on-first-use.*
       — FR-REM-001. *Docs: `database` (migrations log + status).*
-- [ ] **2.3 `Reminder`, `DeliveryLog` and the scheduling math** — entities per DB doc with
+- [x] **2.3 `Reminder`, `DeliveryLog` and the scheduling math** — entities per DB doc with
       `UQ_Reminder_DocumentId_OffsetDays` and `IX_Reminder_Status_DueDate`; `ReminderScheduler`
       domain service computing due dates from expiry − offsets in the user's time zone, skipping
       past dates; pure domain tests for the math (year boundaries, `Asia/Riyadh` vs UTC).

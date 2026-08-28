@@ -45,6 +45,13 @@ public class WathiqDomainModule : AbpModule
             options.IsEnabled = MultiTenancyConsts.IsEnabled;
         });
 
+        // DB6: instants are UTC everywhere. ABP's IClock defaults to Local; setting it here (the
+        // composition root's domain module) makes Clock.Now UTC for every executable that hosts us.
+        Configure<Volo.Abp.Timing.AbpClockOptions>(options =>
+        {
+            options.Kind = DateTimeKind.Utc;
+        });
+
 
 #if DEBUG
         context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());

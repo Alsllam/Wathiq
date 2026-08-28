@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
+using Wathiq.Reminders.Reminders;
 using Wathiq.Reminders.Rules;
 
 namespace Wathiq.Reminders.EntityFrameworkCore;
@@ -11,7 +12,8 @@ namespace Wathiq.Reminders.EntityFrameworkCore;
 public class RemindersDbContext : AbpDbContext<RemindersDbContext>
 {
     public DbSet<ReminderRule> ReminderRules { get; set; } = default!;
-    // Reminder + DeliveryLog arrive in 2.3.
+    public DbSet<Reminder> Reminders { get; set; } = default!;
+    // No DbSet<DeliveryLog>: reached through Reminder only (aggregate boundary).
 
     public RemindersDbContext(DbContextOptions<RemindersDbContext> options)
         : base(options)

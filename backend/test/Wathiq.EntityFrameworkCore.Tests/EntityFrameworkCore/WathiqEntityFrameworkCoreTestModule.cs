@@ -18,6 +18,7 @@ namespace Wathiq.EntityFrameworkCore;
     typeof(WathiqApplicationTestModule),
     typeof(WathiqEntityFrameworkCoreModule),
     typeof(WathiqDocumentsEntityFrameworkCoreModule),
+    typeof(Wathiq.Reminders.EntityFrameworkCore.WathiqRemindersEntityFrameworkCoreModule),
     typeof(AbpEntityFrameworkCoreSqliteModule)
 )]
 public class WathiqEntityFrameworkCoreTestModule : AbpModule
@@ -64,6 +65,10 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
             {
                 context.DbContextOptions.UseSqlite(_sqliteConnection);
             });
+            options.Configure<Wathiq.Reminders.EntityFrameworkCore.RemindersDbContext>(context =>
+            {
+                context.DbContextOptions.UseSqlite(_sqliteConnection);
+            });
         });
     }
 
@@ -89,6 +94,13 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
         // Each module context creates its own tables on the same in-memory connection.
         var documentsOptions = new DbContextOptionsBuilder<DocumentsDbContext>().UseSqlite(connection).Options;
         using (var context = new DocumentsDbContext(documentsOptions))
+        {
+            context.GetService<IRelationalDatabaseCreator>().CreateTables();
+        }
+
+        var remindersOptions = new DbContextOptionsBuilder<Wathiq.Reminders.EntityFrameworkCore.RemindersDbContext>()
+            .UseSqlite(connection).Options;
+        using (var context = new Wathiq.Reminders.EntityFrameworkCore.RemindersDbContext(remindersOptions))
         {
             context.GetService<IRelationalDatabaseCreator>().CreateTables();
         }
