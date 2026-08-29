@@ -173,7 +173,7 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
       a proposal; parsers re-validate every date/number (bad values → empty + warning, never
       trusted). *Topics: structured output, prompt-as-artifact, defense against model output.*
       — FR-DOC-005, FR-AI-003, FR-AI-005. *Docs: `database`.*
-- [ ] **3.7 Extraction endpoints + confirm flow** — trigger extraction for an attachment, fetch
+- [x] **3.7 Extraction endpoints + confirm flow** — trigger extraction for an attachment, fetch
       the proposal, confirm/edit applies fields through `Document.SetValidity` (reminders resync
       arrives free via 2.4); outcome recorded on `ExtractionResult` (Accepted/Edited/Rejected).
       *Topics: proposal-review-confirm API shape, closing the UC-01 loop.* *Docs: `api`.*

@@ -66,6 +66,14 @@ public class DocumentDataExtractor : IDocumentDataExtractor, ITransientDependenc
         return proposal;
     }
 
+    public DocumentDataProposal ParseStored(string rawJson)
+    {
+        // Same pipeline, no model: provenance stays empty because the stored row carries it.
+        var proposal = new DocumentDataProposal { PromptVersion = PromptVersion };
+        ParseAndValidate(rawJson, proposal);
+        return proposal;
+    }
+
     /// <summary>Everything below this line treats the model as an untrusted client (FR-AI-003).</summary>
     private static void ParseAndValidate(string raw, DocumentDataProposal proposal)
     {

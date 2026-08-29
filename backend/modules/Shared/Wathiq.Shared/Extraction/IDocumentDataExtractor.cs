@@ -12,4 +12,11 @@ namespace Wathiq.Shared.Extraction;
 public interface IDocumentDataExtractor
 {
     Task<DocumentDataProposal> ExtractAsync(string ocrText, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Re-derives a proposal from a stored ExtractionResult.RawJson - pure, no model call. Keeps
+    /// the parsers the single authority: Documents re-serves a pending proposal without ever
+    /// learning the JSON schema, and warnings are recomputed instead of persisted.
+    /// </summary>
+    DocumentDataProposal ParseStored(string rawJson);
 }

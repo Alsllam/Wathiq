@@ -11,4 +11,6 @@ public static class DocumentsErrorCodes
     public const string HolderHasDocuments = "Wathiq.Documents:HolderHasDocuments";
     public const string UnsupportedFileType = "Wathiq.Documents:UnsupportedFileType";
     public const string ExtractionAlreadyConcluded = "Wathiq.Documents:ExtractionAlreadyConcluded";
+    public const string ExtractionNotReady = "Wathiq.Documents:ExtractionNotReady";
+    public const string ExtractionFailed = "Wathiq.Documents:ExtractionFailed";
 }

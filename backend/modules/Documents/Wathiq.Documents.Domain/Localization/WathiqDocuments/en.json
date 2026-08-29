@@ -9,6 +9,8 @@
     "Wathiq.Documents:HolderHasDocuments": "This holder still has documents. Delete or reassign them first.",
     "Wathiq.Documents:UnsupportedFileType": "Only JPEG, PNG and PDF files can be attached.",
     "Wathiq.Documents:ExtractionAlreadyConcluded": "This extraction was already reviewed; run a new extraction instead.",
+    "Wathiq.Documents:ExtractionNotReady": "This attachment has not been read yet (text recognition is still running). Try again shortly.",
+    "Wathiq.Documents:ExtractionFailed": "The AI assistant could not process this attachment right now. Your document is unaffected - try again later.",
     "Permission:Documents": "Wathiq Documents",
     "Permission:DocumentTypes": "View document type catalogue",
     "Permission:Holders": "View holders",

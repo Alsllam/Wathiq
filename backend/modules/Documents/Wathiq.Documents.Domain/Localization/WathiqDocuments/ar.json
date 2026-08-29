@@ -9,6 +9,8 @@
     "Wathiq.Documents:HolderHasDocuments": "لا يزال لدى هذا الشخص مستندات. احذفها أو انقلها أولًا.",
     "Wathiq.Documents:UnsupportedFileType": "يمكن إرفاق ملفات JPEG وPNG وPDF فقط.",
     "Wathiq.Documents:ExtractionAlreadyConcluded": "تمت مراجعة نتيجة الاستخراج هذه مسبقًا؛ قم بتشغيل استخراج جديد بدلًا من ذلك.",
+    "Wathiq.Documents:ExtractionNotReady": "لم تتم قراءة هذا المرفق بعد (التعرّف على النص ما يزال جاريًا). حاول مرة أخرى بعد قليل.",
+    "Wathiq.Documents:ExtractionFailed": "تعذّر على المساعد الذكي معالجة هذا المرفق حاليًا. وثيقتك لم تتأثر - حاول لاحقًا.",
     "Permission:Documents": "مستندات وثيق",
     "Permission:DocumentTypes": "عرض أنواع المستندات",
     "Permission:Holders": "عرض أصحاب المستندات",

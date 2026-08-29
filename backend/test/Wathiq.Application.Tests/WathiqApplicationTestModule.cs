@@ -40,5 +40,11 @@ public class WathiqApplicationTestModule : AbpModule
         context.Services.AddSingleton<Documents.RecordingBackgroundJobManager>();
         context.Services.Replace(ServiceDescriptor.Singleton<Volo.Abp.BackgroundJobs.IBackgroundJobManager>(
             sp => sp.GetRequiredService<Documents.RecordingBackgroundJobManager>()));
+
+        // 3.7: the real extractor (Ai module, IS in this graph) would dial Ollama - replace the
+        // seam so the escrow/confirm flow is tested with a scripted model.
+        context.Services.AddSingleton<Documents.FakeDocumentDataExtractor>();
+        context.Services.Replace(ServiceDescriptor.Singleton<Wathiq.Shared.Extraction.IDocumentDataExtractor>(
+            sp => sp.GetRequiredService<Documents.FakeDocumentDataExtractor>()));
     }
 }

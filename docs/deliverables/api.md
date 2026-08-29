@@ -2,7 +2,7 @@
 title: "Wathiq — API Reference"
 subtitle: "وثيق — مرجع الواجهة البرمجية"
 author: "Abdulsalam"
-version: "0.1.2"
+version: "0.1.3"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -14,6 +14,7 @@ status: "Draft"
 | 0.1 | 2026-08-27 | Abdulsalam | First version, written from the generated `swagger.json` of the running host: auth, conventions, Documents module endpoints, error model, live examples (roadmap step 1.7) |
 | 0.1.1 | 2026-08-28 | Abdulsalam | §5 Reminders module endpoints (rule singleton, upcoming list) from the regenerated spec; permission table extended (roadmap step 2.7) |
 | 0.1.2 | 2026-08-28 | Abdulsalam | §4.4 attachment upload/download/delete endpoints from the regenerated spec (roadmap step 3.1) |
+| 0.1.3 | 2026-08-29 | Abdulsalam | §4.5 extraction endpoints (trigger/latest/confirm/reject) from the regenerated spec; live failure-path example (roadmap step 3.7) |
 
 **Status:** Draft · **Related:** SRS (`srs`) FR-DOC/FR-IDM, Architecture (`architecture`) D3/D7,
 Database (`database`).
@@ -176,7 +177,31 @@ Encryption at rest is *Planned* (Phase 8); OCR text fills server-side in Phase 3
 Live example (recorded): a 35-byte PNG uploaded, downloaded byte-identical, deleted — the blob
 file disappeared from the store after the 204.
 
-## 4.5 Live example (recorded against the running host)
+## 4.5 Extraction (FR-DOC-005, UC-01 review-confirm loop)
+
+The AI's output is a *draft in escrow*: extraction stores an `ExtractionResult` row and returns a
+proposal; nothing touches the document until confirm, where normal domain validation (including
+`ExpiryBeforeIssue`) has the last word and the expiry-changed event resyncs reminders (§5).
+
+| Method & path | Permission | Description |
+| --- | --- | --- |
+| `POST /api/documents/document-extraction/{id}/extract/{attachmentId}` | `…Documents.Update` | Runs the local model over the attachment's OCR text. 403 `ExtractionNotReady` if OCR hasn't filled yet; 403 `ExtractionFailed` if the model is unreachable (a `Failed` result row is still recorded); 403 `Wathiq.Ai:DailyCapExceeded` past the per-user cap |
+| `GET /api/documents/document-extraction/{id}/latest/{attachmentId}` | `…Documents` | Latest result for the attachment (any outcome), proposal re-derived from the stored raw JSON — never re-asks the model. `204/null` if never extracted |
+| `POST /api/documents/document-extraction/{id}/confirm/{extractionResultId}` | `…Documents.Update` | Body `{ number?, issueDate?, expiryDate? }` — applies through the same domain methods as a manual edit and concludes the row `Accepted` (values kept as proposed) or `Edited`. Returns the updated `DocumentDto`. 403 `ExtractionAlreadyConcluded` on a second verdict |
+| `POST /api/documents/document-extraction/{id}/reject/{extractionResultId}` | `…Documents.Update` | Concludes `Rejected`; the document is untouched |
+
+`ExtractionProposalDto` (response): `extractionResultId`, `attachmentId`, `number?`, `issueDate?`,
+`expiryDate?`, `holderName?`, `documentKind?`, `confidence?` (0–1), `warnings[]` (why fields were
+dropped — user-facing, FR-AI-003), `promptVersion`, `model`, `outcome`
+(`Proposed=0, Accepted, Edited, Rejected, Failed`), `creationTime`.
+
+Live example (recorded, this container has no model): extract on an OCR'd attachment returned
+403 `Wathiq.Documents:ExtractionFailed` with the localized message, and the `Failed` row
+(`Provider=ollama, Model=unavailable, PromptVersion=extract-document@v1`) was persisted in its
+own transaction — visible via the `latest` endpoint. The happy path runs on the dev box with
+Ollama serving (see `backend/README.md` §AI runtime).
+
+## 4.6 Live example (recorded against the running host)
 
 ```bash
 POST /api/documents/documents            Authorization: Bearer <user token>
