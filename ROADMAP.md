@@ -198,7 +198,7 @@ properties and Transloco. Layout follows `frontend/README.md`; boundaries via
 and the comparison happens there.
 
 - [x] 4.0 Expand phase into steps
-- [ ] **4.1 Nx workspace + `wathiq_portal` shell** — Nx 21 workspace under `frontend/`, Angular 20
+- [x] **4.1 Nx workspace + `wathiq_portal` shell** — Nx 21 workspace under `frontend/`, Angular 20
       standalone app (`bootstrapApplication`, zoneless change detection), Tailwind 4 wired with
       **logical properties only** (`ms-`/`me-`/`text-start` - no `ml-`/`mr-` anywhere, enforced by
       a lint rule if available), ESLint + module-boundary tags, placeholder shell page. Verify:

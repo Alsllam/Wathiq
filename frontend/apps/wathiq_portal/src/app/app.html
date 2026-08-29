@@ -1,0 +1,17 @@
+<!-- Logical properties only (ms-/me-/text-start): this header renders correctly the moment 4.2
+     flips dir per language - nothing here knows or cares which side "start" is. -->
+<header class="border-b border-slate-200 bg-white">
+  <div class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
+    <span class="inline-flex size-9 items-center justify-center rounded-xl bg-emerald-600 text-lg font-bold text-white">
+      و
+    </span>
+    <div class="text-start">
+      <h1 class="text-lg font-semibold text-slate-900">{{ appName() }}</h1>
+      <p class="text-xs text-slate-500">{{ tagline() }}</p>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-5xl px-4 py-10">
+  <router-outlet></router-outlet>
+</main>

@@ -1,0 +1,7 @@
+/* Tailwind 4: one import, no tailwind.config.js - theme/custom utilities live in CSS when
+   needed (@theme). The build finds classes by scanning source automatically. */
+@import 'tailwindcss';
+
+/* RTL guardrail (CLAUDE.md): spatial layout MUST use logical utilities only - ms-, me-, ps-,
+   pe-, text-start, text-end, start-, end- - never ml-, mr- or text-left. One dir switch (4.2)
+   then mirrors the whole app for free. */
