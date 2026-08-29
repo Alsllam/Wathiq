@@ -61,6 +61,7 @@ namespace Wathiq;
     typeof(Wathiq.Reminders.EntityFrameworkCore.WathiqRemindersEntityFrameworkCoreModule),
     typeof(Wathiq.Ai.WathiqAiHttpApiModule),
     typeof(Wathiq.Ai.EntityFrameworkCore.WathiqAiEntityFrameworkCoreModule),
+    typeof(Volo.Abp.BackgroundJobs.Hangfire.AbpBackgroundJobsHangfireModule),
     typeof(AbpAccountWebOpenIddictModule),
     typeof(Volo.Abp.MailKit.AbpMailKitModule),
     typeof(AbpSwashbuckleModule),

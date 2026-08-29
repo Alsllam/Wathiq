@@ -30,5 +30,15 @@ public class WathiqApplicationTestModule : AbpModule
         context.Services.AddSingleton<Reminders.RecordingEmailSender>();
         context.Services.Replace(ServiceDescriptor.Singleton<Volo.Abp.Emailing.IEmailSender>(
             sp => sp.GetRequiredService<Reminders.RecordingEmailSender>()));
+
+        // 3.5: the Tesseract adapter lives in the host, outside this graph - the port MUST get a
+        // fake here or the OCR job can't resolve. The queue is replaced by a recorder so tests
+        // assert "enqueued", then invoke the job directly.
+        context.Services.AddSingleton<Documents.FakeOcrService>();
+        context.Services.AddSingleton<Wathiq.Shared.Ocr.IOcrService>(
+            sp => sp.GetRequiredService<Documents.FakeOcrService>());
+        context.Services.AddSingleton<Documents.RecordingBackgroundJobManager>();
+        context.Services.Replace(ServiceDescriptor.Singleton<Volo.Abp.BackgroundJobs.IBackgroundJobManager>(
+            sp => sp.GetRequiredService<Documents.RecordingBackgroundJobManager>()));
     }
 }

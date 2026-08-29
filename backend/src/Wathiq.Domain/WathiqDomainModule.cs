@@ -55,5 +55,9 @@ public class WathiqDomainModule : AbpModule
 
         // The template's DEBUG NullEmailSender swap is gone since 2.6: dev now has a real SMTP
         // sink (smtp4dev in Docker Compose), and silently-vanishing mail hides delivery bugs.
+
+        // OCR engine knobs (path, languages) from the "Ocr" section; defaults work where
+        // `tesseract` is on PATH, so the section is optional in appsettings.
+        Configure<Ocr.OcrOptions>(context.Services.GetConfiguration().GetSection("Ocr"));
     }
 }

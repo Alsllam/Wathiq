@@ -14,6 +14,9 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="10.3.0" />
+    <!-- Abstractions only: the module ENQUEUES jobs; which engine runs them (Hangfire, in the
+         host) is a composition-root decision, exactly like IFileStore vs LocalDiskFileStore. -->
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Abstractions" Version="10.3.0" />
   </ItemGroup>
 
 </Project>

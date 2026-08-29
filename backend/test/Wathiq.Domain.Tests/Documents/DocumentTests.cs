@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Shouldly;
 using Volo.Abp.Domain.Entities;
 using Wathiq.Documents.Documents;
@@ -43,5 +44,33 @@ public class DocumentTests
     public void Blank_Number_Becomes_Null()
     {
         NewDocument().SetNumber("   ").Number.ShouldBeNull();
+    }
+
+    [Fact]
+    public void AddAttachment_Queues_The_Uploaded_Event()
+    {
+        var doc = NewDocument();
+        var id = Guid.NewGuid();
+
+        doc.AddAttachment(id, "blob-1.jpg", "image/jpeg", 1234, new byte[32]);
+
+        // Same inspection ABP does at SaveChanges: the fact is queued on the aggregate itself.
+        var eto = doc.GetLocalEvents()
+            .Select(e => e.EventData).OfType<Events.AttachmentUploadedEto>().ShouldHaveSingleItem();
+        eto.DocumentId.ShouldBe(doc.Id);
+        eto.AttachmentId.ShouldBe(id);
+    }
+
+    [Fact]
+    public void Ocr_Text_Lands_Only_Through_The_Root()
+    {
+        var doc = NewDocument();
+        var id = Guid.NewGuid();
+        doc.AddAttachment(id, "blob-1.jpg", "image/jpeg", 1234, new byte[32]);
+
+        doc.SetAttachmentOcrText(id, "PASSPORT NO A123");
+
+        doc.Attachments.Single().OcrText.ShouldBe("PASSPORT NO A123");
+        Should.Throw<EntityNotFoundException>(() => doc.SetAttachmentOcrText(Guid.NewGuid(), "x"));
     }
 }

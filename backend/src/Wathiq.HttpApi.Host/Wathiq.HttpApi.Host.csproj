@@ -55,6 +55,8 @@
     <!-- Hangfire lives ONLY in the host (composition root); modules stay scheduler-agnostic. -->
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.21" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.21" />
+    <!-- Routes ABP's IBackgroundJobManager (module-side enqueues, 3.5) onto Hangfire. -->
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Hangfire" Version="10.3.0" />
     <!-- Real SMTP implementation of IEmailSender - modules only ever see the abstraction. -->
     <PackageReference Include="Volo.Abp.MailKit" Version="10.3.0" />
   </ItemGroup>

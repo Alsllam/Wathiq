@@ -107,7 +107,18 @@ public class Document : FullAuditedAggregateRoot<Guid>
     {
         var attachment = new Attachment(attachmentId, Id, blobKey, mimeType, sizeBytes, sha256);
         _attachments.Add(attachment);
+        // Second local-event lap (after 2.4): the aggregate announces the fact; who reacts (the
+        // OCR pipeline, today) is not this class's business.
+        AddLocalEvent(new Events.AttachmentUploadedEto { DocumentId = Id, AttachmentId = attachmentId });
         return attachment;
+    }
+
+    /// <summary>OCR lands through the root, like every other attachment mutation - Attachment.SetOcrText stays internal.</summary>
+    public void SetAttachmentOcrText(Guid attachmentId, string? text)
+    {
+        var attachment = _attachments.FirstOrDefault(a => a.Id == attachmentId)
+                         ?? throw new EntityNotFoundException(typeof(Attachment), attachmentId);
+        attachment.SetOcrText(text);
     }
 
     /// <summary>Returns the removed attachment's blob key so the caller can delete the file after the transaction commits.</summary>

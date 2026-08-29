@@ -163,7 +163,7 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
       health check; one real round-trip smoke test through `IChatClient`. Environment step:
       whatever this machine cannot run gets recorded honestly and re-verified on the dev box.
       *Topics: Ollama serving, model pulls, health checks for stateful dependencies.*
-- [ ] **3.5 Tesseract OCR into `Attachment.OcrText`** — Tesseract (ara+eng) behind an `IOcrService`
+- [x] **3.5 Tesseract OCR into `Attachment.OcrText`** — Tesseract (ara+eng) behind an `IOcrService`
       port; `AttachmentUploaded` local event → Hangfire background job OCRs the blob and fills
       `OcrText` (the 2.5 job disciplines re-applied). *Topics: Tesseract on server, OCR as a
       background pipeline stage, second local-event lap.* — feeds FR-DOC-005.

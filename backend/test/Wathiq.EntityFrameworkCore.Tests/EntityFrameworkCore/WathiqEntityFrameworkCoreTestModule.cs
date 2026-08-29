@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -79,7 +80,17 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
 
     public override void OnApplicationShutdown(ApplicationShutdownContext context)
     {
-        _sqliteConnection?.Dispose();
+        try
+        {
+            _sqliteConnection?.Dispose();
+        }
+        catch (NullReferenceException)
+        {
+            // Microsoft.Data.Sqlite teardown race: Close() iterates its live-command list while
+            // the finalizer thread clears entries of commands EF left undisposed. Assertions have
+            // long passed by now and the in-memory DB dies with the process either way - a driver
+            // race in teardown must not fail a green test (seen ~1 in 14 full-suite runs, 3.5).
+        }
     }
 
     private static SqliteConnection CreateDatabaseAndGetConnection()
