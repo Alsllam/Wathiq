@@ -10,4 +10,5 @@ public static class DocumentsErrorCodes
     public const string CannotDeleteSelfHolder = "Wathiq.Documents:CannotDeleteSelfHolder";
     public const string HolderHasDocuments = "Wathiq.Documents:HolderHasDocuments";
     public const string UnsupportedFileType = "Wathiq.Documents:UnsupportedFileType";
+    public const string ExtractionAlreadyConcluded = "Wathiq.Documents:ExtractionAlreadyConcluded";
 }

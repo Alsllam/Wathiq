@@ -2,8 +2,8 @@
 title: "Wathiq — Database Design"
 subtitle: "وثيق — تصميم قاعدة البيانات"
 author: "Abdulsalam"
-version: "0.1.7"
-date: "2026-08-27"
+version: "0.1.8"
+date: "2026-08-29"
 status: "Draft"
 ---
 
@@ -19,6 +19,7 @@ status: "Draft"
 | 0.1.5 | 2026-08-27 | Abdulsalam | Migrations log row 6: `ReminderRule` table (2.2); `ReminderRule` marked *Implemented*, `OffsetsDays` documented as the `ReminderOffsets` value object |
 | 0.1.6 | 2026-08-28 | Abdulsalam | Migrations log row 7: `Reminder` + `DeliveryLog` tables (2.3); both marked *Implemented* |
 | 0.1.7 | 2026-08-28 | Abdulsalam | Migrations log row 8: `ai` schema + `Usage` table (3.2); `Usage` marked *Implemented* |
+| 0.1.8 | 2026-08-29 | Abdulsalam | Migrations log row 9: `ExtractionResult` table (3.6), marked *Implemented*; `PromptVersion` widened 16→32 (real ids like `extract-document@v1` are 19 chars) |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
 Tables in this version are *Planned* until their migration appears in the migrations log, which
@@ -141,15 +142,15 @@ Indexes: `IX_Document_OwnerUserId`, `IX_Document_ExpiryDate` (timeline query, NF
 | IsEncrypted | bit | no | False until P8 migration |
 | Sha256 | binary(32) | no | De-duplication and integrity |
 
-### `documents.ExtractionResult` (E-ExtractionResult)
+### `documents.ExtractionResult` (E-ExtractionResult) — *Implemented (3.6)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
 | Id | uniqueidentifier | no | PK |
-| AttachmentId | uniqueidentifier | no | FK → Attachment; IX |
+| AttachmentId | uniqueidentifier | no | FK → Attachment (Cascade: no orphaned extraction PII); IX |
 | Provider | nvarchar(32) | no | `ollama` only for extraction (FR-AI-002) |
 | Model | nvarchar(64) | no | e.g. `qwen2.5:7b` |
-| PromptVersion | nvarchar(16) | no | → `ai.Prompt` (no FK) |
+| PromptVersion | nvarchar(32) | no | → `ai.Prompt` (no FK); e.g. `extract-document@v1` |
 | RawJson | nvarchar(max) | no | Model output after schema validation |
 | Confidence | decimal(4,3) | yes | 0–1 overall |
 | Outcome | tinyint | no | enum: Proposed=0, Accepted, Edited, Rejected, Failed |
@@ -330,6 +331,7 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 | 6 | 2026-08-27 | Reminders | `20260827150810_AddReminderRule` — table `ReminderRule` (`OffsetsDays` CSV via value conversion, `Channels` tinyint flags, quiet hours `time`, `TimeZoneId`); unique `UQ_ReminderRule_UserId` | 2.2 |
 | 7 | 2026-08-28 | Reminders | `20260828051505_AddReminderAndDeliveryLog` — tables `Reminder` (unique `UQ_Reminder_DocumentId_OffsetDays`, `IX_Reminder_Status_DueDate`, `IX_Reminder_UserId`), `DeliveryLog` (FK to Reminder, Cascade; `IX_DeliveryLog_ReminderId`) | 2.3 |
 | 8 | 2026-08-28 | Ai (`AiDbContext`, schema `ai`) | `20260828194653_Initial` — schema, `ai.__EFMigrationsHistory`, table `Usage` (`IX_Usage_UserId_At`) | 3.2 |
+| 9 | 2026-08-29 | Documents | `20260829063126_AddExtractionResult` — table `ExtractionResult` (FK to `Attachment`, Cascade; `IX_ExtractionResult_AttachmentId`; `Confidence` decimal(4,3); `Outcome` tinyint) | 3.6 |
 
 # Retention, encryption and backups
 

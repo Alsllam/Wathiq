@@ -11,12 +11,14 @@ namespace Wathiq.Ai;
 public class FakeChatClient : IChatClient
 {
     public int CallCount { get; private set; }
+    /// <summary>Scriptable since 3.6: extractor tests feed it model JSON. Default keeps 3.3's tests as-is.</summary>
+    public string NextResponseText { get; set; } = "ok";
 
     public Task<ChatResponse> GetResponseAsync(
         IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
         CallCount++;
-        return Task.FromResult(new ChatResponse(new ChatMessage(ChatRole.Assistant, "ok"))
+        return Task.FromResult(new ChatResponse(new ChatMessage(ChatRole.Assistant, NextResponseText))
         {
             Usage = new UsageDetails { InputTokenCount = 120, OutputTokenCount = 30 }
         });

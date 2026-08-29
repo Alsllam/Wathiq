@@ -8,6 +8,7 @@
     "Wathiq.Documents:CannotDeleteSelfHolder": "لا يمكنك حذف سجلّك الشخصي.",
     "Wathiq.Documents:HolderHasDocuments": "لا يزال لدى هذا الشخص مستندات. احذفها أو انقلها أولًا.",
     "Wathiq.Documents:UnsupportedFileType": "يمكن إرفاق ملفات JPEG وPNG وPDF فقط.",
+    "Wathiq.Documents:ExtractionAlreadyConcluded": "تمت مراجعة نتيجة الاستخراج هذه مسبقًا؛ قم بتشغيل استخراج جديد بدلًا من ذلك.",
     "Permission:Documents": "مستندات وثيق",
     "Permission:DocumentTypes": "عرض أنواع المستندات",
     "Permission:Holders": "عرض أصحاب المستندات",

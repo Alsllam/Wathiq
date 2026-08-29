@@ -17,6 +17,8 @@ public class DocumentsDbContext : AbpDbContext<DocumentsDbContext>
     public DbSet<Holder> Holders { get; set; } = default!;
     public DbSet<Document> Documents { get; set; } = default!;
     // No DbSet<Attachment>: it is reached through Document only (aggregate boundary).
+    // ExtractionResult IS its own aggregate (queried and concluded independently of Document).
+    public DbSet<Extraction.ExtractionResult> ExtractionResults { get; set; } = default!;
 
     public DocumentsDbContext(DbContextOptions<DocumentsDbContext> options)
         : base(options)

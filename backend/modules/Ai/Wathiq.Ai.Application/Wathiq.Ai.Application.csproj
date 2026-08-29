@@ -13,6 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- FR-AI-005: prompts are versioned artifacts shipped inside the assembly - a prompt edit
+         is a new file + new version const, reviewable in a diff like any API contract change. -->
+    <!-- Explicit LogicalName: the default is derived from RootNamespace + path with chars
+         mangled - a rename away from breaking. Pinned, it is a stable contract. -->
+    <EmbeddedResource Include="Prompts\extract-document.v1.txt" LogicalName="Wathiq.Ai.Prompts.extract-document.v1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.AI" Version="10.9.0" />
     <PackageReference Include="OllamaSharp" Version="5.4.30" />
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="10.3.0" />

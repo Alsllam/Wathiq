@@ -167,7 +167,7 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
       port; `AttachmentUploaded` local event → Hangfire background job OCRs the blob and fills
       `OcrText` (the 2.5 job disciplines re-applied). *Topics: Tesseract on server, OCR as a
       background pipeline stage, second local-event lap.* — feeds FR-DOC-005.
-- [ ] **3.6 Extraction: prompt v1 → validated proposal** — `documents.ExtractionResult` entity +
+- [x] **3.6 Extraction: prompt v1 → validated proposal** — `documents.ExtractionResult` entity +
       migration; `extract-document@v1` prompt as a versioned file with a strict JSON schema;
       `IDocumentDataExtractor` (contract in `Shared`, implementation in `Ai`) turns OcrText into
       a proposal; parsers re-validate every date/number (bad values → empty + warning, never

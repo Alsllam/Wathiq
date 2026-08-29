@@ -8,6 +8,7 @@
     "Wathiq.Documents:CannotDeleteSelfHolder": "You cannot delete your own holder record.",
     "Wathiq.Documents:HolderHasDocuments": "This holder still has documents. Delete or reassign them first.",
     "Wathiq.Documents:UnsupportedFileType": "Only JPEG, PNG and PDF files can be attached.",
+    "Wathiq.Documents:ExtractionAlreadyConcluded": "This extraction was already reviewed; run a new extraction instead.",
     "Permission:Documents": "Wathiq Documents",
     "Permission:DocumentTypes": "View document type catalogue",
     "Permission:Holders": "View holders",
