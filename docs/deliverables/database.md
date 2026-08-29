@@ -2,7 +2,7 @@
 title: "Wathiq — Database Design"
 subtitle: "وثيق — تصميم قاعدة البيانات"
 author: "Abdulsalam"
-version: "0.1.8"
+version: "0.1.9"
 date: "2026-08-29"
 status: "Draft"
 ---
@@ -20,6 +20,7 @@ status: "Draft"
 | 0.1.6 | 2026-08-28 | Abdulsalam | Migrations log row 7: `Reminder` + `DeliveryLog` tables (2.3); both marked *Implemented* |
 | 0.1.7 | 2026-08-28 | Abdulsalam | Migrations log row 8: `ai` schema + `Usage` table (3.2); `Usage` marked *Implemented* |
 | 0.1.8 | 2026-08-29 | Abdulsalam | Migrations log row 9: `ExtractionResult` table (3.6), marked *Implemented*; `PromptVersion` widened 16→32 (real ids like `extract-document@v1` are 19 chars) |
+| 0.1.9 | 2026-08-29 | Abdulsalam | Migrations log row 10: `ai.Usage.PromptVersion` widened 16→32 too — the 3.8 end-to-end cap test caught the ledger still on 16 |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
 Tables in this version are *Planned* until their migration appears in the migrations log, which
@@ -288,7 +289,7 @@ Indexes: `UQ_Reminder_DocumentId_OffsetDays` (idempotent upsert, FR-REM-002),
 | Purpose | tinyint | no | Extraction=0, Embedding, GuideChat, Eval |
 | Provider | nvarchar(32) | no | `ollama`, `groq`, `gemini` |
 | Model | nvarchar(64) | no | |
-| PromptVersion | nvarchar(16) | yes | |
+| PromptVersion | nvarchar(32) | yes | |
 | TokensIn | int | no | |
 | TokensOut | int | no | |
 | DurationMs | int | no | |
@@ -332,6 +333,7 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 | 7 | 2026-08-28 | Reminders | `20260828051505_AddReminderAndDeliveryLog` — tables `Reminder` (unique `UQ_Reminder_DocumentId_OffsetDays`, `IX_Reminder_Status_DueDate`, `IX_Reminder_UserId`), `DeliveryLog` (FK to Reminder, Cascade; `IX_DeliveryLog_ReminderId`) | 2.3 |
 | 8 | 2026-08-28 | Ai (`AiDbContext`, schema `ai`) | `20260828194653_Initial` — schema, `ai.__EFMigrationsHistory`, table `Usage` (`IX_Usage_UserId_At`) | 3.2 |
 | 9 | 2026-08-29 | Documents | `20260829063126_AddExtractionResult` — table `ExtractionResult` (FK to `Attachment`, Cascade; `IX_ExtractionResult_AttachmentId`; `Confidence` decimal(4,3); `Outcome` tinyint) | 3.6 |
+| 10 | 2026-08-29 | Ai | `20260829161139_WidenUsagePromptVersion` — `Usage.PromptVersion` nvarchar(16)→nvarchar(32) | 3.8 |
 
 # Retention, encryption and backups
 

@@ -22,4 +22,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- The eval set is data, not code: editing cases must never require touching C#. Copied to
+         output (and transitively into EFCore.Tests' output) so EvalSet.Load finds it. -->
+    <None Include="Ai\Evals\cases.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

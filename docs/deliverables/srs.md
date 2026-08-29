@@ -2,7 +2,7 @@
 title: "Wathiq — Software Requirements Specification"
 subtitle: "وثيق — مواصفات متطلبات البرمجيات"
 author: "Abdulsalam"
-version: "0.1.2"
+version: "0.1.3"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -14,6 +14,7 @@ status: "Draft"
 | 0.1 | 2026-08-27 | Abdulsalam | Initial SRS: actors, UC-01…UC-06, FR/NFR baseline, glossary (roadmap step 0.4) |
 | 0.1.1 | 2026-08-27 | Abdulsalam | Phase 1 status flips: FR-IDM-001/002 and FR-DOC-001/002/003/006/007 *Implemented*, FR-DOC-004 *Partly implemented* (roadmap step 1.8) |
 | 0.1.2 | 2026-08-28 | Abdulsalam | Phase 2 status flips: FR-REM-001/002/004/005 *Implemented*, FR-REM-003 *Partly implemented* (email done, push P6) (roadmap step 2.8) |
+| 0.1.3 | 2026-08-29 | Abdulsalam | Phase 3 status flips: FR-DOC-005 and FR-AI-001…005 *Implemented* (roadmap step 3.8); AI safety measures now documented in the `ai-safety` deliverable |
 
 **Status:** Draft · **Structure:** IEEE 830-1998 adapted · **Related:** Vision (`vision`),
 Architecture (`architecture`), Database (`database`).
@@ -166,8 +167,8 @@ Columns: ID · Requirement · Priority · Source · Status.
 | FR-DOC-001 | The system shall maintain a catalogue of document types with Arabic and English names and a default validity period. | M | UC-01 | Implemented (1.4 catalogue + seed, 1.6 endpoint) |
 | FR-DOC-002 | The system shall store a document with holder, type, number, issue date, expiry date, status and notes, owned by exactly one user. | M | UC-01 | Implemented (1.5 aggregate, 1.6 CRUD API) |
 | FR-DOC-003 | The system shall reject an expiry date earlier than the issue date and any non-calendar date. | M | UC-01, PLAN P3 question | Implemented (1.5: `ValidityPeriod` value object) |
-| FR-DOC-004 | The system shall store attachments (image/PDF) encrypted at rest and serve them only to the owner. | M | UC-01, C1 | Partly implemented (1.5: aggregate + `IFileStore`; upload API P3, encryption P8) |
-| FR-DOC-005 | The system shall record each AI extraction result (provider, prompt version, JSON, confidence, accepted/edited) linked to its attachment. | M | UC-01 | Planned (P3) |
+| FR-DOC-004 | The system shall store attachments (image/PDF) encrypted at rest and serve them only to the owner. | M | UC-01, C1 | Partly implemented (1.5 aggregate + 3.1 upload/download API + 3.5 OCR; encryption at rest P8) |
+| FR-DOC-005 | The system shall record each AI extraction result (provider, prompt version, JSON, confidence, accepted/edited) linked to its attachment. | M | UC-01 | Implemented (3.6–3.7) |
 | FR-DOC-006 | The system shall let a user mark a document as renewed by entering the new expiry date, keeping the previous one in history. | S | UC-02 | Implemented (1.6: renew endpoint keeps `PreviousExpiryDate`) |
 | FR-DOC-007 | The system shall support holders (family members) per user; a document belongs to one holder. | M | UC-04 | Implemented (1.4 entity + self-holder rule, 1.6 CRUD API) |
 | FR-DOC-008 | The system shall create revocable share links for a document with a maximum lifetime of 7 days. | C | UC-04 | Planned (P8) |
@@ -195,11 +196,11 @@ Columns: ID · Requirement · Priority · Source · Status.
 
 | ID | Requirement | Pri | Source | Status |
 | --- | --- | --- | --- | --- |
-| FR-AI-001 | All model calls shall go through a provider-agnostic interface; the provider shall be selectable by configuration. | M | CLAUDE.md guardrail | Planned (P3) |
-| FR-AI-002 | Extraction of personal documents shall use only the self-hosted provider. | M | C1 | Planned (P3) |
-| FR-AI-003 | Extracted dates and numbers shall be re-validated by parsers before being shown; invalid values shall be shown as empty with a warning. | M | UC-01, FR-DOC-003 | Planned (P3) |
-| FR-AI-004 | Every AI call shall be logged (user, provider, model, tokens, purpose) and a per-user daily cap enforced. | M | Vision P1, R5 | Planned (P3) |
-| FR-AI-005 | Prompts shall be versioned files; the version used shall be stored with each result. | S | FR-DOC-005 | Planned (P3) |
+| FR-AI-001 | All model calls shall go through a provider-agnostic interface; the provider shall be selectable by configuration. | M | CLAUDE.md guardrail | Implemented (3.3) |
+| FR-AI-002 | Extraction of personal documents shall use only the self-hosted provider. | M | C1 | Implemented (3.3, boot guard) |
+| FR-AI-003 | Extracted dates and numbers shall be re-validated by parsers before being shown; invalid values shall be shown as empty with a warning. | M | UC-01, FR-DOC-003 | Implemented (3.6) |
+| FR-AI-004 | Every AI call shall be logged (user, provider, model, tokens, purpose) and a per-user daily cap enforced. | M | Vision P1, R5 | Implemented (3.3, e2e-tested 3.8) |
+| FR-AI-005 | Prompts shall be versioned files; the version used shall be stored with each result. | S | FR-DOC-005 | Implemented (3.6) |
 
 ## Data rights (FR-DR)
 

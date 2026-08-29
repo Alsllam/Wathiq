@@ -177,7 +177,7 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
       the proposal, confirm/edit applies fields through `Document.SetValidity` (reminders resync
       arrives free via 2.4); outcome recorded on `ExtractionResult` (Accepted/Edited/Rejected).
       *Topics: proposal-review-confirm API shape, closing the UC-01 loop.* *Docs: `api`.*
-- [ ] **3.8 Caps, evals, and the docs loop** — cap-exceeded path tested end to end; eval set of
+- [x] **3.8 Caps, evals, and the docs loop** — cap-exceeded path tested end to end; eval set of
       10 synthetic OCR-text documents (ar/en) with expected JSON + an eval runner that scores
       field accuracy; flip FR-AI/FR-DOC-005 rows in `srs.md`; write `ai-safety.md` v0.1
       (routing, prompts, validation, caps, eval method + results). *Topics: evals as regression

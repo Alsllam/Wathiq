@@ -1,0 +1,65 @@
+{
+  "comment": "Eval set v1 for extract-document@v1 (step 3.8). Synthetic OCR text only - no real personal data. 'expected' is the ground truth AFTER validation: what a correct pipeline should propose. Nulls mean 'a correct pipeline proposes nothing'.",
+  "cases": [
+    {
+      "id": "en-passport-clean",
+      "lang": "en",
+      "ocrText": "REPUBLIC OF EXAMPLE\nPASSPORT\nPassport No: P-4471209\nSurname: HADDAD\nGiven names: OMAR\nDate of issue: 2024-02-11\nDate of expiry: 2034-02-10",
+      "expected": { "number": "P-4471209", "issueDate": "2024-02-11", "expiryDate": "2034-02-10" }
+    },
+    {
+      "id": "en-licence-noisy",
+      "lang": "en",
+      "ocrText": "DR1VING LICENCE\nLicence N0. DL 88-4152\nHolder: SARA KHALIL\nlssue: 2023-07-30  Expiry: 2033-O7-29\n(scanner fold line)",
+      "expected": { "number": "DL 88-4152", "issueDate": "2023-07-30", "expiryDate": "2033-07-29" }
+    },
+    {
+      "id": "en-insurance-dates-words",
+      "lang": "en",
+      "ocrText": "GULF SHIELD INSURANCE\nPolicy number: GS-2026-77821\nInsured: vehicle sedan white\nValid from 12 March 2026 until 11 March 2027",
+      "expected": { "number": "GS-2026-77821", "issueDate": "2026-03-12", "expiryDate": "2027-03-11" }
+    },
+    {
+      "id": "en-contract-no-dates",
+      "lang": "en",
+      "ocrText": "TENANCY CONTRACT\nContract ref: TC/2026/0093\nParties agree to the annexed terms.\nSignatures overleaf.",
+      "expected": { "number": "TC/2026/0093", "issueDate": null, "expiryDate": null }
+    },
+    {
+      "id": "en-not-a-document",
+      "lang": "en",
+      "ocrText": "SPECIAL OFFER!! Buy two shawarma get one free. Valid Fridays only. Hotline 800-FOOD.",
+      "expected": { "number": null, "issueDate": null, "expiryDate": null }
+    },
+    {
+      "id": "ar-national-id",
+      "lang": "ar",
+      "ocrText": "الهوية الوطنية\nرقم الهوية: ١٠٨٨٤٥٢٩٣٧\nالاسم: منى عبدالله الحربي\nتاريخ الإصدار: 2022-05-19\nتاريخ الانتهاء: 2032-05-18",
+      "expected": { "number": "1088452937", "issueDate": "2022-05-19", "expiryDate": "2032-05-18" }
+    },
+    {
+      "id": "ar-vehicle-reg",
+      "lang": "ar",
+      "ocrText": "استمارة مركبة\nرقم الاستمارة: ٤٥٢-٧٧٨٩\nالمالك: خالد سعيد\nتنتهي الاستمارة في 2027-09-30",
+      "expected": { "number": "452-7789", "issueDate": null, "expiryDate": "2027-09-30" }
+    },
+    {
+      "id": "ar-passport-hijri-expiry",
+      "lang": "ar",
+      "ocrText": "جواز سفر\nرقم الجواز: A0912384\nالاسم: ليلى محمد\nتاريخ الإصدار: 2025-01-02\nتاريخ الانتهاء: ١٤٥١/٠٦/١٥ هـ",
+      "expected": { "number": "A0912384", "issueDate": "2025-01-02", "expiryDate": null }
+    },
+    {
+      "id": "ar-insurance-mixed",
+      "lang": "ar",
+      "ocrText": "وثيقة تأمين مركبات\nرقم الوثيقة: INS-٣٣٠٤٥\nسارية من 2026-08-01 إلى 2027-07-31\nشركة الدرع العربي",
+      "expected": { "number": "INS-33045", "issueDate": "2026-08-01", "expiryDate": "2027-07-31" }
+    },
+    {
+      "id": "ar-licence-broken-ocr",
+      "lang": "ar",
+      "ocrText": "رخصة قيادة\nالرقم: ٧٧م٢٣ ##\nالاسم: (غير مقروء)\nالانتهاء: 30/02/2027",
+      "expected": { "number": null, "issueDate": null, "expiryDate": null }
+    }
+  ]
+}
