@@ -20,6 +20,9 @@
     "paths": {
       "@wathiq/shared/i18n": [
         "libs/shared/i18n/src/index.ts"
+      ],
+      "@wathiq/shared/api": [
+        "libs/shared/api/src/index.ts"
       ]
     }
   },

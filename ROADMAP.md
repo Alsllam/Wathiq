@@ -209,7 +209,7 @@ and the comparison happens there.
       pipes honoring locale. Every later screen ships its ar+en keys in the same commit (CLAUDE.md
       guardrail made mechanical). *Topics: Transloco setup, RTL via logical properties + `dir`
       switching, locale-aware pipes.*
-- [ ] **4.3 Typed API client (`shared/api`)** — generate a typed client from the host's real
+- [x] **4.3 Typed API client (`shared/api`)** — generate a typed client from the host's real
       `swagger.json` (checked into the lib with its generation script), environment config for the
       API base URL, smoke: document-types list rendered on the shell page (anonymous endpoint).
       *Topics: OpenAPI codegen for Angular, Nx lib boundaries in practice, `httpResource` first

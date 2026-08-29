@@ -1,5 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { TranslocoTestingModule } from '@jsverse/transloco';
 import { App } from './app';
@@ -25,12 +27,28 @@ describe('App', () => {
           translocoConfig: { availableLangs: ['ar', 'en'], defaultLang: 'ar', reRenderOnLangChange: true },
         }),
       ],
-      providers: [provideZonelessChangeDetection(), provideRouter([])],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideRouter([]),
+        // App now embeds DocumentTypesPreview (httpResource) - requests stay stubbed here.
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
   });
 
+  // The embedded httpResource holds app stability until its request is answered - flush it
+  // first (detectChanges issues it), or every whenStable() in these tests times out.
+  function flushCatalogue(fixture: { detectChanges(): void }) {
+    fixture.detectChanges();
+    TestBed.inject(HttpTestingController)
+      .expectOne('/api/documents/document-types')
+      .flush({ items: [] });
+  }
+
   it('renders the Arabic-first shell header', async () => {
     const fixture = TestBed.createComponent(App);
+    flushCatalogue(fixture);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('وثيق');
@@ -38,6 +56,7 @@ describe('App', () => {
 
   it('the language toggle switches the rendered language and direction', async () => {
     const fixture = TestBed.createComponent(App);
+    flushCatalogue(fixture);
     await fixture.whenStable();
 
     (fixture.nativeElement as HTMLElement).querySelector('button')?.click();

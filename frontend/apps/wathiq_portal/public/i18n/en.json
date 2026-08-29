@@ -3,5 +3,11 @@
     "appName": "Wathiq",
     "tagline": "Your documents & deadlines assistant",
     "switchLang": "العربية"
+  },
+  "catalogue": {
+    "title": "Supported document types",
+    "loading": "Loading…",
+    "error": "The server is unreachable right now.",
+    "empty": "No types yet."
   }
 }

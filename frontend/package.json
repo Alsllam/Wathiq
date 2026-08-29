@@ -2,7 +2,9 @@
   "name": "@wathiq-frontend/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "generate:api": "openapi-typescript libs/shared/api/swagger.json -o libs/shared/api/src/lib/api-types.gen.ts"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~20.3.0",
@@ -48,6 +50,7 @@
     "jest-preset-angular": "~14.6.1",
     "jest-util": "^29.7.0",
     "nx": "21.6.11",
+    "openapi-typescript": "^7.13.0",
     "prettier": "^2.6.2",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",

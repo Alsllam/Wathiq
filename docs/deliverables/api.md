@@ -2,7 +2,7 @@
 title: "Wathiq — API Reference"
 subtitle: "وثيق — مرجع الواجهة البرمجية"
 author: "Abdulsalam"
-version: "0.1.3"
+version: "0.1.4"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -15,6 +15,7 @@ status: "Draft"
 | 0.1.1 | 2026-08-28 | Abdulsalam | §5 Reminders module endpoints (rule singleton, upcoming list) from the regenerated spec; permission table extended (roadmap step 2.7) |
 | 0.1.2 | 2026-08-28 | Abdulsalam | §4.4 attachment upload/download/delete endpoints from the regenerated spec (roadmap step 3.1) |
 | 0.1.3 | 2026-08-29 | Abdulsalam | §4.5 extraction endpoints (trigger/latest/confirm/reject) from the regenerated spec; live failure-path example (roadmap step 3.7) |
+| 0.1.4 | 2026-08-29 | Abdulsalam | Document-types list made anonymous - public reference data for the portal shell and future landing page (roadmap step 4.3) |
 
 **Status:** Draft · **Related:** SRS (`srs`) FR-DOC/FR-IDM, Architecture (`architecture`) D3/D7,
 Database (`database`).
@@ -127,7 +128,7 @@ Route root is `/api/documents/*` (module name), resources are plural
 
 | Method & path | Permission | Description |
 | --- | --- | --- |
-| `GET /api/documents/document-types` | `WathiqDocuments.DocumentTypes` | Active catalogue entries, sorted by `sortOrder`. Read-only (admin curation is *Planned*, Phase 7) |
+| `GET /api/documents/document-types` | *anonymous (4.3)* | Active catalogue entries, sorted by `sortOrder` - public reference data, no PII. Read-only (admin curation is *Planned*, Phase 7) |
 
 `DocumentTypeDto`: `id`, `code` (e.g. `PASSPORT`), `nameAr`, `nameEn`,
 `defaultValidityMonths?`, `sortOrder`.

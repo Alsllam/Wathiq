@@ -21,6 +21,10 @@ public class DocumentTypeAppService : DocumentsAppServiceBase, IDocumentTypeAppS
         _documentTypes = documentTypes;
     }
 
+    // 4.3 product decision: the catalogue is public reference data (ar/en names, no PII) - the
+    // portal shell and a future landing page read it before login. Method-level override of the
+    // class-level policy; anything beyond reading the list stays permissioned.
+    [Microsoft.AspNetCore.Authorization.AllowAnonymous]
     public async Task<ListResultDto<DocumentTypeDto>> GetListAsync()
     {
         // The catalogue is small and global - no paging (ListResultDto, not PagedResultDto).
