@@ -1,22 +1,49 @@
-import { TestBed } from '@angular/core/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 import { App } from './app';
+
+// require, not import: under jest's CJS the ESM-interop wraps json imports in {default}, and
+// Transloco would flatten that into "default.shell.appName" keys.
+/* eslint-disable @typescript-eslint/no-require-imports */
+const ar = require('../../public/i18n/ar.json');
+const en = require('../../public/i18n/en.json');
 
 describe('App', () => {
   beforeEach(async () => {
+    localStorage.clear();
     await TestBed.configureTestingModule({
-      imports: [App],
-      // TestBed builds its own injector - the app's zoneless choice must be repeated here or
-      // the test would run under a different change-detection model than production.
+      imports: [
+        App,
+        // The REAL translation files, loaded synchronously - keys drift is caught by the test,
+        // and no HTTP loader runs in specs.
+        TranslocoTestingModule.forRoot({
+          langs: { ar, en },
+          // reRenderOnLangChange must MATCH production (provideWathiqI18n sets it): it defaults
+          // to false, which would freeze the pipe on the first language forever.
+          translocoConfig: { availableLangs: ['ar', 'en'], defaultLang: 'ar', reRenderOnLangChange: true },
+        }),
+      ],
       providers: [provideZonelessChangeDetection(), provideRouter([])],
     }).compileComponents();
   });
 
   it('renders the Arabic-first shell header', async () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable(); // zoneless: await stability instead of detectChanges() rituals
+    await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('وثيق');
+  });
+
+  it('the language toggle switches the rendered language and direction', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+
+    (fixture.nativeElement as HTMLElement).querySelector('button')?.click();
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.querySelector('h1')?.textContent).toContain('Wathiq');
+    expect(document.documentElement.dir).toBe('ltr');
   });
 });

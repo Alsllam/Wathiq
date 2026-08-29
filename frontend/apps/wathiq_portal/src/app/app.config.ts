@@ -3,7 +3,9 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+import { provideWathiqI18n } from '@wathiq/shared/i18n';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -14,5 +16,7 @@ export const appConfig: ApplicationConfig = {
     // means auditing every mutation; starting here makes the discipline free.
     provideZonelessChangeDetection(),
     provideRouter(appRoutes),
+    provideHttpClient(),
+    provideWathiqI18n(), // ar-first Transloco + registered ar/en locale data (4.2)
   ],
 };

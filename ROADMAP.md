@@ -204,7 +204,7 @@ and the comparison happens there.
       a lint rule if available), ESLint + module-boundary tags, placeholder shell page. Verify:
       `nx serve` renders, `nx lint`/`nx test` green. *Topics: Nx 21 workspace anatomy, standalone
       bootstrap, `provideZonelessChangeDetection`, Tailwind 4 setup.*
-- [ ] **4.2 i18n + RTL foundation (`shared/i18n`)** — Transloco with `ar` (default) + `en`, a
+- [x] **4.2 i18n + RTL foundation (`shared/i18n`)** — Transloco with `ar` (default) + `en`, a
       language signal driving `dir`/`lang` on `<html>`, Arabic-capable font stack, date/number
       pipes honoring locale. Every later screen ships its ar+en keys in the same commit (CLAUDE.md
       guardrail made mechanical). *Topics: Transloco setup, RTL via logical properties + `dir`

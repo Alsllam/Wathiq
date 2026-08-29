@@ -1,14 +1,22 @@
-<!-- Logical properties only (ms-/me-/text-start): this header renders correctly the moment 4.2
-     flips dir per language - nothing here knows or cares which side "start" is. -->
+<!-- Logical properties only (ms-, me-, text-start): this header renders correctly under BOTH
+     dir values - the toggle below proves it live, nothing here names left or right. -->
 <header class="border-b border-slate-200 bg-white">
   <div class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
     <span class="inline-flex size-9 items-center justify-center rounded-xl bg-emerald-600 text-lg font-bold text-white">
       و
     </span>
     <div class="text-start">
-      <h1 class="text-lg font-semibold text-slate-900">{{ appName() }}</h1>
-      <p class="text-xs text-slate-500">{{ tagline() }}</p>
+      <h1 class="text-lg font-semibold text-slate-900">{{ 'shell.appName' | transloco }}</h1>
+      <p class="text-xs text-slate-500">{{ 'shell.tagline' | transloco }}</p>
     </div>
+    <!-- ms-auto = "push to the END of the reading direction": in ar it lands left, in en right. -->
+    <button
+      type="button"
+      class="ms-auto rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
+      (click)="language.toggle()"
+    >
+      {{ 'shell.switchLang' | transloco }}
+    </button>
   </div>
 </header>
 

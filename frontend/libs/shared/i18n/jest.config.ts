@@ -1,8 +1,8 @@
 export default {
-  displayName: 'wathiq_portal',
-  preset: '../../jest.preset.js',
+  displayName: 'shared-i18n',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/wathiq_portal',
+  coverageDirectory: '../../../coverage/libs/shared/i18n',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
@@ -18,5 +18,5 @@ export default {
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
     'jest-preset-angular/build/serializers/html-comment',
-  ],
+  ]
 };

@@ -2,6 +2,14 @@
    needed (@theme). The build finds classes by scanning source automatically. */
 @import 'tailwindcss';
 
+/* Tailwind 4 theming is CSS, not JS config: system fonts with solid Arabic coverage on every
+   OS (Segoe UI/Tahoma on Windows, Noto on Linux/Android, SF on Apple) - no webfont download,
+   nothing to self-host yet. */
+@theme {
+  --font-sans: 'Segoe UI', 'Noto Sans Arabic', 'Noto Sans', Tahoma, ui-sans-serif, system-ui,
+    sans-serif;
+}
+
 /* RTL guardrail (CLAUDE.md): spatial layout MUST use logical utilities only - ms-, me-, ps-,
    pe-, text-start, text-end, start-, end- - never ml-, mr- or text-left. One dir switch (4.2)
    then mirrors the whole app for free. */

@@ -1,15 +1,15 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { LanguageService } from '@wathiq/shared/i18n';
 
 @Component({
-  imports: [RouterModule],
+  imports: [RouterModule, TranslocoPipe],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-  // Even a static title is a signal: under zoneless, signal reads are what tell Angular a
-  // template can change - plain fields are the exception now, not the rule.
-  protected readonly appName = signal('وثيق');
-  protected readonly tagline = signal('مساعدك لوثائقك ومواعيدها · Your documents & deadlines assistant');
+  // Public so the template can call toggle() and read lang() - the service IS the view state.
+  protected readonly language = inject(LanguageService);
 }
