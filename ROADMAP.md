@@ -130,7 +130,7 @@ unique index `UQ_Reminder_DocumentId_OffsetDays` is the idempotency backbone, no
 - [ ] 2.CP Checkpoint — "How do you make the nightly reminder job safe to run twice?"
       *(deferred by user; run `/checkpoint` any time — 1.CP is also still open)*
 
-## Phase 3 — AI: OCR + extraction (local, free)  `active`
+## Phase 3 — AI: OCR + extraction (local, free)  `steps done · 3.CP pending`
 
 The pipeline of UC-01: upload an attachment → Tesseract OCR → local LLM structures it → validated
 proposal → user confirms → document fields set (and 2.4's event reschedules reminders for free).
@@ -183,14 +183,64 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
       (routing, prompts, validation, caps, eval method + results). *Topics: evals as regression
       tests for prompts, honest safety documentation.* *Docs: `ai-safety`, `srs`.*
 - [ ] 3.CP Checkpoint — "The model returns an expiry date of 30/02/2027 — where is it caught?"
+      *(deferred by user; run `/checkpoint` any time)*
 
-## Phase 4 — Angular portal  *(expand at start)*
+## Phase 4 — Angular portal  `active`
 
 Nx workspace, `wathiq_portal`, auth (OpenIddict from ABP), documents list/detail, add-document
 wizard (upload → extraction review → confirm), expiry timeline, ar/en + RTL.
 *Topics: signals, control flow, signal forms, resource/httpResource, Nx libs, Tailwind logical.*
+The dev knows Angular/Nx well — the lessons target what is NEW in Angular 20 (signals
+everywhere, built-in control flow, `resource`/`httpResource`, zoneless) plus Tailwind 4 logical
+properties and Transloco. Layout follows `frontend/README.md`; boundaries via
+`@nx/enforce-module-boundaries` (the frontend twin of ADR-001). Reference repo
+`d:\Projects\MoD.HousingProject.Frontend` lives on the dev box — steps that mirror it say so,
+and the comparison happens there.
 
-- [ ] 4.0 Expand phase into steps
+- [x] 4.0 Expand phase into steps
+- [ ] **4.1 Nx workspace + `wathiq_portal` shell** — Nx 21 workspace under `frontend/`, Angular 20
+      standalone app (`bootstrapApplication`, zoneless change detection), Tailwind 4 wired with
+      **logical properties only** (`ms-`/`me-`/`text-start` - no `ml-`/`mr-` anywhere, enforced by
+      a lint rule if available), ESLint + module-boundary tags, placeholder shell page. Verify:
+      `nx serve` renders, `nx lint`/`nx test` green. *Topics: Nx 21 workspace anatomy, standalone
+      bootstrap, `provideZonelessChangeDetection`, Tailwind 4 setup.*
+- [ ] **4.2 i18n + RTL foundation (`shared/i18n`)** — Transloco with `ar` (default) + `en`, a
+      language signal driving `dir`/`lang` on `<html>`, Arabic-capable font stack, date/number
+      pipes honoring locale. Every later screen ships its ar+en keys in the same commit (CLAUDE.md
+      guardrail made mechanical). *Topics: Transloco setup, RTL via logical properties + `dir`
+      switching, locale-aware pipes.*
+- [ ] **4.3 Typed API client (`shared/api`)** — generate a typed client from the host's real
+      `swagger.json` (checked into the lib with its generation script), environment config for the
+      API base URL, smoke: document-types list rendered on the shell page (anonymous endpoint).
+      *Topics: OpenAPI codegen for Angular, Nx lib boundaries in practice, `httpResource` first
+      contact.*
+- [ ] **4.4 Auth against ABP OpenIddict** — authorization-code + PKCE login/logout to the host,
+      token attach via functional interceptor, `authGuard` on routes, current-user signal.
+      Verify live against the running backend. *Topics: OIDC code+PKCE in an SPA, functional
+      interceptors/guards, auth state as a signal.*
+- [ ] **4.5 Documents list + detail (`documents` lib)** — list via `httpResource` (loading/error/
+      empty states with `@if`/`@for`/`@empty`), status + days-until-expiry chips (computed), detail
+      view with attachments. *Topics: `resource`/`httpResource`, computed signals for derived view
+      state, the new control flow end to end.*
+- [ ] **4.6 Add-document wizard I: create + upload** — multi-step wizard (type/holder → fields →
+      attachment upload with progress), signal forms for the field steps, client-side MIME/size
+      pre-checks mirroring the server allow-list. *Topics: signal forms, multi-step wizard state as
+      signals, file upload in Angular.*
+- [ ] **4.7 Add-document wizard II: extraction review → confirm** — after upload, poll
+      `latest` until OCR lands, trigger extraction, render the proposal with its **warnings** (the
+      FR-AI-003 UX: empty field + the reason), user edits/confirms → confirm endpoint → document
+      updated; handle `ExtractionNotReady`/`ExtractionFailed`/cap errors gracefully. Closes UC-01
+      in the UI. *Topics: polling with `resource`, proposal-review UX, error-code-driven messages.*
+- [ ] **4.8 Expiry timeline + reminder settings** — timeline (soonest-first, overdue flagged) and
+      the reminder-rule editor (offsets, channels, quiet hours, time zone) against the Reminders
+      API. *Topics: computed-heavy derived views, editing value-object-shaped DTOs.*
+- [ ] **4.9 Portal tests + docs loop** — unit tests for the wizard state + computed logic, one
+      Playwright happy path (login → create → upload → list) against the live backend, frontend
+      section added to `architecture.md`, `user-guide.md` v0.1 started with the portal flows.
+      *Topics: testing signal components, Playwright against a real API, keeping docs honest.*
+      *Docs: `architecture`, `user-guide`.*
+- [ ] 4.CP Checkpoint — "When do you use `computed` vs `effect`, and which one should you almost
+      never need?"
 
 ## Phase 5 — Guides + RAG  *(expand at start)*
 
