@@ -2,7 +2,9 @@
   "shell": {
     "appName": "Wathiq",
     "tagline": "Your documents & deadlines assistant",
-    "switchLang": "العربية"
+    "switchLang": "العربية",
+    "login": "Sign in",
+    "logout": "Sign out"
   },
   "catalogue": {
     "title": "Supported document types",

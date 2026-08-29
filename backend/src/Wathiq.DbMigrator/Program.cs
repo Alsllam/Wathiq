@@ -30,6 +30,11 @@ class Program
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
+            // 4.4: content root defaults to the CURRENT DIRECTORY, so `dotnet run` from the
+            // repo root silently loads NO appsettings.json - migrations still work (env conn
+            // string) while the OpenIddict section is empty and clients seed half-blank.
+            // Pinning to the binary's directory makes the migrator cwd-proof.
+            .UseContentRoot(System.AppContext.BaseDirectory)
             .AddAppSettingsSecretsJson()
             .ConfigureLogging((context, logging) => logging.ClearProviders())
             .ConfigureServices((hostContext, services) =>

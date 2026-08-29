@@ -4,7 +4,17 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { TranslocoTestingModule } from '@jsverse/transloco';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { Subject } from 'rxjs';
 import { App } from './app';
+
+// The header reads AuthService, whose only dependency is the OAuth library - stubbed here as
+// "anonymous, nothing happening" (the auth lib's own spec covers the interesting states).
+const oauthStub = {
+  events: new Subject(),
+  hasValidAccessToken: () => false,
+  getIdentityClaims: () => null,
+};
 
 // require, not import: under jest's CJS the ESM-interop wraps json imports in {default}, and
 // Transloco would flatten that into "default.shell.appName" keys.
@@ -33,6 +43,7 @@ describe('App', () => {
         // App now embeds DocumentTypesPreview (httpResource) - requests stay stubbed here.
         provideHttpClient(),
         provideHttpClientTesting(),
+        { provide: OAuthService, useValue: oauthStub },
       ],
     }).compileComponents();
   });
@@ -59,7 +70,7 @@ describe('App', () => {
     flushCatalogue(fixture);
     await fixture.whenStable();
 
-    (fixture.nativeElement as HTMLElement).querySelector('button')?.click();
+    (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('[data-testid="lang-toggle"]')?.click();
     await fixture.whenStable();
 
     expect(fixture.nativeElement.querySelector('h1')?.textContent).toContain('Wathiq');

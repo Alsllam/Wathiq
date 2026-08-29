@@ -23,6 +23,9 @@
       ],
       "@wathiq/shared/api": [
         "libs/shared/api/src/index.ts"
+      ],
+      "@wathiq/shared/auth": [
+        "libs/shared/auth/src/index.ts"
       ]
     }
   },

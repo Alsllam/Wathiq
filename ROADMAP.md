@@ -214,7 +214,7 @@ and the comparison happens there.
       API base URL, smoke: document-types list rendered on the shell page (anonymous endpoint).
       *Topics: OpenAPI codegen for Angular, Nx lib boundaries in practice, `httpResource` first
       contact.*
-- [ ] **4.4 Auth against ABP OpenIddict** — authorization-code + PKCE login/logout to the host,
+- [x] **4.4 Auth against ABP OpenIddict** — authorization-code + PKCE login/logout to the host,
       token attach via functional interceptor, `authGuard` on routes, current-user signal.
       Verify live against the running backend. *Topics: OIDC code+PKCE in an SPA, functional
       interceptors/guards, auth state as a signal.*

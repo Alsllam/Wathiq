@@ -2,7 +2,9 @@
   "shell": {
     "appName": "وثيق",
     "tagline": "مساعدك لوثائقك ومواعيدها",
-    "switchLang": "English"
+    "switchLang": "English",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج"
   },
   "catalogue": {
     "title": "أنواع الوثائق المدعومة",

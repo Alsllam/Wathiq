@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { AuthService } from '@wathiq/shared/auth';
 import { LanguageService } from '@wathiq/shared/i18n';
 import { DocumentTypesPreview } from './document-types-preview';
 
@@ -11,6 +12,7 @@ import { DocumentTypesPreview } from './document-types-preview';
   styleUrl: './app.css',
 })
 export class App {
-  // Public so the template can call toggle() and read lang() - the service IS the view state.
+  // Public so the template can call toggle() and read lang() - the services ARE the view state.
   protected readonly language = inject(LanguageService);
+  protected readonly auth = inject(AuthService);
 }

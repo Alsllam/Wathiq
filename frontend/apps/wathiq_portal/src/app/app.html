@@ -10,13 +10,34 @@
       <p class="text-xs text-slate-500">{{ 'shell.tagline' | transloco }}</p>
     </div>
     <!-- ms-auto = "push to the END of the reading direction": in ar it lands left, in en right. -->
-    <button
-      type="button"
-      class="ms-auto rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
-      (click)="language.toggle()"
-    >
-      {{ 'shell.switchLang' | transloco }}
-    </button>
+    <div class="ms-auto flex items-center gap-2">
+      @if (auth.isAuthenticated()) {
+        <span class="text-sm text-slate-600">{{ auth.userName() }}</span>
+        <button
+          type="button"
+          class="rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
+          (click)="auth.logout()"
+        >
+          {{ 'shell.logout' | transloco }}
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700"
+          (click)="auth.login()"
+        >
+          {{ 'shell.login' | transloco }}
+        </button>
+      }
+      <button
+        type="button"
+        data-testid="lang-toggle"
+        class="rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
+        (click)="language.toggle()"
+      >
+        {{ 'shell.switchLang' | transloco }}
+      </button>
+    </div>
   </div>
 </header>
 
