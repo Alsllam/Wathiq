@@ -12,6 +12,11 @@
     <!-- ms-auto = "push to the END of the reading direction": in ar it lands left, in en right. -->
     <div class="ms-auto flex items-center gap-2">
       @if (auth.isAuthenticated()) {
+        <a routerLink="/documents" class="me-2 text-sm font-medium text-emerald-700 hover:underline">
+          {{ 'documents.nav' | transloco }}
+        </a>
+      }
+      @if (auth.isAuthenticated()) {
         <span class="text-sm text-slate-600">{{ auth.userName() }}</span>
         <button
           type="button"

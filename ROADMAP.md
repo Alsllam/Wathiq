@@ -218,7 +218,7 @@ and the comparison happens there.
       token attach via functional interceptor, `authGuard` on routes, current-user signal.
       Verify live against the running backend. *Topics: OIDC code+PKCE in an SPA, functional
       interceptors/guards, auth state as a signal.*
-- [ ] **4.5 Documents list + detail (`documents` lib)** — list via `httpResource` (loading/error/
+- [x] **4.5 Documents list + detail (`documents` lib)** — list via `httpResource` (loading/error/
       empty states with `@if`/`@for`/`@empty`), status + days-until-expiry chips (computed), detail
       view with attachments. *Topics: `resource`/`httpResource`, computed signals for derived view
       state, the new control flow end to end.*

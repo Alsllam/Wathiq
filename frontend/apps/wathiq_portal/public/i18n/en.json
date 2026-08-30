@@ -11,5 +11,25 @@
     "loading": "Loading…",
     "error": "The server is unreachable right now.",
     "empty": "No types yet."
+  },
+  "documents": {
+    "title": "My documents",
+    "loading": "Loading…",
+    "error": "Documents cannot be loaded right now.",
+    "empty": "No documents yet.",
+    "back": "Back to documents",
+    "issueDate": "Issue date",
+    "expiryDate": "Expiry date",
+    "notes": "Notes",
+    "attachments": "Attachments",
+    "noAttachments": "No attachments.",
+    "download": "Download",
+    "nav": "Documents",
+    "expiry": {
+      "expired": "Expired {{days}} days ago",
+      "soon": "Expires in {{days}} days",
+      "ok": "Valid ({{days}} days)",
+      "none": "No expiry date"
+    }
   }
 }
