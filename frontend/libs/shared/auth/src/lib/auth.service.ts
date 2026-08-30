@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { injectApiUrl } from '@wathiq/shared/api';
 
 /// The signals facade over angular-oauth2-oidc (4.2's recipe again): the library's event
 /// stream is the edge; ONE writable signal mirrors it; everything the UI needs derives.
@@ -7,6 +10,8 @@ import { OAuthService } from 'angular-oauth2-oidc';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly oauth = inject(OAuthService);
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = injectApiUrl();
 
   private readonly authenticated = signal(false);
 
@@ -30,6 +35,13 @@ export class AuthService {
   async init(): Promise<void> {
     await this.oauth.loadDiscoveryDocumentAndTryLogin();
     this.authenticated.set(this.oauth.hasValidAccessToken());
+    if (this.authenticated()) {
+      // ABP's bootstrap call, for one side effect we need: it RE-ISSUES the XSRF-TOKEN cookie
+      // bound to the CURRENT principal. The pre-login anonymous token otherwise fails POSTs
+      // with "meant for a different claims-based user" (the antiforgery is per-principal).
+      await firstValueFrom(this.http.get(this.apiUrl('/api/abp/application-configuration')))
+        .catch(() => undefined); // backend down = degraded, not broken login
+    }
   }
 
   login(): void {

@@ -19,7 +19,13 @@ const PAGE_SIZE = 10;
   imports: [RouterLink, TranslocoPipe],
   template: `
     <section>
-      <h2 class="text-xl font-semibold text-slate-900">{{ 'documents.title' | transloco }}</h2>
+      <div class="flex items-center">
+        <h2 class="text-xl font-semibold text-slate-900">{{ 'documents.title' | transloco }}</h2>
+        <a routerLink="new" data-testid="add-document"
+           class="ms-auto rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700">
+          {{ 'wizard.title' | transloco }}
+        </a>
+      </div>
 
       @if (documents.isLoading()) {
         <p class="mt-4 text-sm text-slate-500">{{ 'documents.loading' | transloco }}</p>

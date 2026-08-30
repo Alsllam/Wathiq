@@ -31,5 +31,23 @@
       "ok": "Valid ({{days}} days)",
       "none": "No expiry date"
     }
+  },
+  "wizard": {
+    "title": "Add document",
+    "stepOf": "Step {{step}} of 3",
+    "type": "Document type",
+    "holder": "Holder",
+    "number": "Document number",
+    "datesInverted": "The expiry date is before the issue date.",
+    "attachment": "Attachment (image or PDF, optional)",
+    "back": "Back",
+    "next": "Next",
+    "createOnly": "Create document",
+    "createWithFile": "Create & upload",
+    "error": "The document could not be created. Try again.",
+    "file": {
+      "type": "This file type is not supported (JPEG, PNG or PDF only).",
+      "size": "The file exceeds 20 MB."
+    }
   }
 }

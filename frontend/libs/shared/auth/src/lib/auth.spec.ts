@@ -1,6 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { HttpRequest, HttpHandlerFn } from '@angular/common/http';
+import { HttpRequest, HttpHandlerFn, provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Subject } from 'rxjs';
 import { OAuthService, OAuthEvent } from 'angular-oauth2-oidc';
 import { AuthService } from './auth.service';
@@ -36,6 +37,8 @@ describe('shared-auth', () => {
     TestBed.configureTestingModule({
       providers: [
         provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(), // init()'s app-config call stays stubbed
         { provide: OAuthService, useValue: fakeOAuth },
       ],
     });

@@ -222,7 +222,7 @@ and the comparison happens there.
       empty states with `@if`/`@for`/`@empty`), status + days-until-expiry chips (computed), detail
       view with attachments. *Topics: `resource`/`httpResource`, computed signals for derived view
       state, the new control flow end to end.*
-- [ ] **4.6 Add-document wizard I: create + upload** — multi-step wizard (type/holder → fields →
+- [x] **4.6 Add-document wizard I: create + upload** — multi-step wizard (type/holder → fields →
       attachment upload with progress), signal forms for the field steps, client-side MIME/size
       pre-checks mirroring the server allow-list. *Topics: signal forms, multi-step wizard state as
       signals, file upload in Angular.*
