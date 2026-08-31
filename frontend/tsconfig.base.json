@@ -11,7 +11,7 @@
     "target": "es2015",
     "module": "esnext",
     "lib": [
-      "es2020",
+      "es2022",
       "dom"
     ],
     "skipLibCheck": true,
@@ -29,6 +29,9 @@
       ],
       "@wathiq/documents": [
         "libs/documents/src/index.ts"
+      ],
+      "@wathiq/reminders": [
+        "libs/reminders/src/index.ts"
       ]
     }
   },

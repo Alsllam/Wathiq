@@ -15,6 +15,9 @@
         <a routerLink="/documents" class="me-2 text-sm font-medium text-emerald-700 hover:underline">
           {{ 'documents.nav' | transloco }}
         </a>
+        <a routerLink="/reminders" class="me-2 text-sm font-medium text-emerald-700 hover:underline">
+          {{ 'reminders.nav' | transloco }}
+        </a>
       }
       @if (auth.isAuthenticated()) {
         <span class="text-sm text-slate-600">{{ auth.userName() }}</span>

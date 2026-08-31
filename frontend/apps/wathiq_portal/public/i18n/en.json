@@ -64,5 +64,25 @@
     "reject": "Reject proposal",
     "done": "Your decision was saved.",
     "unsupported": "Extraction is not available for this file type yet."
+  },
+  "reminders": {
+    "nav": "Reminders",
+    "title": "Expiry timeline",
+    "empty": "No upcoming reminders.",
+    "overdueBy": "Overdue by {{days}} days",
+    "inDays": "In {{days}} days",
+    "settings": "Reminder settings",
+    "offsets": "Remind me before expiry by",
+    "days": "{{days}} days",
+    "remove": "Remove",
+    "channels": "Channels",
+    "email": "Email",
+    "push": "Push notifications",
+    "soon": "coming soon",
+    "quiet": "Quiet hours",
+    "quietPair": "Set both start and end, or leave both empty.",
+    "timezone": "Time zone",
+    "save": "Save settings",
+    "saved": "Saved ✓"
   }
 }

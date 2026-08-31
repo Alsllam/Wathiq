@@ -9,6 +9,9 @@ export type DocumentDto = components['schemas']['Wathiq.Documents.Documents.Docu
 export type AttachmentDto = components['schemas']['Wathiq.Documents.Documents.AttachmentDto'];
 export type HolderDto = components['schemas']['Wathiq.Documents.Holders.HolderDto'];
 export type ExtractionProposalDto = components['schemas']['Wathiq.Documents.Extraction.ExtractionProposalDto'];
+export type ReminderDto = components['schemas']['Wathiq.Reminders.Reminders.ReminderDto'];
+export type ReminderRuleDto = components['schemas']['Wathiq.Reminders.Rules.ReminderRuleDto'];
+export type UpdateReminderRuleDto = components['schemas']['Wathiq.Reminders.Rules.UpdateReminderRuleDto'];
 
 /// ABP's list envelopes, generic the way the wire actually is.
 export interface ListResultDto<T> {

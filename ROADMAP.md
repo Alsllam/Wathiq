@@ -231,7 +231,7 @@ and the comparison happens there.
       FR-AI-003 UX: empty field + the reason), user edits/confirms → confirm endpoint → document
       updated; handle `ExtractionNotReady`/`ExtractionFailed`/cap errors gracefully. Closes UC-01
       in the UI. *Topics: polling with `resource`, proposal-review UX, error-code-driven messages.*
-- [ ] **4.8 Expiry timeline + reminder settings** — timeline (soonest-first, overdue flagged) and
+- [x] **4.8 Expiry timeline + reminder settings** — timeline (soonest-first, overdue flagged) and
       the reminder-rule editor (offsets, channels, quiet hours, time zone) against the Reminders
       API. *Topics: computed-heavy derived views, editing value-object-shaped DTOs.*
 - [ ] **4.9 Portal tests + docs loop** — unit tests for the wizard state + computed logic, one
