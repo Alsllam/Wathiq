@@ -49,5 +49,20 @@
       "type": "This file type is not supported (JPEG, PNG or PDF only).",
       "size": "The file exceeds 20 MB."
     }
+  },
+  "extraction": {
+    "start": "Extract data with AI",
+    "notReady": "The attachment is still being read.",
+    "retryIn": "Retrying in {{s}}s",
+    "working": "Extracting…",
+    "failed": "Extraction is unavailable right now. Your document is unaffected.",
+    "capped": "You reached today's AI usage limit.",
+    "retry": "Retry",
+    "reviewTitle": "AI proposal — review, then confirm",
+    "confidence": "Model confidence: {{p}}%",
+    "confirm": "Confirm & save",
+    "reject": "Reject proposal",
+    "done": "Your decision was saved.",
+    "unsupported": "Extraction is not available for this file type yet."
   }
 }

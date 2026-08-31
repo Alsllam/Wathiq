@@ -226,7 +226,7 @@ and the comparison happens there.
       attachment upload with progress), signal forms for the field steps, client-side MIME/size
       pre-checks mirroring the server allow-list. *Topics: signal forms, multi-step wizard state as
       signals, file upload in Angular.*
-- [ ] **4.7 Add-document wizard II: extraction review → confirm** — after upload, poll
+- [x] **4.7 Add-document wizard II: extraction review → confirm** — after upload, poll
       `latest` until OCR lands, trigger extraction, render the proposal with its **warnings** (the
       FR-AI-003 UX: empty field + the reason), user edits/confirms → confirm endpoint → document
       updated; handle `ExtractionNotReady`/`ExtractionFailed`/cap errors gracefully. Closes UC-01

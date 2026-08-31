@@ -5,11 +5,12 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AttachmentDto, DocumentDto, injectApiUrl } from '@wathiq/shared/api';
 import { LanguageService } from '@wathiq/shared/i18n';
+import { ExtractionReview } from './extraction/extraction-review';
 import { EXPIRY_CHIP_CLASSES, expirySeverity } from './expiry';
 
 @Component({
   selector: 'wq-document-detail',
-  imports: [RouterLink, TranslocoPipe, DatePipe, DecimalPipe],
+  imports: [RouterLink, TranslocoPipe, DatePipe, DecimalPipe, ExtractionReview],
   template: `
     <section>
       <a routerLink=".." class="text-sm text-emerald-700 hover:underline">
@@ -53,13 +54,23 @@ import { EXPIRY_CHIP_CLASSES, expirySeverity } from './expiry';
           </h3>
           <ul class="mt-2 space-y-1">
             @for (att of doc.attachments; track att.id) {
-              <li class="flex items-center gap-3 rounded-lg bg-slate-50 px-3 py-2 text-sm">
-                <span class="text-slate-700" dir="ltr">{{ att.mimeType }}</span>
-                <span class="text-slate-400">{{ (att.sizeBytes ?? 0) / 1024 | number: '1.0-0' }} KB</span>
-                <button type="button" class="ms-auto text-emerald-700 hover:underline"
-                        (click)="download(doc.id!, att)">
-                  {{ 'documents.download' | transloco }}
-                </button>
+              <li>
+                <div class="flex items-center gap-3 rounded-lg bg-slate-50 px-3 py-2 text-sm">
+                  <span class="text-slate-700" dir="ltr">{{ att.mimeType }}</span>
+                  <span class="text-slate-400">{{ (att.sizeBytes ?? 0) / 1024 | number: '1.0-0' }} KB</span>
+                  <button type="button" class="ms-auto text-emerald-700 hover:underline"
+                          (click)="download(doc.id!, att)">
+                    {{ 'documents.download' | transloco }}
+                  </button>
+                </div>
+                @if (att.mimeType?.startsWith('image/')) {
+                  <!-- UC-01's last mile: review the AI's proposal, then confirm through the same
+                       endpoints 3.7 proved - concluded() reloads the document (resource.reload). -->
+                  <wq-extraction-review [documentId]="doc.id!" [attachmentId]="att.id!"
+                                        (concluded)="document.reload()" />
+                } @else {
+                  <p class="mt-1 text-xs text-slate-400">{{ 'extraction.unsupported' | transloco }}</p>
+                }
               </li>
             } @empty {
               <li class="text-sm text-slate-500">{{ 'documents.noAttachments' | transloco }}</li>
