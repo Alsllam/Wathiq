@@ -234,7 +234,7 @@ and the comparison happens there.
 - [x] **4.8 Expiry timeline + reminder settings** — timeline (soonest-first, overdue flagged) and
       the reminder-rule editor (offsets, channels, quiet hours, time zone) against the Reminders
       API. *Topics: computed-heavy derived views, editing value-object-shaped DTOs.*
-- [ ] **4.9 Portal tests + docs loop** — unit tests for the wizard state + computed logic, one
+- [x] **4.9 Portal tests + docs loop** — unit tests for the wizard state + computed logic, one
       Playwright happy path (login → create → upload → list) against the live backend, frontend
       section added to `architecture.md`, `user-guide.md` v0.1 started with the portal flows.
       *Topics: testing signal components, Playwright against a real API, keeping docs honest.*

@@ -1,0 +1,17 @@
+{
+  "name": "wathiq_portal_e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/wathiq_portal_e2e/src",
+  "tags": ["type:e2e", "scope:portal"],
+  "implicitDependencies": ["wathiq_portal"],
+  "targets": {
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx playwright test",
+        "cwd": "apps/wathiq_portal_e2e"
+      }
+    }
+  }
+}

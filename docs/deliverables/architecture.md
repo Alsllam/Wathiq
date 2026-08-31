@@ -2,7 +2,7 @@
 title: "Wathiq — Software Architecture Document"
 subtitle: "وثيق — وثيقة معمارية البرمجيات"
 author: "Abdulsalam"
-version: "0.1"
+version: "0.2"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -12,6 +12,7 @@ status: "Draft"
 | Version | Date | Author | Change |
 | --- | --- | --- | --- |
 | 0.1 | 2026-08-27 | Abdulsalam | C4 context + container, module map, key flows, decisions D1–D9 (roadmap step 0.5) |
+| 0.2 | 2026-08-30 | Abdulsalam | §Frontend architecture (as built, Phase 4): workspace map, boundaries, auth+XSRF flow, data access, i18n/RTL, zoneless; API-shape observation from 4.7 (roadmap step 4.9) |
 
 **Status:** Draft · **Related:** Vision (`vision`), SRS (`srs`), Database (`database`).
 Diagrams are authored in Mermaid (source kept beside each figure) and rendered to
@@ -230,6 +231,57 @@ sequenceDiagram
     G-->>U: answer with citations + last-verified date
   end
 ```
+
+# Frontend architecture (as built, Phase 4)
+
+The portal is an Nx 21 workspace (`frontend/`), Angular 20, **zoneless** (`provideZonelessChangeDetection`;
+zone.js is not installed) — all view state lives in signals, derivation in `computed`, with exactly
+two sanctioned `effect` shapes: syncing state OUT of Angular (the i18n `<html dir/lang>` writer) and
+the guarded seed-once INTO editable state (the reminder-rule editor).
+
+## Workspace map and boundaries
+
+| Project | Tag | Role |
+| --- | --- | --- |
+| `apps/wathiq_portal` | `type:app, scope:portal` | shell, routing, providers |
+| `apps/wathiq_portal_e2e` | `type:e2e` | Playwright happy path against the live stack |
+| `libs/documents` | `type:feature` | list/detail, add wizard, extraction review |
+| `libs/reminders` | `type:feature` | expiry timeline, rule editor |
+| `libs/shared/api` | `scope:shared` | committed `swagger.json` + generated types (`npm run generate:api`), base-URL token, dev proxy conventions |
+| `libs/shared/auth` | `scope:shared` | OIDC code+PKCE facade (signals), auth + XSRF interceptors, guard |
+| `libs/shared/i18n` | `scope:shared` | Transloco (ar-first), language signal → dir/locale, locale data |
+
+`@nx/enforce-module-boundaries` enforces: app → feature/shared; feature → shared; shared → shared —
+the frontend twin of ADR-001, declared before the first lib existed.
+
+## Auth flow (as built)
+
+Authorization code + PKCE against the host's OpenIddict (`Wathiq_App`, public client, no secret).
+An app initializer completes the `?code=` exchange before any guard runs; auth state is one signal
+derived from the OAuth library's events. Two interceptors: bearer-on-API-URLs, and the ABP
+antiforgery pair — the login cookie rides proxied API calls (cookies ignore ports), so the client
+returns the `XSRF-TOKEN` cookie as `RequestVerificationToken` and re-fetches
+`/api/abp/application-configuration` post-login to get a token bound to the signed-in principal.
+
+## Data access
+
+Relative `/api/*` URLs through the dev proxy (deployment supplies a base URL via injection token);
+reads are `httpResource` with reactive URLs (pagination = writing a page signal), writes are plain
+`HttpClient` posts that end by reloading the owning resource. DTO types are generated from the
+committed `swagger.json`; regeneration turns backend contract drift into a compile error and a diff.
+
+## i18n / RTL
+
+Arabic-first: one `lang` signal; `dir`, locale and Transloco's active language derive from it.
+Spatial CSS is logical-properties-only (`ms-`/`me-`/`text-start`), so the `dir` flip mirrors the
+whole app; dates/numbers pass `locale()` as a pipe argument. Every screen ships `ar`+`en` keys in
+its own commit.
+
+## API-shape observations (feedback to the backend)
+
+- *(4.7)* OCR readiness is only observable by attempting extraction (`ExtractionNotReady`); the
+  review UI polls by retrying visibly. A lightweight status (a field on `AttachmentDto` or a
+  dedicated endpoint) would let the UI show "reading…" before the first attempt.
 
 # Cross-cutting concerns
 
