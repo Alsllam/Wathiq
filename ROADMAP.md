@@ -185,7 +185,7 @@ trusted until parsers re-validate it (FR-AI-003). Code steps verify with fakes b
 - [ ] 3.CP Checkpoint — "The model returns an expiry date of 30/02/2027 — where is it caught?"
       *(deferred by user; run `/checkpoint` any time)*
 
-## Phase 4 — Angular portal  `active`
+## Phase 4 — Angular portal  `steps done · 4.CP pending`
 
 Nx workspace, `wathiq_portal`, auth (OpenIddict from ABP), documents list/detail, add-document
 wizard (upload → extraction review → confirm), expiry timeline, ar/en + RTL.
@@ -240,15 +240,62 @@ and the comparison happens there.
       *Topics: testing signal components, Playwright against a real API, keeping docs honest.*
       *Docs: `architecture`, `user-guide`.*
 - [ ] 4.CP Checkpoint — "When do you use `computed` vs `effect`, and which one should you almost
-      never need?"
+      never need?" *(deferred by user; run `/checkpoint` any time)*
 
-## Phase 5 — Guides + RAG  *(expand at start)*
+## Phase 5 — Guides + RAG  `active`
 
 `Guides` module, versions, chunking + `bge-m3` embeddings stored in SQL Server, cosine search,
 grounded chat with citations, "outdated?" feedback, eval questions.
 *Topics: RAG pipeline, chunking, embeddings in SQL, grounding, hallucination controls.*
+Entities follow `docs/deliverables/database.md` §schema `guides` exactly (Guide → GuideVersion →
+GuideChunk with version-anchored embeddings — the checkpoint's theme). Privacy split (C1): guide
+CONTENT is public, so the `"guides"` keyed client may use a cloud free tier, but embeddings run
+on local `bge-m3` and user questions are logged capped like every AI call. Model-dependent steps
+verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the 3.4 split).
 
-- [ ] 5.0 Expand phase into steps
+- [x] 5.0 Expand phase into steps
+- [ ] **5.1 `Guides` module skeleton** — the four projects under `backend/modules/Guides/`,
+      `GuidesDbContext` on schema `guides`, empty first migration, registered in host + migrator +
+      SQLite test host in one commit (the settled recipe), permissions home (`Guides.Manage` for
+      authoring - admin only; reading is for everyone). *Topics: the module recipe from memory,
+      fifth lap.* *Docs: `database` (migrations log).*
+- [ ] **5.2 `Guide`, `GuideVersion`, `GuideStep` + publish workflow** — entities per DB doc;
+      versions are immutable once published (`PublishedAt`), `Guide.PublishedVersionId` points at
+      the served one; admin authoring endpoints (create guide, add draft version, publish);
+      `LastVerifiedAt` mandatory (Vision R2: every answer shows freshness). Seed one real guide
+      (passport renewal, ar+en). *Topics: publish-workflow modeling, immutable versions,
+      seeding real content.* — FR-GDE-001/002. *Docs: `database`, `api`.*
+- [ ] **5.3 Chunking + `bge-m3` embeddings on publish** — `GuideChunk` per DB doc (embedding as
+      `varbinary`, `EmbeddingModel` recorded); heading/size-aware chunker with overlap (pure,
+      heavily tested); `IEmbeddingGenerator` behind the Ai module (local bge-m3 ONLY - embeddings
+      of public text still stay local by default), publish enqueues an embed job (the 3.5 lap);
+      float[] ↔ bytes converters tested. Gated live embed smoke. *Topics: chunking strategies,
+      embeddings as storage, IEmbeddingGenerator.* — FR-GDE-003. *Docs: `database`.*
+- [ ] **5.4 Retrieval: cosine top-k over SQL-stored embeddings** — `IGuideRetriever`: embed the
+      question, cosine against the published versions' chunks (in-process over SQL-hydrated
+      vectors with a small cache - honest about SQL Server 2022 having no VECTOR type yet; the
+      DB doc already notes `VECTOR(1024)` when available), similarity floor, top-k with scores.
+      Pure math unit-tested; retrieval quality eval deferred to 5.6. *Topics: cosine similarity,
+      hydrate-and-cache retrieval, scale honesty.*
+- [ ] **5.5 Grounded chat with citations** — `guides-chat@v1` versioned prompt (answer ONLY from
+      supplied chunks, cite chunk ids, refuse when nothing relevant); `/api/guides/chat` endpoint;
+      response validation: citations must reference retrieved chunk ids (hallucinated citations
+      dropped + warning - FR-AI-003's posture for RAG), low-similarity → honest "no answer" with
+      a pointer to the guide list; every answer carries `LastVerifiedAt`. Usage logged/capped via
+      the 3.3 decorator (purpose GuideChat). *Topics: grounding prompts, citation validation,
+      refusal as a feature.* — FR-GDE-004, FR-AI-003. *Docs: `api`.*
+- [ ] **5.6 Feedback, evals and the docs loop** — `GuideFeedback` entity + endpoint ("outdated?"
+      from any reader); eval set of grounded Q&A pairs (ar/en, incl. must-refuse questions) with
+      a gated runner scoring citation correctness + refusal accuracy; flip FR-GDE rows in
+      `srs.md`; extend `ai-safety.md` with the RAG section (grounding, citation validation,
+      refusal, eval method). *Topics: RAG evals, feedback loops.* *Docs: `srs`, `ai-safety`,
+      `database`.*
+- [ ] **5.7 Portal: guides list + chat screen** — `libs/guides` feature lib: guide list (public
+      read), guide detail rendering steps + freshness, the chat screen showing answers with
+      citation links INTO the guide and the "outdated?" button (UC-03 for residents). ar+en keys,
+      the established signal patterns. *Topics: chat UX over signals, rendering citations,
+      closing UC-03 in the UI.* *Docs: `user-guide`.*
+- [ ] 5.CP Checkpoint — "Why store the chunk's `GuideVersion` alongside its embedding?"
 
 ## Phase 6 — Flutter resident app  *(expand at start)*
 
