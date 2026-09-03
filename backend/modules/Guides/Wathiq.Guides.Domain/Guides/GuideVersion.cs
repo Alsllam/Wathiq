@@ -88,6 +88,10 @@ public class GuideVersion : FullAuditedAggregateRoot<Guid>
         }
 
         PublishedAt = now;
+
+        // Publish is the moment content becomes citable, so it is also the moment to (re)build
+        // its chunks+embeddings. AddLocalEvent publishes at SaveChanges, inside this UoW (1.5).
+        AddLocalEvent(new Events.GuideVersionPublishedEto { GuideVersionId = Id });
         return this;
     }
 

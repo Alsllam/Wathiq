@@ -265,7 +265,7 @@ verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the
       `LastVerifiedAt` mandatory (Vision R2: every answer shows freshness). Seed one real guide
       (passport renewal, ar+en). *Topics: publish-workflow modeling, immutable versions,
       seeding real content.* — FR-GDE-001/002. *Docs: `database`, `api`.*
-- [ ] **5.3 Chunking + `bge-m3` embeddings on publish** — `GuideChunk` per DB doc (embedding as
+- [x] **5.3 Chunking + `bge-m3` embeddings on publish** — `GuideChunk` per DB doc (embedding as
       `varbinary`, `EmbeddingModel` recorded); heading/size-aware chunker with overlap (pure,
       heavily tested); `IEmbeddingGenerator` behind the Ai module (local bge-m3 ONLY - embeddings
       of public text still stay local by default), publish enqueues an embed job (the 3.5 lap);

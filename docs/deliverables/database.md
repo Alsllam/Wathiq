@@ -2,7 +2,7 @@
 title: "Wathiq — Database Design"
 subtitle: "وثيق — تصميم قاعدة البيانات"
 author: "Abdulsalam"
-version: "0.1.11"
+version: "0.1.12"
 date: "2026-08-29"
 status: "Draft"
 ---
@@ -23,6 +23,7 @@ status: "Draft"
 | 0.1.9 | 2026-08-29 | Abdulsalam | Migrations log row 10: `ai.Usage.PromptVersion` widened 16→32 too — the 3.8 end-to-end cap test caught the ledger still on 16 |
 | 0.1.10 | 2026-09-03 | Abdulsalam | Migrations log row 11: `guides` schema initial (empty) migration — Guides module skeleton (5.1) |
 | 0.1.11 | 2026-09-03 | Abdulsalam | Migrations log row 12: `Guide`, `GuideVersion`, `GuideStep` tables (5.2); all three marked *Implemented* |
+| 0.1.12 | 2026-09-03 | Abdulsalam | Migrations log row 13: `GuideChunk` table with `varbinary(4096)` embeddings (5.3), marked *Implemented* |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
 Tables in this version are *Planned* until their migration appears in the migrations log, which
@@ -247,7 +248,7 @@ Indexes: `UQ_Reminder_DocumentId_OffsetDays` (idempotent upsert, FR-REM-002),
 | StepNo | int | no | UQ with GuideVersionId |
 | Text | nvarchar(2048) | no | |
 
-### `guides.GuideChunk` (E-GuideChunk)
+### `guides.GuideChunk` (E-GuideChunk) — *Implemented (5.3)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -338,6 +339,7 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 | 10 | 2026-08-29 | Ai | `20260829161139_WidenUsagePromptVersion` — `Usage.PromptVersion` nvarchar(16)→nvarchar(32) | 3.8 |
 | 11 | 2026-09-03 | Guides | `20260903113549_Initial` — empty; creates only `guides.__EFMigrationsHistory` (tables arrive with 5.2/5.3/5.6) | 5.1 |
 | 12 | 2026-09-03 | Guides | `20260903114437_AddGuideContent` — tables `Guide` (UQ `Slug`), `GuideVersion` (FK→Guide Cascade; UQ `GuideId+VersionNo`; `Language` nchar(2); `LastVerifiedAt` date), `GuideStep` (FK→GuideVersion Cascade; UQ `GuideVersionId+StepNo`); `Guide.PublishedVersionId` FK→GuideVersion NO ACTION (second cascade path would be rejected) | 5.2 |
+| 13 | 2026-09-03 | Guides | `20260903121127_AddGuideChunk` — table `GuideChunk` (FK→GuideVersion Cascade; UQ `GuideVersionId+ChunkNo`; `Embedding` varbinary(4096) = 1024×float32 little-endian; `EmbeddingModel` nvarchar(64)); rows are derived data, rebuilt by the embed job on publish/rebuild | 5.3 |
 
 # Retention, encryption and backups
 

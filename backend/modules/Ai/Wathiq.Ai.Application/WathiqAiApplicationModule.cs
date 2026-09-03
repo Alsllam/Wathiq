@@ -26,6 +26,12 @@ public class WathiqAiApplicationModule : AbpModule
         // this module decides WHO serves it - the only place provider SDK types are allowed.
         RegisterChatClient(context, AiConsts.ExtractionClientKey, aiOptions.Extraction, AiUsagePurpose.Extraction, aiOptions);
         RegisterChatClient(context, AiConsts.GuidesClientKey, aiOptions.Guides, AiUsagePurpose.GuideChat, aiOptions);
+
+        // The IChatClient wall's twin (5.3): consumers (the Guides embed job, 5.4's retriever)
+        // inject the framework abstraction; only this line knows Ollama serves it. Validate()
+        // above already refused any non-local provider for it.
+        context.Services.AddTransient<IEmbeddingGenerator<string, Embedding<float>>>(
+            _ => new OllamaApiClient(new Uri(aiOptions.Embeddings.Endpoint), aiOptions.Embeddings.Model));
     }
 
     private static void RegisterChatClient(

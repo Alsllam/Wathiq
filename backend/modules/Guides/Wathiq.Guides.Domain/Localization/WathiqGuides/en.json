@@ -8,6 +8,7 @@
     "Wathiq.Guides:VersionAlreadyPublished": "Version {VersionNo} is already published.",
     "Wathiq.Guides:VersionNotOfGuide": "This version does not belong to this guide.",
     "Wathiq.Guides:CannotServeDraft": "A draft version cannot be served to readers. Publish it first.",
-    "Wathiq.Guides:GuideNotPublished": "This guide has no published content yet."
+    "Wathiq.Guides:GuideNotPublished": "This guide has no published content yet.",
+    "Wathiq.Guides:VersionNotPublished": "Only a published version can be (re)embedded. Publish it first."
   }
 }

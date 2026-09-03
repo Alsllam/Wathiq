@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- The abstractions package only: IEmbeddingGenerator is the wall; OllamaSharp stays in the Ai module. -->
+    <PackageReference Include="Microsoft.Extensions.AI" Version="10.9.0" />
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Abstractions" Version="10.3.0" />
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="10.3.0" />
   </ItemGroup>
 

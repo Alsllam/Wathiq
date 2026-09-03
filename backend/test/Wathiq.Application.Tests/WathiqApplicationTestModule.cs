@@ -42,6 +42,13 @@ public class WathiqApplicationTestModule : AbpModule
         context.Services.Replace(ServiceDescriptor.Singleton<Volo.Abp.BackgroundJobs.IBackgroundJobManager>(
             sp => sp.GetRequiredService<Documents.RecordingBackgroundJobManager>()));
 
+        // 5.3: the Ai module registers the real Ollama-backed IEmbeddingGenerator - replace it so
+        // the embed pipeline runs on deterministic vectors (the live model rides [OllamaFact]).
+        context.Services.AddSingleton<Guides.FakeEmbeddingGenerator>();
+        context.Services.Replace(ServiceDescriptor.Singleton<
+            Microsoft.Extensions.AI.IEmbeddingGenerator<string, Microsoft.Extensions.AI.Embedding<float>>>(
+            sp => sp.GetRequiredService<Guides.FakeEmbeddingGenerator>()));
+
         // 3.7: the real extractor (Ai module, IS in this graph) would dial Ollama - replace the
         // seam so the escrow/confirm flow is tested with a scripted model.
         context.Services.AddSingleton<Documents.FakeDocumentDataExtractor>();

@@ -11,4 +11,7 @@ public interface IGuideAdminAppService : IApplicationService
     Task<GuideVersionDto> CreateVersionAsync(CreateGuideVersionDto input);
     Task<GuideVersionDto> UpdateVersionAsync(Guid id, UpdateGuideVersionDto input);
     Task<GuideVersionDto> PublishAsync(Guid id);
+
+    /// <summary>Re-enqueue chunking+embedding for a published version (seeded content, model swaps).</summary>
+    Task RebuildEmbeddingsAsync(Guid id);
 }

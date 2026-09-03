@@ -2,7 +2,7 @@
 title: "Wathiq — API Reference"
 subtitle: "وثيق — مرجع الواجهة البرمجية"
 author: "Abdulsalam"
-version: "0.1.5"
+version: "0.1.6"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -17,6 +17,7 @@ status: "Draft"
 | 0.1.3 | 2026-08-29 | Abdulsalam | §4.5 extraction endpoints (trigger/latest/confirm/reject) from the regenerated spec; live failure-path example (roadmap step 3.7) |
 | 0.1.4 | 2026-08-29 | Abdulsalam | Document-types list made anonymous - public reference data for the portal shell and future landing page (roadmap step 4.3) |
 | 0.1.5 | 2026-09-03 | Abdulsalam | §6 Guides module endpoints: public reading (anonymous by design) + admin authoring/publish, from the regenerated spec with live examples (roadmap step 5.2) |
+| 0.1.6 | 2026-09-03 | Abdulsalam | §6.2 rebuild-embeddings endpoint (seeded/pre-pipeline versions, model swaps) (roadmap step 5.3) |
 
 **Status:** Draft · **Related:** SRS (`srs`) FR-DOC/FR-IDM, Architecture (`architecture`) D3/D7,
 Database (`database`).
@@ -274,7 +275,8 @@ version is absent from the list and `by-slug` answers `Wathiq.Guides:GuideNotPub
 | `POST /api/guides/guide-admin` | `WathiqGuides.Manage` | Create a guide identity: `{slug, titleAr, titleEn}`; slug is URL-safe (`^[a-z0-9][a-z0-9-]*$`) and unique (`Wathiq.Guides:SlugAlreadyExists`) |
 | `POST /api/guides/guide-admin/version` | `WathiqGuides.Manage` | Add a **draft** version: `{guideId, language (ar\|en), bodyMarkdown, lastVerifiedAt (required), requiredDocuments?, fees?, location?, steps[]}`; `versionNo` is assigned server-side (one timeline per guide) |
 | `PUT /api/guides/guide-admin/{id}/version` | `WathiqGuides.Manage` | Edit a draft (body, freshness date, steps replaced as a unit). On a published version: `Wathiq.Guides:PublishedVersionIsImmutable` |
-| `POST /api/guides/guide-admin/{id}/publish` | `WathiqGuides.Manage` | One-shot freeze: sets `publishedAt`, points the guide at this version. Repeat → `Wathiq.Guides:VersionAlreadyPublished` |
+| `POST /api/guides/guide-admin/{id}/publish` | `WathiqGuides.Manage` | One-shot freeze: sets `publishedAt`, points the guide at this version, and enqueues chunking+embedding. Repeat → `Wathiq.Guides:VersionAlreadyPublished` |
+| `POST /api/guides/guide-admin/{id}/rebuild-embeddings` | `WathiqGuides.Manage` | Re-enqueue chunking+embedding for a **published** version (content published before the pipeline, or after an embedding-model change). Draft → `Wathiq.Guides:VersionNotPublished` |
 
 Live examples (recorded against the running host):
 

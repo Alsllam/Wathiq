@@ -8,6 +8,7 @@
     "Wathiq.Guides:VersionAlreadyPublished": "الإصدار {VersionNo} منشور مسبقًا.",
     "Wathiq.Guides:VersionNotOfGuide": "هذا الإصدار لا يتبع هذا الدليل.",
     "Wathiq.Guides:CannotServeDraft": "لا يمكن عرض مسودة للقرّاء. انشرها أولًا.",
-    "Wathiq.Guides:GuideNotPublished": "لا يوجد محتوى منشور لهذا الدليل بعد."
+    "Wathiq.Guides:GuideNotPublished": "لا يوجد محتوى منشور لهذا الدليل بعد.",
+    "Wathiq.Guides:VersionNotPublished": "لا يمكن إعادة تضمين إلا إصدار منشور. انشره أولًا."
   }
 }

@@ -8,4 +8,5 @@ public static class GuidesErrorCodes
     public const string VersionNotOfGuide = "Wathiq.Guides:VersionNotOfGuide";
     public const string CannotServeDraft = "Wathiq.Guides:CannotServeDraft";
     public const string GuideNotPublished = "Wathiq.Guides:GuideNotPublished";
+    public const string VersionNotPublished = "Wathiq.Guides:VersionNotPublished";
 }

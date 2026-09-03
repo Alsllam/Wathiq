@@ -16,11 +16,16 @@ public class GuideAdminAppService : GuidesAppServiceBase, IGuideAdminAppService
 {
     private readonly GuideManager _guideManager;
     private readonly IRepository<GuideVersion, Guid> _versions;
+    private readonly Volo.Abp.BackgroundJobs.IBackgroundJobManager _backgroundJobManager;
 
-    public GuideAdminAppService(GuideManager guideManager, IRepository<GuideVersion, Guid> versions)
+    public GuideAdminAppService(
+        GuideManager guideManager,
+        IRepository<GuideVersion, Guid> versions,
+        Volo.Abp.BackgroundJobs.IBackgroundJobManager backgroundJobManager)
     {
         _guideManager = guideManager;
         _versions = versions;
+        _backgroundJobManager = backgroundJobManager;
     }
 
     public async Task<GuideDto> CreateAsync(CreateGuideDto input)
@@ -52,6 +57,21 @@ public class GuideAdminAppService : GuidesAppServiceBase, IGuideAdminAppService
     public async Task<GuideVersionDto> PublishAsync(Guid id)
     {
         return ToVersionDto(await _guideManager.PublishAsync(id));
+    }
+
+    public async Task RebuildEmbeddingsAsync(Guid id)
+    {
+        var version = await _versions.GetAsync(id);
+        if (!version.IsPublished)
+        {
+            // Only published (immutable) content is embeddable - a draft's vectors would go
+            // stale on the next edit and 5.5 must never cite a draft.
+            throw new Volo.Abp.BusinessException(GuidesErrorCodes.VersionNotPublished);
+        }
+
+        // Publish already embeds via the event; this is the manual lever for versions published
+        // BEFORE the pipeline existed (the seed) and for re-embedding after a model change.
+        await _backgroundJobManager.EnqueueAsync(new Embedding.GuideEmbedArgs { GuideVersionId = version.Id });
     }
 
     internal static GuideVersionDto ToVersionDto(GuideVersion v) => new()
