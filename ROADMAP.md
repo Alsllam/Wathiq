@@ -271,7 +271,7 @@ verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the
       of public text still stay local by default), publish enqueues an embed job (the 3.5 lap);
       float[] ↔ bytes converters tested. Gated live embed smoke. *Topics: chunking strategies,
       embeddings as storage, IEmbeddingGenerator.* — FR-GDE-003. *Docs: `database`.*
-- [ ] **5.4 Retrieval: cosine top-k over SQL-stored embeddings** — `IGuideRetriever`: embed the
+- [x] **5.4 Retrieval: cosine top-k over SQL-stored embeddings** — `IGuideRetriever`: embed the
       question, cosine against the published versions' chunks (in-process over SQL-hydrated
       vectors with a small cache - honest about SQL Server 2022 having no VECTOR type yet; the
       DB doc already notes `VECTOR(1024)` when available), similarity floor, top-k with scores.

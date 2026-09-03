@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Application;
 using Volo.Abp.Modularity;
 
@@ -9,6 +10,10 @@ namespace Wathiq.Guides;
 )]
 public class WathiqGuidesApplicationModule : AbpModule
 {
-    // App services arrive with 5.2 (authoring + public reading). The permission definition
-    // provider in Permissions/ is auto-discovered - no registration line needed.
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+        // Defaults live in the class; ops can tune floor/topK/TTL without a deploy (5.6 evals
+        // will inform the numbers). No secrets here - just knobs.
+        Configure<GuideRetrievalOptions>(context.Services.GetConfiguration().GetSection("Guides:Retrieval"));
+    }
 }

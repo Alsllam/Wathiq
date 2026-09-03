@@ -24,6 +24,7 @@ public class GuideEmbedJob : AsyncBackgroundJob<GuideEmbedArgs>, IUnitOfWorkEnab
     private readonly IRepository<GuideChunk, Guid> _chunks;
     private readonly IEmbeddingGenerator<string, Embedding<float>> _embeddingGenerator;
     private readonly IGuidGenerator _guidGenerator;
+    private readonly Retrieval.GuideChunkCache _chunkCache;
     private readonly ILogger<GuideEmbedJob> _logger;
 
     public GuideEmbedJob(
@@ -31,12 +32,14 @@ public class GuideEmbedJob : AsyncBackgroundJob<GuideEmbedArgs>, IUnitOfWorkEnab
         IRepository<GuideChunk, Guid> chunks,
         IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator,
         IGuidGenerator guidGenerator,
+        Retrieval.GuideChunkCache chunkCache,
         ILogger<GuideEmbedJob> logger)
     {
         _versions = versions;
         _chunks = chunks;
         _embeddingGenerator = embeddingGenerator;
         _guidGenerator = guidGenerator;
+        _chunkCache = chunkCache;
         _logger = logger;
     }
 
@@ -71,6 +74,10 @@ public class GuideEmbedJob : AsyncBackgroundJob<GuideEmbedArgs>, IUnitOfWorkEnab
             EmbeddingConverter.ToBytes(embedding.Vector.Span), model, draft.TokenCount)).ToList();
 
         await _chunks.InsertManyAsync(rows);
+
+        // Retrieval (5.4) serves from a hydrated cache; a rebuild must be visible to the very
+        // next question, not TTL-seconds later.
+        _chunkCache.Invalidate();
 
         _logger.LogInformation("Embedded version {VersionId}: {Count} chunks via {Model}.", version.Id, rows.Count, model);
     }
