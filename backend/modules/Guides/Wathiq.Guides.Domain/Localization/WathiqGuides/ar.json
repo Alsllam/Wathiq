@@ -2,6 +2,12 @@
   "Culture": "ar",
   "Texts": {
     "Permission:Guides": "أدلة وثيق",
-    "Permission:Guides.Manage": "تأليف الأدلة ونشرها"
+    "Permission:Guides.Manage": "تأليف الأدلة ونشرها",
+    "Wathiq.Guides:SlugAlreadyExists": "يوجد دليل بهذا المعرّف مسبقًا.",
+    "Wathiq.Guides:PublishedVersionIsImmutable": "الإصدار {VersionNo} منشور ولا يمكن تعديله. أنشئ مسودة إصدار جديدة بدلًا من ذلك.",
+    "Wathiq.Guides:VersionAlreadyPublished": "الإصدار {VersionNo} منشور مسبقًا.",
+    "Wathiq.Guides:VersionNotOfGuide": "هذا الإصدار لا يتبع هذا الدليل.",
+    "Wathiq.Guides:CannotServeDraft": "لا يمكن عرض مسودة للقرّاء. انشرها أولًا.",
+    "Wathiq.Guides:GuideNotPublished": "لا يوجد محتوى منشور لهذا الدليل بعد."
   }
 }

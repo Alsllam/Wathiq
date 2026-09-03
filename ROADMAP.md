@@ -259,7 +259,7 @@ verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the
       SQLite test host in one commit (the settled recipe), permissions home (`Guides.Manage` for
       authoring - admin only; reading is for everyone). *Topics: the module recipe from memory,
       fifth lap.* *Docs: `database` (migrations log).*
-- [ ] **5.2 `Guide`, `GuideVersion`, `GuideStep` + publish workflow** — entities per DB doc;
+- [x] **5.2 `Guide`, `GuideVersion`, `GuideStep` + publish workflow** — entities per DB doc;
       versions are immutable once published (`PublishedAt`), `Guide.PublishedVersionId` points at
       the served one; admin authoring endpoints (create guide, add draft version, publish);
       `LastVerifiedAt` mandatory (Vision R2: every answer shows freshness). Seed one real guide

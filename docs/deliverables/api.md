@@ -2,7 +2,7 @@
 title: "Wathiq — API Reference"
 subtitle: "وثيق — مرجع الواجهة البرمجية"
 author: "Abdulsalam"
-version: "0.1.4"
+version: "0.1.5"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -16,6 +16,7 @@ status: "Draft"
 | 0.1.2 | 2026-08-28 | Abdulsalam | §4.4 attachment upload/download/delete endpoints from the regenerated spec (roadmap step 3.1) |
 | 0.1.3 | 2026-08-29 | Abdulsalam | §4.5 extraction endpoints (trigger/latest/confirm/reject) from the regenerated spec; live failure-path example (roadmap step 3.7) |
 | 0.1.4 | 2026-08-29 | Abdulsalam | Document-types list made anonymous - public reference data for the portal shell and future landing page (roadmap step 4.3) |
+| 0.1.5 | 2026-09-03 | Abdulsalam | §6 Guides module endpoints: public reading (anonymous by design) + admin authoring/publish, from the regenerated spec with live examples (roadmap step 5.2) |
 
 **Status:** Draft · **Related:** SRS (`srs`) FR-DOC/FR-IDM, Architecture (`architecture`) D3/D7,
 Database (`database`).
@@ -79,6 +80,7 @@ Every Documents action checks an ABP permission (defined in
 | `WathiqDocuments.Documents` (+ `.Create/.Update/.Delete`) | yes | yes |
 | `WathiqReminders.Rule` (+ `.Update`) | yes | yes |
 | `WathiqReminders.Reminders` | yes | yes |
+| `WathiqGuides.Manage` (authoring) | **no** | yes |
 
 The `user` role is seeded with `IsDefault = true`, so **every self-registered account gets these
 permissions automatically** — no admin action needed. Data access is additionally
@@ -246,7 +248,48 @@ account holding one document expiring `2026-09-04` left exactly one Pending row 
 `offsetDays: 3, dueDate: 2026-09-01, expiryDate: 2026-09-04` — the already-sent 7-day reminder
 stayed `Sent` (history is immutable), the removed offsets were cancelled.
 
-# 6. Error model
+# 6. Guides module endpoints
+
+Route root `/api/guides/*`. The access model is **asymmetric by design**: reading is anonymous
+(guides are the public half of the service - no account, no token), authoring is admin-only
+(`WathiqGuides.Manage`). A **published `GuideVersion` is immutable**; re-authoring means a new
+draft version, and publishing re-points `Guide.publishedVersionId` (latest publish wins).
+
+## 6.1 Public reading (FR-GDE-001)
+
+| Method & path | Permission | Description |
+| --- | --- | --- |
+| `GET /api/guides/guide` | *anonymous* | Active guides that have published content; `{items:[{id, slug, titleAr, titleEn}]}` |
+| `GET /api/guides/guide/by-slug?slug=…&language=ar\|en` | *anonymous* | Served content: latest **published** version in the requested language (default `ar`), falling back to the guide's `publishedVersionId` |
+
+`GuideDetailDto.version`: `versionNo`, `language`, `bodyMarkdown`, `requiredDocuments?`,
+`fees?`, `location?`, **`lastVerifiedAt`** (date - Vision R2: every read shows freshness),
+`publishedAt`, `steps` (ordered strings). Drafts are never served; a guide with no published
+version is absent from the list and `by-slug` answers `Wathiq.Guides:GuideNotPublished`.
+
+## 6.2 Admin authoring (FR-GDE-002)
+
+| Method & path | Permission | Description |
+| --- | --- | --- |
+| `POST /api/guides/guide-admin` | `WathiqGuides.Manage` | Create a guide identity: `{slug, titleAr, titleEn}`; slug is URL-safe (`^[a-z0-9][a-z0-9-]*$`) and unique (`Wathiq.Guides:SlugAlreadyExists`) |
+| `POST /api/guides/guide-admin/version` | `WathiqGuides.Manage` | Add a **draft** version: `{guideId, language (ar\|en), bodyMarkdown, lastVerifiedAt (required), requiredDocuments?, fees?, location?, steps[]}`; `versionNo` is assigned server-side (one timeline per guide) |
+| `PUT /api/guides/guide-admin/{id}/version` | `WathiqGuides.Manage` | Edit a draft (body, freshness date, steps replaced as a unit). On a published version: `Wathiq.Guides:PublishedVersionIsImmutable` |
+| `POST /api/guides/guide-admin/{id}/publish` | `WathiqGuides.Manage` | One-shot freeze: sets `publishedAt`, points the guide at this version. Repeat → `Wathiq.Guides:VersionAlreadyPublished` |
+
+Live examples (recorded against the running host):
+
+```bash
+# Anonymous - no Authorization header at all:
+curl "https://localhost:44352/api/guides/guide/by-slug?slug=renew-passport&language=ar"
+# → titleAr "تجديد جواز السفر", version.language "ar", lastVerifiedAt "2026-09-01", 6 steps
+
+# Anonymous POST to authoring → denied (login challenge); with an admin bearer token → 200.
+```
+
+The seeded `renew-passport` guide (ar + en, both published) is the module's reference content -
+5.3 chunks it, 5.5 cites it.
+
+# 7. Error model
 
 Every error is the ABP envelope `{ "error": { code, message, details, data, validationErrors } }`.
 
@@ -258,7 +301,9 @@ Every error is the ABP envelope `{ "error": { code, message, details, data, vali
 | 404 | Row doesn't exist **or belongs to another user** | — |
 
 Reminders business codes: `InvalidOffsets`, `QuietHoursIncomplete`, `UnknownTimeZone`,
-`NoEmailAddress` — prefixed `Wathiq.Reminders:`.
+`NoEmailAddress` — prefixed `Wathiq.Reminders:`. Guides business codes: `SlugAlreadyExists`,
+`PublishedVersionIsImmutable`, `VersionAlreadyPublished`, `GuideNotPublished` — prefixed
+`Wathiq.Guides:`.
 
 Business error codes of the Documents module (message localized via `Accept-Language`):
 `ExpiryBeforeIssue`, `HolderNotOwned`, `DocumentTypeNotActive`, `SelfHolderIsAutomatic`,
@@ -273,7 +318,7 @@ Live example (`Accept-Language: ar`, expiry before issue):
     "data": { "IssueDate": "2030-01-01", "ExpiryDate": "2020-01-01" } } }
 ```
 
-# 7. Infrastructure endpoints (ABP built-ins)
+# 8. Infrastructure endpoints (ABP built-ins)
 
 Summarized — full detail is in Swagger. Admin-tagged groups require admin permissions.
 
@@ -285,10 +330,10 @@ Summarized — full detail is in Swagger. Admin-tagged groups require admin perm
 | App configuration | `/api/abp/application-configuration` | current user, permissions, localization — the client bootstrap call |
 | Settings | `/api/setting-management/*` | emailing, timezone (admin) |
 
-# 8. Planned
+# 9. Planned
 
 | Item | Phase |
 | --- | --- |
 | Attachment upload/download (`IRemoteStreamContent`, size/MIME limits per FileStore config) | 3 |
-| Guides + chat endpoints (`/api/guides/*`, `/api/ai/*`) | 3–5 |
+| Guides grounded-chat endpoint (`/api/guides/chat`) + feedback | 5 |
 | Rate limiting on auth + AI endpoints | 8 |

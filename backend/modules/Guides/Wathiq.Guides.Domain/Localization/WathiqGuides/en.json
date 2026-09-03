@@ -2,6 +2,12 @@
   "Culture": "en",
   "Texts": {
     "Permission:Guides": "Wathiq Guides",
-    "Permission:Guides.Manage": "Author and publish guides"
+    "Permission:Guides.Manage": "Author and publish guides",
+    "Wathiq.Guides:SlugAlreadyExists": "A guide with this slug already exists.",
+    "Wathiq.Guides:PublishedVersionIsImmutable": "Version {VersionNo} is published and can no longer be edited. Create a new draft version instead.",
+    "Wathiq.Guides:VersionAlreadyPublished": "Version {VersionNo} is already published.",
+    "Wathiq.Guides:VersionNotOfGuide": "This version does not belong to this guide.",
+    "Wathiq.Guides:CannotServeDraft": "A draft version cannot be served to readers. Publish it first.",
+    "Wathiq.Guides:GuideNotPublished": "This guide has no published content yet."
   }
 }

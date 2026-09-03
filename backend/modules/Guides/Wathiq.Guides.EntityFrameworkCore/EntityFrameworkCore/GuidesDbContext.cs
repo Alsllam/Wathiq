@@ -8,7 +8,9 @@ namespace Wathiq.Guides.EntityFrameworkCore;
 [ConnectionStringName(GuidesDbProperties.ConnectionStringName)]
 public class GuidesDbContext : AbpDbContext<GuidesDbContext>
 {
-    // Guide / GuideVersion / GuideStep arrive with 5.2, GuideChunk with 5.3, GuideFeedback with 5.6.
+    public DbSet<Guides.Guide> Guides { get; set; } = default!;
+    public DbSet<Guides.GuideVersion> GuideVersions { get; set; } = default!;
+    // GuideStep rides the GuideVersion aggregate; GuideChunk arrives with 5.3, GuideFeedback with 5.6.
 
     public GuidesDbContext(DbContextOptions<GuidesDbContext> options)
         : base(options)

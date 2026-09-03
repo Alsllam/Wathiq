@@ -2,7 +2,7 @@
 title: "Wathiq — Database Design"
 subtitle: "وثيق — تصميم قاعدة البيانات"
 author: "Abdulsalam"
-version: "0.1.10"
+version: "0.1.11"
 date: "2026-08-29"
 status: "Draft"
 ---
@@ -22,6 +22,7 @@ status: "Draft"
 | 0.1.8 | 2026-08-29 | Abdulsalam | Migrations log row 9: `ExtractionResult` table (3.6), marked *Implemented*; `PromptVersion` widened 16→32 (real ids like `extract-document@v1` are 19 chars) |
 | 0.1.9 | 2026-08-29 | Abdulsalam | Migrations log row 10: `ai.Usage.PromptVersion` widened 16→32 too — the 3.8 end-to-end cap test caught the ledger still on 16 |
 | 0.1.10 | 2026-09-03 | Abdulsalam | Migrations log row 11: `guides` schema initial (empty) migration — Guides module skeleton (5.1) |
+| 0.1.11 | 2026-09-03 | Abdulsalam | Migrations log row 12: `Guide`, `GuideVersion`, `GuideStep` tables (5.2); all three marked *Implemented* |
 
 **Status:** Draft · **Related:** Architecture (`architecture`) D2/D10, SRS (`srs`).
 Tables in this version are *Planned* until their migration appears in the migrations log, which
@@ -211,7 +212,7 @@ Indexes: `UQ_Reminder_DocumentId_OffsetDays` (idempotent upsert, FR-REM-002),
 
 ## Schema `guides`
 
-### `guides.Guide` (E-Guide)
+### `guides.Guide` (E-Guide) — *Implemented (5.2)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -222,7 +223,7 @@ Indexes: `UQ_Reminder_DocumentId_OffsetDays` (idempotent upsert, FR-REM-002),
 | PublishedVersionId | uniqueidentifier | yes | → GuideVersion currently served |
 | IsActive | bit | no | |
 
-### `guides.GuideVersion` (E-GuideVersion)
+### `guides.GuideVersion` (E-GuideVersion) — *Implemented (5.2)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -237,7 +238,7 @@ Indexes: `UQ_Reminder_DocumentId_OffsetDays` (idempotent upsert, FR-REM-002),
 | LastVerifiedAt | date | no | Shown with every answer (Vision R2) |
 | PublishedAt | datetime2 | yes | Null = draft |
 
-### `guides.GuideStep` (E-GuideStep)
+### `guides.GuideStep` (E-GuideStep) — *Implemented (5.2)*
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -336,6 +337,7 @@ Index: `IX_Usage_UserId_At` (daily cap query: count where `At >= today`).
 | 9 | 2026-08-29 | Documents | `20260829063126_AddExtractionResult` — table `ExtractionResult` (FK to `Attachment`, Cascade; `IX_ExtractionResult_AttachmentId`; `Confidence` decimal(4,3); `Outcome` tinyint) | 3.6 |
 | 10 | 2026-08-29 | Ai | `20260829161139_WidenUsagePromptVersion` — `Usage.PromptVersion` nvarchar(16)→nvarchar(32) | 3.8 |
 | 11 | 2026-09-03 | Guides | `20260903113549_Initial` — empty; creates only `guides.__EFMigrationsHistory` (tables arrive with 5.2/5.3/5.6) | 5.1 |
+| 12 | 2026-09-03 | Guides | `20260903114437_AddGuideContent` — tables `Guide` (UQ `Slug`), `GuideVersion` (FK→Guide Cascade; UQ `GuideId+VersionNo`; `Language` nchar(2); `LastVerifiedAt` date), `GuideStep` (FK→GuideVersion Cascade; UQ `GuideVersionId+StepNo`); `Guide.PublishedVersionId` FK→GuideVersion NO ACTION (second cascade path would be rejected) | 5.2 |
 
 # Retention, encryption and backups
 

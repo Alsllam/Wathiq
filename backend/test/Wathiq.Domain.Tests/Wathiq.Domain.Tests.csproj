@@ -13,6 +13,7 @@
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.Domain\Wathiq.Documents.Domain.csproj" />
     <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.Domain\Wathiq.Reminders.Domain.csproj" />
     <ProjectReference Include="..\..\modules\Ai\Wathiq.Ai.Domain\Wathiq.Ai.Domain.csproj" />
+    <ProjectReference Include="..\..\modules\Guides\Wathiq.Guides.Domain\Wathiq.Guides.Domain.csproj" />
     <ProjectReference Include="..\Wathiq.TestBase\Wathiq.TestBase.csproj" />
   </ItemGroup>
 

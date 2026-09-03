@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.Application\Wathiq.Documents.Application.csproj" />
     <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.Application\Wathiq.Reminders.Application.csproj" />
     <ProjectReference Include="..\..\modules\Ai\Wathiq.Ai.Application\Wathiq.Ai.Application.csproj" />
+    <ProjectReference Include="..\..\modules\Guides\Wathiq.Guides.Application\Wathiq.Guides.Application.csproj" />
     <ProjectReference Include="..\Wathiq.Domain.Tests\Wathiq.Domain.Tests.csproj" />
   </ItemGroup>
 
