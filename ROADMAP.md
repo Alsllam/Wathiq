@@ -254,7 +254,7 @@ on local `bge-m3` and user questions are logged capped like every AI call. Model
 verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the 3.4 split).
 
 - [x] 5.0 Expand phase into steps
-- [ ] **5.1 `Guides` module skeleton** — the four projects under `backend/modules/Guides/`,
+- [x] **5.1 `Guides` module skeleton** — the four projects under `backend/modules/Guides/`,
       `GuidesDbContext` on schema `guides`, empty first migration, registered in host + migrator +
       SQLite test host in one commit (the settled recipe), permissions home (`Guides.Manage` for
       authoring - admin only; reading is for everyone). *Topics: the module recipe from memory,

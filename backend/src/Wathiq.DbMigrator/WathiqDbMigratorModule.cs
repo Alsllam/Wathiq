@@ -16,6 +16,8 @@ namespace Wathiq.DbMigrator;
     typeof(Wathiq.Reminders.WathiqRemindersApplicationModule),
     typeof(Wathiq.Ai.EntityFrameworkCore.WathiqAiEntityFrameworkCoreModule),
     typeof(Wathiq.Ai.WathiqAiApplicationModule),
+    typeof(Wathiq.Guides.EntityFrameworkCore.WathiqGuidesEntityFrameworkCoreModule),
+    typeof(Wathiq.Guides.WathiqGuidesApplicationModule),
     typeof(WathiqApplicationContractsModule)
 )]
 public class WathiqDbMigratorModule : AbpModule

@@ -21,6 +21,7 @@ namespace Wathiq.EntityFrameworkCore;
     typeof(WathiqDocumentsEntityFrameworkCoreModule),
     typeof(Wathiq.Reminders.EntityFrameworkCore.WathiqRemindersEntityFrameworkCoreModule),
     typeof(Wathiq.Ai.EntityFrameworkCore.WathiqAiEntityFrameworkCoreModule),
+    typeof(Wathiq.Guides.EntityFrameworkCore.WathiqGuidesEntityFrameworkCoreModule),
     typeof(AbpEntityFrameworkCoreSqliteModule)
 )]
 public class WathiqEntityFrameworkCoreTestModule : AbpModule
@@ -75,6 +76,10 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
             {
                 context.DbContextOptions.UseSqlite(_sqliteConnection);
             });
+            options.Configure<Wathiq.Guides.EntityFrameworkCore.GuidesDbContext>(context =>
+            {
+                context.DbContextOptions.UseSqlite(_sqliteConnection);
+            });
         });
     }
 
@@ -124,6 +129,15 @@ public class WathiqEntityFrameworkCoreTestModule : AbpModule
         var aiOptions = new DbContextOptionsBuilder<Wathiq.Ai.EntityFrameworkCore.AiDbContext>()
             .UseSqlite(connection).Options;
         using (var context = new Wathiq.Ai.EntityFrameworkCore.AiDbContext(aiOptions))
+        {
+            context.GetService<IRelationalDatabaseCreator>().CreateTables();
+        }
+
+        // Guides has no tables yet (empty Initial, 5.1) - CreateTables is a no-op but keeps the
+        // ritual: forget this block in 5.2 and every guides.* test dies with "no such table".
+        var guidesOptions = new DbContextOptionsBuilder<Wathiq.Guides.EntityFrameworkCore.GuidesDbContext>()
+            .UseSqlite(connection).Options;
+        using (var context = new Wathiq.Guides.EntityFrameworkCore.GuidesDbContext(guidesOptions))
         {
             context.GetService<IRelationalDatabaseCreator>().CreateTables();
         }

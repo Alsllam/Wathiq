@@ -25,6 +25,8 @@
     <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.Application\Wathiq.Reminders.Application.csproj" />
     <ProjectReference Include="..\..\modules\Ai\Wathiq.Ai.EntityFrameworkCore\Wathiq.Ai.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\modules\Ai\Wathiq.Ai.Application\Wathiq.Ai.Application.csproj" />
+    <ProjectReference Include="..\..\modules\Guides\Wathiq.Guides.EntityFrameworkCore\Wathiq.Guides.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\modules\Guides\Wathiq.Guides.Application\Wathiq.Guides.Application.csproj" />
     <ProjectReference Include="..\Wathiq.Application.Contracts\Wathiq.Application.Contracts.csproj" />
   </ItemGroup>
 

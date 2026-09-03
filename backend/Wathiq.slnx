@@ -14,6 +14,12 @@
         <Project Path="modules/Ai/Wathiq.Ai.EntityFrameworkCore/Wathiq.Ai.EntityFrameworkCore.csproj" />
         <Project Path="modules/Ai/Wathiq.Ai.HttpApi/Wathiq.Ai.HttpApi.csproj" />
     </Folder>
+    <Folder Name="/modules/Guides/">
+        <Project Path="modules/Guides/Wathiq.Guides.Application/Wathiq.Guides.Application.csproj" />
+        <Project Path="modules/Guides/Wathiq.Guides.Domain/Wathiq.Guides.Domain.csproj" />
+        <Project Path="modules/Guides/Wathiq.Guides.EntityFrameworkCore/Wathiq.Guides.EntityFrameworkCore.csproj" />
+        <Project Path="modules/Guides/Wathiq.Guides.HttpApi/Wathiq.Guides.HttpApi.csproj" />
+    </Folder>
     <Folder Name="/modules/Reminders/">
         <Project Path="modules/Reminders/Wathiq.Reminders.Application/Wathiq.Reminders.Application.csproj" />
         <Project Path="modules/Reminders/Wathiq.Reminders.Domain/Wathiq.Reminders.Domain.csproj" />

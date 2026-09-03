@@ -13,6 +13,7 @@
     <ProjectReference Include="..\..\modules\Documents\Wathiq.Documents.EntityFrameworkCore\Wathiq.Documents.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\modules\Reminders\Wathiq.Reminders.EntityFrameworkCore\Wathiq.Reminders.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\modules\Ai\Wathiq.Ai.EntityFrameworkCore\Wathiq.Ai.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\modules\Guides\Wathiq.Guides.EntityFrameworkCore\Wathiq.Guides.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
