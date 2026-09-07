@@ -284,7 +284,7 @@ verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the
       a pointer to the guide list; every answer carries `LastVerifiedAt`. Usage logged/capped via
       the 3.3 decorator (purpose GuideChat). *Topics: grounding prompts, citation validation,
       refusal as a feature.* — FR-GDE-004, FR-AI-003. *Docs: `api`.*
-- [ ] **5.6 Feedback, evals and the docs loop** — `GuideFeedback` entity + endpoint ("outdated?"
+- [x] **5.6 Feedback, evals and the docs loop** — `GuideFeedback` entity + endpoint ("outdated?"
       from any reader); eval set of grounded Q&A pairs (ar/en, incl. must-refuse questions) with
       a gated runner scoring citation correctness + refusal accuracy; flip FR-GDE rows in
       `srs.md`; extend `ai-safety.md` with the RAG section (grounding, citation validation,

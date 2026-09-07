@@ -2,7 +2,7 @@
 title: "Wathiq — AI Safety & Guardrails"
 subtitle: "وثيق — سلامة الذكاء الاصطناعي وضوابطه"
 author: "Abdulsalam"
-version: "0.1"
+version: "0.2"
 date: "2026-08-29"
 status: "Draft"
 ---
@@ -12,6 +12,7 @@ status: "Draft"
 | Version | Date | Author | Change |
 | --- | --- | --- | --- |
 | 0.1 | 2026-08-29 | Abdulsalam | First version: routing, prompts, validation, caps, eval method (roadmap step 3.8). Live eval results pending the first dev-box run |
+| 0.2 | 2026-09-07 | Abdulsalam | §8 Grounded chat (RAG): grounding chain, citation validation, refusal paths, RAG eval method (roadmap step 5.6) |
 
 **Status:** Draft · **Related:** SRS FR-AI-001…005 / FR-DOC-005 / C1, Architecture D5,
 Database (`ai` schema, `documents.ExtractionResult`), API §4.5.
@@ -106,7 +107,52 @@ once in the prompt (to make good output likely) and once in C# (to make bad outp
 | Model returns garbage | No fields proposed; warnings explain; raw kept for diagnosis | Empty proposal + reasons |
 | Model returns bad values | Fields dropped by parsers, per §4 | Empty fields + warnings |
 
-# 8. Planned hardening {-}
+# 8. Grounded chat (RAG) — FR-GDE-002/003, FR-AI-003
+
+The guides chat answers **only from retrieved, published guide content**. The safety chain, in
+order, with the layer that enforces each link:
+
+1. **Corpus scope** (`GuideRetriever`): only *served* content is searchable — active guides,
+   latest published version per language. Drafts and superseded versions are never candidates
+   (their chunks remain in SQL so past citations stay resolvable). Chunks embedded by a
+   different model than the current one are invisible, not low-scoring — vectors from different
+   models share no space.
+2. **Similarity floor** (config `Guides:Retrieval`, default 0.5): below it, the corpus "does
+   not speak to this question" and the pipeline refuses before any chat-model call. An empty
+   corpus refuses before even the *embedding* call.
+3. **Label isolation** (`ChatAppService` → `IGuideAnswerer`): the model receives excerpts as
+   opaque labels `C1..Cn` with text — never real ids. It cannot leak, guess or mangle a chunk
+   or version id, and an invented label is trivially detectable.
+4. **Versioned grounding prompt** (`guides-chat@v1`, embedded resource, pinned name): answer
+   only from excerpts, refuse with `answer: null` otherwise, cite every excerpt used. The
+   version string rides into every `ai.Usage` row (purpose `GuideChat`) via the 3.3 decorator —
+   the cap applies, which is why chat requires sign-in while reading stays anonymous.
+5. **Parse defensively** (`GuideAnswerParser`): prose, torn JSON, citation noise — every
+   malformed output degrades to a refusal, never an exception, never a served answer.
+6. **Citation validation** (`ChatAppService`): cited labels are mapped back against the set
+   retrieved *for this request*. Invented citations are dropped and flagged
+   (`hallucinatedCitationsDropped`); an answer left with **zero** valid citations is refused
+   whole — grounding is definitional, not decorative.
+7. **Freshness on every answer** (Vision R2): each citation carries its source version's
+   `LastVerifiedAt`; the answer-level date is the **oldest** cited source — an answer is only
+   as fresh as its stalest ingredient.
+8. **Reader feedback** (`GuideFeedback`): any reader — anonymous included — can flag a version
+   as outdated/wrong; flags land in an admin queue (list + resolve). The correction loop for
+   everything the layers above cannot know.
+
+**RAG evaluation method** (the §6 philosophy at conversation level): a 10-case bilingual set of
+grounded Q&A pairs — 6 answerable from the seeded guide, **4 must-refuse** (off-topic and
+guides-that-don't-exist-yet). A refusal case scores a point only for silence: a set without
+must-refuse cases cannot distinguish a grounded assistant from a confident liar. The
+`[OllamaFact]`-gated runner (`Rag_Eval_Scores_The_Live_Pipeline`) chunks and embeds the real
+seeded guide with the production chunker + bge-m3, retrieves with the production math and
+defaults, answers through the real `GuideAnswerer`, and replicates the service's citation
+policy. Metrics: answer rate, refusal accuracy, clean-citation rate — floors at 50% reject a
+broken pipeline; record per prompt version here after each dev-box run
+(`WATHIQ_OLLAMA_SMOKE=1 dotnet test --filter Rag_Eval`). **Results:** *pending the first
+dev-box run.*
+
+# 9. Planned hardening {-}
 
 - P8: encryption at rest for attachments and `OcrText`/`RawJson`; purge of extraction PII 90
   days after acceptance; hard-delete flow.

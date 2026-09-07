@@ -16,5 +16,7 @@ public static class GuideConsts
     public const int EmbeddingByteLength = 4096;
     public const int MaxEmbeddingModelLength = 64;
 
+    public const int MaxFeedbackCommentLength = 1024;
+
     public static readonly string[] SupportedLanguages = ["ar", "en"];
 }

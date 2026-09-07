@@ -2,7 +2,7 @@
 title: "Wathiq — Software Requirements Specification"
 subtitle: "وثيق — مواصفات متطلبات البرمجيات"
 author: "Abdulsalam"
-version: "0.1.3"
+version: "0.1.4"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -15,6 +15,7 @@ status: "Draft"
 | 0.1.1 | 2026-08-27 | Abdulsalam | Phase 1 status flips: FR-IDM-001/002 and FR-DOC-001/002/003/006/007 *Implemented*, FR-DOC-004 *Partly implemented* (roadmap step 1.8) |
 | 0.1.2 | 2026-08-28 | Abdulsalam | Phase 2 status flips: FR-REM-001/002/004/005 *Implemented*, FR-REM-003 *Partly implemented* (email done, push P6) (roadmap step 2.8) |
 | 0.1.3 | 2026-08-29 | Abdulsalam | Phase 3 status flips: FR-DOC-005 and FR-AI-001…005 *Implemented* (roadmap step 3.8); AI safety measures now documented in the `ai-safety` deliverable |
+| 0.1.4 | 2026-09-07 | Abdulsalam | Phase 5 status flips: FR-GDE-001…004 *Implemented* (roadmap step 5.6); grounded chat behavior detailed in `ai-safety` §8 |
 
 **Status:** Draft · **Structure:** IEEE 830-1998 adapted · **Related:** Vision (`vision`),
 Architecture (`architecture`), Database (`database`).
@@ -187,10 +188,10 @@ Columns: ID · Requirement · Priority · Source · Status.
 
 | ID | Requirement | Pri | Source | Status |
 | --- | --- | --- | --- | --- |
-| FR-GDE-001 | The system shall store guides with steps, required documents, fees, location, language and a *last verified* date, versioned on publish. | M | UC-06 | Planned (P5) |
-| FR-GDE-002 | The system shall answer renewal questions only from retrieved guide content and shall cite the guide version used. | M | UC-03, Vision P6 | Planned (P5) |
-| FR-GDE-003 | When no relevant guide exists the system shall say so instead of answering. | M | UC-03 | Planned (P5) |
-| FR-GDE-004 | Users shall be able to flag a guide as outdated; flags are visible to the Admin. | S | UC-06, Vision R2 | Planned (P5) |
+| FR-GDE-001 | The system shall store guides with steps, required documents, fees, location, language and a *last verified* date, versioned on publish. | M | UC-06 | Implemented (5.2) — published versions are immutable; re-authoring creates a new version |
+| FR-GDE-002 | The system shall answer renewal questions only from retrieved guide content and shall cite the guide version used. | M | UC-03, Vision P6 | Implemented (5.5) — citations validated against the retrieved set; hallucinated ones dropped; uncited answers refused |
+| FR-GDE-003 | When no relevant guide exists the system shall say so instead of answering. | M | UC-03 | Implemented (5.4/5.5) — similarity floor + model refusal + citation failure all converge on one honest refusal |
+| FR-GDE-004 | Users shall be able to flag a guide as outdated; flags are visible to the Admin. | S | UC-06, Vision R2 | Implemented (5.6) — anonymous flags allowed; admin list + resolve |
 
 ## AI (FR-AI)
 

@@ -1,0 +1,15 @@
+{
+  "comment": "Grounded Q&A eval (5.6). expect=answer: the seeded renew-passport guide contains the answer and the pipeline must cite it. expect=refuse: the corpus does NOT answer this - refusing IS the correct behavior (the 3.8 null-is-a-label idea at conversation level). Bilingual by design (D2: one multilingual embedding space).",
+  "cases": [
+    { "id": "ar-fees", "lang": "ar", "question": "كم رسوم تجديد جواز السفر؟", "expect": "answer", "mustCiteSlug": "renew-passport" },
+    { "id": "ar-where", "lang": "ar", "question": "من أين أجدد جواز السفر؟", "expect": "answer", "mustCiteSlug": "renew-passport" },
+    { "id": "ar-delivery", "lang": "ar", "question": "كيف أستلم الجواز الجديد بعد التجديد؟", "expect": "answer", "mustCiteSlug": "renew-passport" },
+    { "id": "en-fees", "lang": "en", "question": "How much does it cost to renew a passport for ten years?", "expect": "answer", "mustCiteSlug": "renew-passport" },
+    { "id": "en-documents", "lang": "en", "question": "What do I need before renewing my passport?", "expect": "answer", "mustCiteSlug": "renew-passport" },
+    { "id": "en-old-passport", "lang": "en", "question": "Is my old passport still valid while I wait for the new one?", "expect": "answer", "mustCiteSlug": "renew-passport" },
+    { "id": "ar-refuse-licence", "lang": "ar", "question": "كيف أجدد رخصة القيادة؟", "expect": "refuse" },
+    { "id": "ar-refuse-offtopic", "lang": "ar", "question": "ما هي عاصمة فرنسا؟", "expect": "refuse" },
+    { "id": "en-refuse-iqama", "lang": "en", "question": "How do I renew my residence permit (iqama)?", "expect": "refuse" },
+    { "id": "en-refuse-offtopic", "lang": "en", "question": "What is a good restaurant in Riyadh?", "expect": "refuse" }
+  ]
+}

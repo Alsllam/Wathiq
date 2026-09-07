@@ -2,7 +2,7 @@
 title: "Wathiq — API Reference"
 subtitle: "وثيق — مرجع الواجهة البرمجية"
 author: "Abdulsalam"
-version: "0.1.7"
+version: "0.1.8"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -19,6 +19,7 @@ status: "Draft"
 | 0.1.5 | 2026-09-03 | Abdulsalam | §6 Guides module endpoints: public reading (anonymous by design) + admin authoring/publish, from the regenerated spec with live examples (roadmap step 5.2) |
 | 0.1.6 | 2026-09-03 | Abdulsalam | §6.2 rebuild-embeddings endpoint (seeded/pre-pipeline versions, model swaps) (roadmap step 5.3) |
 | 0.1.7 | 2026-09-03 | Abdulsalam | §6.3 grounded chat endpoint: validated citations, honest refusal, freshness on every answer; live refusal example (roadmap step 5.5) |
+| 0.1.8 | 2026-09-07 | Abdulsalam | §6.4 guide feedback endpoints: anonymous create, admin list/resolve (roadmap step 5.6) |
 
 **Status:** Draft · **Related:** SRS (`srs`) FR-DOC/FR-IDM, Architecture (`architecture`) D3/D7,
 Database (`database`).
@@ -330,6 +331,14 @@ path): anonymous → login challenge; authenticated →
 ```
 
 
+## 6.4 Guide feedback (FR-GDE-004)
+
+| Method & path | Permission | Description |
+| --- | --- | --- |
+| `POST /api/guides/guide-feedback` | *anonymous* | `{guideVersionId, kind (0 Outdated · 1 Wrong · 2 Helpful), comment?}` — flags a **published** version (draft id → `Wathiq.Guides:VersionNotPublished`); signed-in reporters are recorded, anonymous allowed by design |
+| `GET /api/guides/guide-feedback?includeResolved=` | `WathiqGuides.Manage` | Open flags (default), newest first, each with its guide's slug for context |
+| `POST /api/guides/guide-feedback/{id}/resolve` | `WathiqGuides.Manage` | Marks handled; idempotent (a state, not an event) |
+
 # 7. Error model
 
 Every error is the ABP envelope `{ "error": { code, message, details, data, validationErrors } }`.
@@ -375,6 +384,4 @@ Summarized — full detail is in Swagger. Admin-tagged groups require admin perm
 
 | Item | Phase |
 | --- | --- |
-| Attachment upload/download (`IRemoteStreamContent`, size/MIME limits per FileStore config) | 3 |
-| Guide feedback endpoint ("outdated?" reports) | 5 |
 | Rate limiting on auth + AI endpoints | 8 |

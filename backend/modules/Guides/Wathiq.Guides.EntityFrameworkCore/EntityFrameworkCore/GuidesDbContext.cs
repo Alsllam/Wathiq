@@ -11,7 +11,8 @@ public class GuidesDbContext : AbpDbContext<GuidesDbContext>
     public DbSet<Guides.Guide> Guides { get; set; } = default!;
     public DbSet<Guides.GuideVersion> GuideVersions { get; set; } = default!;
     public DbSet<Guides.GuideChunk> GuideChunks { get; set; } = default!;
-    // GuideStep rides the GuideVersion aggregate; GuideFeedback arrives with 5.6.
+    public DbSet<Guides.GuideFeedback> GuideFeedbacks { get; set; } = default!;
+    // GuideStep rides the GuideVersion aggregate.
 
     public GuidesDbContext(DbContextOptions<GuidesDbContext> options)
         : base(options)
