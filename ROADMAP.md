@@ -316,7 +316,7 @@ exists).
       (documented for the dev box too), `flutter create` shaped to `mobile/README.md`'s layout,
       strict `analysis_options`, one first widget test. *Concept: everything is a widget - the
       tree, `runApp`, and why there is no HTML/CSS split.* 
-- [ ] **6.2 Dart models + JSON round-trips** — DTO classes for what the app will consume
+- [x] **6.2 Dart models + JSON round-trips** — DTO classes for what the app will consume
       (guides, documents, reminders, chat), manual `fromJson`/`toJson` (no codegen yet - the
       point is reading Dart), round-trip tests against captured API payloads. *Concept: sound
       null safety - `String?` vs C# NRT, `required`, and why the compiler is stricter.*

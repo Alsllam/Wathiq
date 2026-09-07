@@ -39,10 +39,11 @@ build/
 .flutter-plugins
 .flutter-plugins-dependencies
 
-# Data / AI
+# Data / AI (downloaded model weights only - source folders named models/ are code)
 uploads/
 *.log
-models/
+/models/
+backend/**/models/
 
 # Docs build scratch (out/ stays committed)
 docs/deliverables/.tmp/
