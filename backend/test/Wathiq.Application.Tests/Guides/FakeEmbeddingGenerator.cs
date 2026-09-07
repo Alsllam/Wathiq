@@ -15,8 +15,16 @@ public class FakeEmbeddingGenerator : IEmbeddingGenerator<string, Embedding<floa
 {
     public List<string> Inputs { get; } = [];
 
+    /// <summary>A question embedding as this text scores 0 with EVERYTHING (zero vector) - the
+    /// deterministic way to exercise the below-the-floor refusal path.</summary>
+    public const string NoMatchSentinel = "∅";
+
     public static float[] VectorFor(string text)
     {
+        if (text == NoMatchSentinel)
+        {
+            return new float[8];
+        }
         // Stable across runs (no string.GetHashCode randomization): sum of chars seeds the ramp.
         var seed = 0;
         foreach (var c in text) seed = unchecked(seed * 31 + c);

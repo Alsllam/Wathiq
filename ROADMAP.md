@@ -277,7 +277,7 @@ verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the
       DB doc already notes `VECTOR(1024)` when available), similarity floor, top-k with scores.
       Pure math unit-tested; retrieval quality eval deferred to 5.6. *Topics: cosine similarity,
       hydrate-and-cache retrieval, scale honesty.*
-- [ ] **5.5 Grounded chat with citations** — `guides-chat@v1` versioned prompt (answer ONLY from
+- [x] **5.5 Grounded chat with citations** — `guides-chat@v1` versioned prompt (answer ONLY from
       supplied chunks, cite chunk ids, refuse when nothing relevant); `/api/guides/chat` endpoint;
       response validation: citations must reference retrieved chunk ids (hallucinated citations
       dropped + warning - FR-AI-003's posture for RAG), low-similarity → honest "no answer" with

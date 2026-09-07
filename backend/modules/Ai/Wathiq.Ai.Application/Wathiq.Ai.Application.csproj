@@ -18,6 +18,7 @@
     <!-- Explicit LogicalName: the default is derived from RootNamespace + path with chars
          mangled - a rename away from breaking. Pinned, it is a stable contract. -->
     <EmbeddedResource Include="Prompts\extract-document.v1.txt" LogicalName="Wathiq.Ai.Prompts.extract-document.v1.txt" />
+    <EmbeddedResource Include="Prompts\guides-chat.v1.txt" LogicalName="Wathiq.Ai.Prompts.guides-chat.v1.txt" />
   </ItemGroup>
 
   <ItemGroup>

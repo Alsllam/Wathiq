@@ -39,6 +39,14 @@ public class GuideRetriever : IGuideRetriever, ITransientDependency
     public async Task<IReadOnlyList<GuideChunkMatch>> RetrieveAsync(
         string question, int? topK = null, double? similarityFloor = null, CancellationToken cancellationToken = default)
     {
+        // Corpus first, model second: an empty corpus refuses without spending a model call
+        // (and without needing the embedding runtime up at all - fresh installs stay graceful).
+        var corpus = await _cache.GetOrLoadAsync(LoadServedCorpusAsync, _options.CacheTtl, cancellationToken);
+        if (corpus.Count == 0)
+        {
+            return [];
+        }
+
         // The question rides the same local generator as the corpus (C1) - and its ModelId is
         // the space we may compare against: chunks from another model are invisible, not wrong.
         var embedded = (await _embeddingGenerator.GenerateAsync([question], cancellationToken: cancellationToken))[0];
@@ -46,8 +54,6 @@ public class GuideRetriever : IGuideRetriever, ITransientDependency
         var model = _embeddingGenerator.GetService<EmbeddingGeneratorMetadata>()?.DefaultModelId
                     ?? embedded.ModelId
                     ?? "unknown";
-
-        var corpus = await _cache.GetOrLoadAsync(LoadServedCorpusAsync, _options.CacheTtl, cancellationToken);
 
         return corpus
             .Where(c => c.Model == model && c.Vector.Length == questionVector.Length)

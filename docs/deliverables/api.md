@@ -2,7 +2,7 @@
 title: "Wathiq — API Reference"
 subtitle: "وثيق — مرجع الواجهة البرمجية"
 author: "Abdulsalam"
-version: "0.1.6"
+version: "0.1.7"
 date: "2026-08-27"
 status: "Draft"
 ---
@@ -18,6 +18,7 @@ status: "Draft"
 | 0.1.4 | 2026-08-29 | Abdulsalam | Document-types list made anonymous - public reference data for the portal shell and future landing page (roadmap step 4.3) |
 | 0.1.5 | 2026-09-03 | Abdulsalam | §6 Guides module endpoints: public reading (anonymous by design) + admin authoring/publish, from the regenerated spec with live examples (roadmap step 5.2) |
 | 0.1.6 | 2026-09-03 | Abdulsalam | §6.2 rebuild-embeddings endpoint (seeded/pre-pipeline versions, model swaps) (roadmap step 5.3) |
+| 0.1.7 | 2026-09-03 | Abdulsalam | §6.3 grounded chat endpoint: validated citations, honest refusal, freshness on every answer; live refusal example (roadmap step 5.5) |
 
 **Status:** Draft · **Related:** SRS (`srs`) FR-DOC/FR-IDM, Architecture (`architecture`) D3/D7,
 Database (`database`).
@@ -291,6 +292,44 @@ curl "https://localhost:44352/api/guides/guide/by-slug?slug=renew-passport&langu
 The seeded `renew-passport` guide (ar + en, both published) is the module's reference content -
 5.3 chunks it, 5.5 cites it.
 
+## 6.3 Grounded chat (FR-GDE-004, FR-AI-003)
+
+| Method & path | Permission | Description |
+| --- | --- | --- |
+| `POST /api/guides/chat/ask` | *authenticated* (any user) | `{question}` (≤512 chars) → a grounded answer or an honest refusal |
+
+Chat needs a **sign-in but no special grant**: reading guides stays anonymous, but chat spends
+model time under the per-user daily cap (FR-AI-004, purpose `GuideChat` in the `ai.Usage`
+ledger), and a cap needs an identity.
+
+The response contract (`GuideChatResponseDto`):
+
+- `answered: true` → `answer` plus `citations[]` — each citation carries `chunkId`,
+  `guideVersionId` (the immutable anchor), `guideSlug`, both titles, a `snippet` and that
+  source's `lastVerifiedAt`; the top-level `lastVerifiedAt` is the **oldest** cited source
+  (conservative freshness, Vision R2).
+- `answered: false` → `message` (localized) points the user at the guide list. Produced when
+  retrieval finds nothing above the similarity floor, when the model declines (or returns
+  unparseable output), and when **every** citation the model offered was invented.
+- `hallucinatedCitationsDropped: true` → the model cited excerpts that were never retrieved;
+  invalid citations are dropped (FR-AI-003's posture for RAG), and an answer left with none is
+  refused whole.
+
+Grounding chain: retrieval (5.4) supplies excerpts labeled `C1..Cn`; the model (versioned
+prompt `guides-chat@v1`, Ai module, keyed `guides` client) sees labels and text only - never
+real ids; the service maps cited labels back to retrieved chunks, so every served citation
+provably references content the answer was grounded on.
+
+Live example (recorded, `Accept-Language: ar`, corpus without embedded chunks - the fresh-install
+path): anonymous → login challenge; authenticated →
+
+```json
+{"answered": false, "answer": null,
+ "message": "لم أجد إجابة موثوقة في الأدلة المنشورة. تصفّح قائمة الأدلة من فضلك — الإجابة من خارج الأدلة قد تكون خاطئة.",
+ "citations": [], "lastVerifiedAt": null, "hallucinatedCitationsDropped": false}
+```
+
+
 # 7. Error model
 
 Every error is the ABP envelope `{ "error": { code, message, details, data, validationErrors } }`.
@@ -337,5 +376,5 @@ Summarized — full detail is in Swagger. Admin-tagged groups require admin perm
 | Item | Phase |
 | --- | --- |
 | Attachment upload/download (`IRemoteStreamContent`, size/MIME limits per FileStore config) | 3 |
-| Guides grounded-chat endpoint (`/api/guides/chat`) + feedback | 5 |
+| Guide feedback endpoint ("outdated?" reports) | 5 |
 | Rate limiting on auth + AI endpoints | 8 |

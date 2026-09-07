@@ -9,6 +9,7 @@
     "Wathiq.Guides:VersionNotOfGuide": "This version does not belong to this guide.",
     "Wathiq.Guides:CannotServeDraft": "A draft version cannot be served to readers. Publish it first.",
     "Wathiq.Guides:GuideNotPublished": "This guide has no published content yet.",
-    "Wathiq.Guides:VersionNotPublished": "Only a published version can be (re)embedded. Publish it first."
+    "Wathiq.Guides:VersionNotPublished": "Only a published version can be (re)embedded. Publish it first.",
+    "Wathiq.Guides:ChatNoAnswer": "I could not find a reliable answer in the published guides. Please browse the guide list - an answer from outside the guides could be wrong."
   }
 }

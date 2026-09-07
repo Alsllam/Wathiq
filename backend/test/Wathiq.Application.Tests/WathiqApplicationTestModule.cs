@@ -49,6 +49,11 @@ public class WathiqApplicationTestModule : AbpModule
             Microsoft.Extensions.AI.IEmbeddingGenerator<string, Microsoft.Extensions.AI.Embedding<float>>>(
             sp => sp.GetRequiredService<Guides.FakeEmbeddingGenerator>()));
 
+        // 5.5: same idea for the chat seam - the grounded loop is tested with a scripted model.
+        context.Services.AddSingleton<Guides.FakeGuideAnswerer>();
+        context.Services.Replace(ServiceDescriptor.Singleton<Wathiq.Shared.GuideChat.IGuideAnswerer>(
+            sp => sp.GetRequiredService<Guides.FakeGuideAnswerer>()));
+
         // 3.7: the real extractor (Ai module, IS in this graph) would dial Ollama - replace the
         // seam so the escrow/confirm flow is tested with a scripted model.
         context.Services.AddSingleton<Documents.FakeDocumentDataExtractor>();
