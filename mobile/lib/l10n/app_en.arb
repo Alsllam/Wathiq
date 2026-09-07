@@ -17,5 +17,15 @@
   "flagOutdated": "Outdated? Tell us",
   "flagThanks": "Thank you — an admin will review this guide.",
   "signIn": "Sign in",
-  "signOut": "Sign out"
+  "signOut": "Sign out",
+  "documentsSignIn": "Sign in to see your documents — they belong to your account.",
+  "documentsEmpty": "No documents yet.",
+  "noExpiry": "No expiry",
+  "expired": "Expired",
+  "expiresInDays": "In {days} days",
+  "issueDate": "Issue date",
+  "expiryDate": "Expiry date",
+  "notes": "Notes",
+  "attachments": "Attachments",
+  "noAttachments": "No attachments."
 }

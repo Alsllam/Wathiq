@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../features/documents/document_detail_page.dart';
 import '../features/guides/guide_detail_page.dart';
 import 'home_shell.dart';
 
@@ -16,6 +17,11 @@ final router = GoRouter(
           path: 'guides/:slug',
           builder: (context, state) =>
               GuideDetailPage(slug: state.pathParameters['slug']!),
+        ),
+        GoRoute(
+          path: 'documents/:id',
+          builder: (context, state) =>
+              DocumentDetailPage(id: state.pathParameters['id']!),
         ),
       ],
     ),

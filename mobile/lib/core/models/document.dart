@@ -14,6 +14,25 @@ enum DocumentStatus {
       values.firstWhere((s) => s.wire == value);
 }
 
+class AttachmentModel {
+  const AttachmentModel({
+    required this.id,
+    required this.mimeType,
+    required this.sizeBytes,
+  });
+
+  final String id;
+  final String mimeType;
+  final int sizeBytes;
+
+  factory AttachmentModel.fromJson(Map<String, dynamic> json) =>
+      AttachmentModel(
+        id: json['id'] as String,
+        mimeType: json['mimeType'] as String,
+        sizeBytes: json['sizeBytes'] as int,
+      );
+}
+
 class DocumentModel {
   const DocumentModel({
     required this.id,
@@ -25,6 +44,7 @@ class DocumentModel {
     this.expiryDate,
     this.notes,
     this.daysUntilExpiry,
+    this.attachments = const [],
   });
 
   final String id;
@@ -40,6 +60,7 @@ class DocumentModel {
   final DateTime? expiryDate;
   final String? notes;
   final int? daysUntilExpiry;
+  final List<AttachmentModel> attachments;
 
   factory DocumentModel.fromJson(Map<String, dynamic> json) => DocumentModel(
         id: json['id'] as String,
@@ -51,6 +72,9 @@ class DocumentModel {
         expiryDate: _dateOrNull(json['expiryDate']),
         notes: json['notes'] as String?,
         daysUntilExpiry: json['daysUntilExpiry'] as int?,
+        attachments: (json['attachments'] as List<dynamic>? ?? const [])
+            .map((e) => AttachmentModel.fromJson(e as Map<String, dynamic>))
+            .toList(),
       );
 
   static DateTime? _dateOrNull(dynamic value) =>

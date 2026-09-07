@@ -24,5 +24,22 @@
   "flagOutdated": "هل المعلومات قديمة؟ أبلغنا",
   "flagThanks": "شكرًا لك — سيراجع المشرف هذا الدليل.",
   "signIn": "تسجيل الدخول",
-  "signOut": "تسجيل الخروج"
+  "signOut": "تسجيل الخروج",
+  "documentsSignIn": "سجّل الدخول لعرض وثائقك — وثائقك خاصة بحسابك.",
+  "documentsEmpty": "لا توجد وثائق بعد.",
+  "noExpiry": "بدون انتهاء",
+  "expired": "منتهية",
+  "expiresInDays": "خلال {days} يومًا",
+  "@expiresInDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "issueDate": "تاريخ الإصدار",
+  "expiryDate": "تاريخ الانتهاء",
+  "notes": "ملاحظات",
+  "attachments": "المرفقات",
+  "noAttachments": "لا مرفقات."
 }

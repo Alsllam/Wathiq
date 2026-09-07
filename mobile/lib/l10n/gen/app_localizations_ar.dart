@@ -63,4 +63,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get signOut => 'تسجيل الخروج';
+
+  @override
+  String get documentsSignIn => 'سجّل الدخول لعرض وثائقك — وثائقك خاصة بحسابك.';
+
+  @override
+  String get documentsEmpty => 'لا توجد وثائق بعد.';
+
+  @override
+  String get noExpiry => 'بدون انتهاء';
+
+  @override
+  String get expired => 'منتهية';
+
+  @override
+  String expiresInDays(int days) {
+    return 'خلال $days يومًا';
+  }
+
+  @override
+  String get issueDate => 'تاريخ الإصدار';
+
+  @override
+  String get expiryDate => 'تاريخ الانتهاء';
+
+  @override
+  String get notes => 'ملاحظات';
+
+  @override
+  String get attachments => 'المرفقات';
+
+  @override
+  String get noAttachments => 'لا مرفقات.';
 }

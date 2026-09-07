@@ -336,7 +336,7 @@ exists).
       `flutter_secure_storage`, Dio bearer + refresh interceptor; container tests fake the
       token store, the real browser dance is a device precondition. *Concept: `Future`/`async`/
       `await` and what a plugin (platform channel) is.*
-- [ ] **6.7 Documents list + detail** — UC-01's read side, authed, `AsyncValue` states done
+- [x] **6.7 Documents list + detail** — UC-01's read side, authed, `AsyncValue` states done
       properly. *Concept: `ConsumerWidget` vs `StatefulWidget` - when local mutable state still
       earns a `State` object.*
 - [ ] **6.8 Camera capture → create + upload** — `image_picker`, the add-document flow, multipart

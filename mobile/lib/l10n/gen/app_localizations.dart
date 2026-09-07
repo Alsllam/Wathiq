@@ -205,6 +205,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تسجيل الخروج'**
   String get signOut;
+
+  /// No description provided for @documentsSignIn.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل الدخول لعرض وثائقك — وثائقك خاصة بحسابك.'**
+  String get documentsSignIn;
+
+  /// No description provided for @documentsEmpty.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد وثائق بعد.'**
+  String get documentsEmpty;
+
+  /// No description provided for @noExpiry.
+  ///
+  /// In ar, this message translates to:
+  /// **'بدون انتهاء'**
+  String get noExpiry;
+
+  /// No description provided for @expired.
+  ///
+  /// In ar, this message translates to:
+  /// **'منتهية'**
+  String get expired;
+
+  /// No description provided for @expiresInDays.
+  ///
+  /// In ar, this message translates to:
+  /// **'خلال {days} يومًا'**
+  String expiresInDays(int days);
+
+  /// No description provided for @issueDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الإصدار'**
+  String get issueDate;
+
+  /// No description provided for @expiryDate.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الانتهاء'**
+  String get expiryDate;
+
+  /// No description provided for @notes.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظات'**
+  String get notes;
+
+  /// No description provided for @attachments.
+  ///
+  /// In ar, this message translates to:
+  /// **'المرفقات'**
+  String get attachments;
+
+  /// No description provided for @noAttachments.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا مرفقات.'**
+  String get noAttachments;
 }
 
 class _AppLocalizationsDelegate

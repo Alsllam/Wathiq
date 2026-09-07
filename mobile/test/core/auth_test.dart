@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wathiq_mobile/core/auth/auth_notifier.dart';
@@ -7,36 +5,7 @@ import 'package:wathiq_mobile/core/auth/auth_tokens.dart';
 import 'package:wathiq_mobile/core/auth/authorizer.dart';
 import 'package:wathiq_mobile/core/auth/token_store.dart';
 
-/// A JWT with only the parts that matter: header.payload.signature, payload
-/// carrying preferred_username - built here so the test owns its fixture.
-String fakeJwt(Map<String, dynamic> claims) {
-  String b64(Object o) => base64Url.encode(utf8.encode(jsonEncode(o)));
-  return '${b64({'alg': 'none'})}.${b64(claims)}.sig';
-}
-
-class InMemoryTokenStore implements TokenStore {
-  AuthTokens? tokens;
-  @override
-  Future<AuthTokens?> read() async => tokens;
-  @override
-  Future<void> save(AuthTokens value) async => tokens = value;
-  @override
-  Future<void> clear() async => tokens = null;
-}
-
-class FakeAuthorizer implements Authorizer {
-  AuthTokens? nextSignIn;
-  AuthTokens? nextRefresh;
-  final refreshedWith = <String>[];
-
-  @override
-  Future<AuthTokens?> signIn() async => nextSignIn;
-  @override
-  Future<AuthTokens?> refresh(String refreshToken) async {
-    refreshedWith.add(refreshToken);
-    return nextRefresh;
-  }
-}
+import '../helpers.dart';
 
 void main() {
   group('decodeJwtClaims', () {

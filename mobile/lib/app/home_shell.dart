@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/auth/auth_notifier.dart';
 import '../core/locale_provider.dart';
+import '../features/documents/documents_list_page.dart';
 import '../features/guides/guides_list_page.dart';
 import '../l10n/gen/app_localizations.dart';
 
@@ -25,7 +26,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
 
     final pages = [
       const GuidesListPage(),
-      _ComingSoon(label: l10n.navDocuments, step: '6.7'),
+      const DocumentsListPage(),
       _ComingSoon(label: l10n.navReminders, step: '6.9'),
     ];
 

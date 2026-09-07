@@ -63,4 +63,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signOut => 'Sign out';
+
+  @override
+  String get documentsSignIn =>
+      'Sign in to see your documents — they belong to your account.';
+
+  @override
+  String get documentsEmpty => 'No documents yet.';
+
+  @override
+  String get noExpiry => 'No expiry';
+
+  @override
+  String get expired => 'Expired';
+
+  @override
+  String expiresInDays(int days) {
+    return 'In $days days';
+  }
+
+  @override
+  String get issueDate => 'Issue date';
+
+  @override
+  String get expiryDate => 'Expiry date';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get attachments => 'Attachments';
+
+  @override
+  String get noAttachments => 'No attachments.';
 }
