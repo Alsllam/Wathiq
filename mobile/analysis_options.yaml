@@ -1,0 +1,18 @@
+# Strictness dialed to match the other two apps (backend Nullable=enable,
+# frontend strict tsconfig): a first Flutter project needs MORE compiler help,
+# not less - every implicit dynamic the analyzer catches is a lesson delivered
+# at edit time instead of runtime.
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    always_declare_return_types: true
+    unawaited_futures: true
+    avoid_dynamic_calls: true

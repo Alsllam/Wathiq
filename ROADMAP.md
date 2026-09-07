@@ -312,7 +312,7 @@ the ANONYMOUS guides read (5.1's public design paying out: networking gets learn
 exists).
 
 - [x] 6.0 Expand phase into steps
-- [ ] **6.1 Flutter SDK + project skeleton** — pin + install the SDK in the container
+- [x] **6.1 Flutter SDK + project skeleton** — pin + install the SDK in the container
       (documented for the dev box too), `flutter create` shaped to `mobile/README.md`'s layout,
       strict `analysis_options`, one first widget test. *Concept: everything is a widget - the
       tree, `runApp`, and why there is no HTML/CSS split.* 
