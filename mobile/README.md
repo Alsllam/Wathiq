@@ -38,3 +38,13 @@ export PATH=$PATH:/opt/flutter/bin && flutter config --no-analytics
 `flutter analyze` and `flutter test` run headless on the Dart VM — no device needed, so both
 gate every Phase 6 step in-container. Device-only work (camera, the OIDC browser flow, FCM
 delivery) runs on a phone/emulator from the dev box: `flutter run` from this folder.
+
+## Auth on a device (6.6)
+
+Sign-in runs code+PKCE against the host's OpenIddict (client `Wathiq_App`, redirect scheme
+`sa.wathiq.wathiqmobile` - registered in the Android manifestPlaceholders and iOS Info.plist).
+Preconditions on the dev box: the backend running with its https dev cert TRUSTED by the
+device/emulator (or `--dart-define=WATHIQ_API_URL=http://10.0.2.2:<port>` against an http
+profile), and the `Wathiq_App` client's RootUrl already allows the scheme redirect. Container
+tests cover the whole token lifecycle through fakes; only the browser dance itself needs the
+device.

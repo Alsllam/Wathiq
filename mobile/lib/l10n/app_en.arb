@@ -15,5 +15,7 @@
   "location": "Where",
   "steps": "Steps",
   "flagOutdated": "Outdated? Tell us",
-  "flagThanks": "Thank you — an admin will review this guide."
+  "flagThanks": "Thank you — an admin will review this guide.",
+  "signIn": "Sign in",
+  "signOut": "Sign out"
 }

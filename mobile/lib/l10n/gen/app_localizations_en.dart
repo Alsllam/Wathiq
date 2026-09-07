@@ -57,4 +57,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get flagThanks => 'Thank you — an admin will review this guide.';
+
+  @override
+  String get signIn => 'Sign in';
+
+  @override
+  String get signOut => 'Sign out';
 }

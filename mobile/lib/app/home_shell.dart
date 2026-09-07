@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/auth/auth_notifier.dart';
 import '../core/locale_provider.dart';
 import '../features/guides/guides_list_page.dart';
 import '../l10n/gen/app_localizations.dart';
@@ -38,6 +39,24 @@ class _HomeShellState extends ConsumerState<HomeShell> {
             onPressed: () => ref.read(localeProvider.notifier).toggle(),
             child: Text(l10n.switchLang),
           ),
+          // Sign-in state via AsyncValue (hydrating from secure storage is
+          // async); sealed switch handles both signed states exhaustively.
+          switch (ref.watch(authProvider).value) {
+            SignedIn(:final userName) => Tooltip(
+                message: userName,
+                child: IconButton(
+                  key: const Key('signout'),
+                  icon: const Icon(Icons.logout),
+                  onPressed: () => ref.read(authProvider.notifier).signOut(),
+                ),
+              ),
+            SignedOut() || null => IconButton(
+                key: const Key('signin'),
+                tooltip: l10n.signIn,
+                icon: const Icon(Icons.person_outline),
+                onPressed: () => ref.read(authProvider.notifier).signIn(),
+              ),
+          },
         ],
       ),
       body: pages[_index],

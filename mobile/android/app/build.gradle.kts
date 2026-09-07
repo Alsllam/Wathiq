@@ -22,6 +22,9 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "sa.wathiq.wathiq_mobile"
+        // flutter_appauth: the OS routes this scheme back to the app after
+        // the browser consents (must match Authorizer._redirectUrl).
+        manifestPlaceholders["appAuthRedirectScheme"] = "sa.wathiq.wathiqmobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

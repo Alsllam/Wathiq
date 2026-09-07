@@ -332,7 +332,7 @@ exists).
 - [x] **6.5 go_router: guide detail** — path-param route, steps + freshness + the anonymous
       "outdated?" POST; deep-linkable URLs. *Concept: declarative routing - routes as data,
       like the Angular route table, not imperative pushes.*
-- [ ] **6.6 Auth: OIDC code+PKCE** — `flutter_appauth` against OpenIddict, tokens in
+- [x] **6.6 Auth: OIDC code+PKCE** — `flutter_appauth` against OpenIddict, tokens in
       `flutter_secure_storage`, Dio bearer + refresh interceptor; container tests fake the
       token store, the real browser dance is a device precondition. *Concept: `Future`/`async`/
       `await` and what a plugin (platform channel) is.*

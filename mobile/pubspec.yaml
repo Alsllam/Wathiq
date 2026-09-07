@@ -39,6 +39,10 @@ dependencies:
   dio: ^5.9.0
   # Declarative routing - routes as data, URL as source of truth (6.5).
   go_router: ^16.0.0
+  # OIDC code+PKCE against OpenIddict + secure token storage (6.6).
+  # Both are PLUGINS (platform channels): real behavior needs a device.
+  flutter_appauth: ^9.0.1
+  flutter_secure_storage: ^9.2.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

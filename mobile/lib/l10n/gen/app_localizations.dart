@@ -193,6 +193,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'شكرًا لك — سيراجع المشرف هذا الدليل.'**
   String get flagThanks;
+
+  /// No description provided for @signIn.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الدخول'**
+  String get signIn;
+
+  /// No description provided for @signOut.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الخروج'**
+  String get signOut;
 }
 
 class _AppLocalizationsDelegate

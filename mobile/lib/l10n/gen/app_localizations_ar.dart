@@ -57,4 +57,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get flagThanks => 'شكرًا لك — سيراجع المشرف هذا الدليل.';
+
+  @override
+  String get signIn => 'تسجيل الدخول';
+
+  @override
+  String get signOut => 'تسجيل الخروج';
 }
