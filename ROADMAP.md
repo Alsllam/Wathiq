@@ -329,7 +329,7 @@ exists).
       screen from anonymous `/api/guides/guide`, provider overrides in widget tests. *Concept:
       Riverpod providers as the signals analogue - `FutureProvider` + `AsyncValue`
       (loading/error/data) ≙ `httpResource`.*
-- [ ] **6.5 go_router: guide detail** — path-param route, steps + freshness + the anonymous
+- [x] **6.5 go_router: guide detail** — path-param route, steps + freshness + the anonymous
       "outdated?" POST; deep-linkable URLs. *Concept: declarative routing - routes as data,
       like the Angular route table, not imperative pushes.*
 - [ ] **6.6 Auth: OIDC code+PKCE** — `flutter_appauth` against OpenIddict, tokens in

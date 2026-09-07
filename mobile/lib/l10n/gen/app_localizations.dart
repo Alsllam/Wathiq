@@ -151,6 +151,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'إعادة المحاولة'**
   String get retry;
+
+  /// No description provided for @lastVerified.
+  ///
+  /// In ar, this message translates to:
+  /// **'آخر تحقق:'**
+  String get lastVerified;
+
+  /// No description provided for @requiredDocuments.
+  ///
+  /// In ar, this message translates to:
+  /// **'المتطلبات'**
+  String get requiredDocuments;
+
+  /// No description provided for @fees.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرسوم'**
+  String get fees;
+
+  /// No description provided for @location.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكان'**
+  String get location;
+
+  /// No description provided for @steps.
+  ///
+  /// In ar, this message translates to:
+  /// **'الخطوات'**
+  String get steps;
+
+  /// No description provided for @flagOutdated.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل المعلومات قديمة؟ أبلغنا'**
+  String get flagOutdated;
+
+  /// No description provided for @flagThanks.
+  ///
+  /// In ar, this message translates to:
+  /// **'شكرًا لك — سيراجع المشرف هذا الدليل.'**
+  String get flagThanks;
 }
 
 class _AppLocalizationsDelegate

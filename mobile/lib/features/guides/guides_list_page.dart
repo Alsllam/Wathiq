@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/locale_provider.dart';
 import '../../l10n/gen/app_localizations.dart';
@@ -52,7 +53,8 @@ class GuidesListPage extends ConsumerWidget {
                 // In RTL this chevron points LEFT automatically - direction-
                 // aware icons are part of the Directionality contract.
                 trailing: const Icon(Icons.chevron_left),
-                onTap: () {}, // navigation arrives with go_router in 6.5
+                // push (not go): the list stays beneath, back pops to it.
+                onTap: () => context.push('/guides/${guide.slug}'),
               ),
             );
           },

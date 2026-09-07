@@ -36,4 +36,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get retry => 'Retry';
+
+  @override
+  String get lastVerified => 'Last verified:';
+
+  @override
+  String get requiredDocuments => 'Requirements';
+
+  @override
+  String get fees => 'Fees';
+
+  @override
+  String get location => 'Where';
+
+  @override
+  String get steps => 'Steps';
+
+  @override
+  String get flagOutdated => 'Outdated? Tell us';
+
+  @override
+  String get flagThanks => 'Thank you — an admin will review this guide.';
 }

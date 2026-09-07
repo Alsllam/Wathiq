@@ -8,5 +8,12 @@
   "switchLang": "العربية",
   "comingSoonStep": "Built in step {step}",
   "loadError": "Could not load — check your connection",
-  "retry": "Retry"
+  "retry": "Retry",
+  "lastVerified": "Last verified:",
+  "requiredDocuments": "Requirements",
+  "fees": "Fees",
+  "location": "Where",
+  "steps": "Steps",
+  "flagOutdated": "Outdated? Tell us",
+  "flagThanks": "Thank you — an admin will review this guide."
 }

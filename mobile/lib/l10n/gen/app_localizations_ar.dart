@@ -36,4 +36,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get retry => 'إعادة المحاولة';
+
+  @override
+  String get lastVerified => 'آخر تحقق:';
+
+  @override
+  String get requiredDocuments => 'المتطلبات';
+
+  @override
+  String get fees => 'الرسوم';
+
+  @override
+  String get location => 'المكان';
+
+  @override
+  String get steps => 'الخطوات';
+
+  @override
+  String get flagOutdated => 'هل المعلومات قديمة؟ أبلغنا';
+
+  @override
+  String get flagThanks => 'شكرًا لك — سيراجع المشرف هذا الدليل.';
 }

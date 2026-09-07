@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/locale_provider.dart';
 import '../l10n/gen/app_localizations.dart';
-import 'home_shell.dart';
+import 'router.dart';
 
 /// Back to stateless - but a ConsumerWidget: the locale moved OUT of the tree
 /// into localeProvider (6.4), and this root simply watches it. State that two
@@ -15,7 +15,9 @@ class WathiqApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
+    // .router: navigation is delegated to go_router's route table (6.5).
+    return MaterialApp.router(
+      routerConfig: router,
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       // THE BuildContext lesson (6.3): everything below can call Theme.of,
       // AppLocalizations.of, Directionality.of - each walks UP the tree to
@@ -35,7 +37,6 @@ class WathiqApp extends ConsumerWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF059669)),
         useMaterial3: true,
       ),
-      home: const HomeShell(),
     );
   }
 }
