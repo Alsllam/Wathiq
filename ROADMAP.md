@@ -242,7 +242,7 @@ and the comparison happens there.
 - [ ] 4.CP Checkpoint — "When do you use `computed` vs `effect`, and which one should you almost
       never need?" *(deferred by user; run `/checkpoint` any time)*
 
-## Phase 5 — Guides + RAG  `active`
+## Phase 5 — Guides + RAG  `steps done · 5.CP pending`
 
 `Guides` module, versions, chunking + `bge-m3` embeddings stored in SQL Server, cosine search,
 grounded chat with citations, "outdated?" feedback, eval questions.
@@ -296,14 +296,69 @@ verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the
       the established signal patterns. *Topics: chat UX over signals, rendering citations,
       closing UC-03 in the UI.* *Docs: `user-guide`.*
 - [ ] 5.CP Checkpoint — "Why store the chunk's `GuideVersion` alongside its embedding?"
+      *(deferred by user; run /checkpoint any time)*
 
-## Phase 6 — Flutter resident app  *(expand at start)*
+## Phase 6 — Flutter resident app  `active`
 
-Flutter project, Riverpod, go_router, auth, documents list, camera capture → upload, reminders
-list, Drift offline queue, FCM push. One Dart concept per step.
-*Topics: Dart, widgets, state, navigation, networking, offline, push.*
+The resident app (`mobile/`, layout per its README): login, documents, camera capture → upload,
+reminders, offline queue, push. **This is the developer's first Flutter project — one named
+Dart/Flutter concept per step, slower on purpose.** Environment honesty: the Flutter SDK
+installs in this container (verified reachable), so `flutter analyze` + `flutter test` (widget
+tests run headless on the Dart VM) gate every step here; anything needing a DEVICE — the camera,
+the real OIDC browser dance, FCM delivery — is a documented dev-box/phone precondition, the
+`WATHIQ_OLLAMA_SMOKE` philosophy extended to hardware. Arabic-first from the first screen (ARB
+`ar` + `en` in the same commit as every screen). The first networked screens are deliberately
+the ANONYMOUS guides read (5.1's public design paying out: networking gets learned before auth
+exists).
 
-- [ ] 6.0 Expand phase into steps
+- [x] 6.0 Expand phase into steps
+- [ ] **6.1 Flutter SDK + project skeleton** — pin + install the SDK in the container
+      (documented for the dev box too), `flutter create` shaped to `mobile/README.md`'s layout,
+      strict `analysis_options`, one first widget test. *Concept: everything is a widget - the
+      tree, `runApp`, and why there is no HTML/CSS split.* 
+- [ ] **6.2 Dart models + JSON round-trips** — DTO classes for what the app will consume
+      (guides, documents, reminders, chat), manual `fromJson`/`toJson` (no codegen yet - the
+      point is reading Dart), round-trip tests against captured API payloads. *Concept: sound
+      null safety - `String?` vs C# NRT, `required`, and why the compiler is stricter.*
+- [ ] **6.3 App shell: theme + ar/en + RTL** — `MaterialApp` with `flutter_localizations`, ARB
+      files (`ar` default), locale toggle, RTL flowing from the locale (no manual mirroring),
+      bottom-nav scaffold matching the portal's structure. *Concept: `BuildContext` and the
+      widget tree - where "inherited" things (theme, locale, direction) actually come from.*
+- [ ] **6.4 Riverpod + Dio: the public guides list** — Dio base client (per-platform base URL,
+      `Accept-Language` interceptor - the 5.7 lesson arrives here on day one), guides list
+      screen from anonymous `/api/guides/guide`, provider overrides in widget tests. *Concept:
+      Riverpod providers as the signals analogue - `FutureProvider` + `AsyncValue`
+      (loading/error/data) ≙ `httpResource`.*
+- [ ] **6.5 go_router: guide detail** — path-param route, steps + freshness + the anonymous
+      "outdated?" POST; deep-linkable URLs. *Concept: declarative routing - routes as data,
+      like the Angular route table, not imperative pushes.*
+- [ ] **6.6 Auth: OIDC code+PKCE** — `flutter_appauth` against OpenIddict, tokens in
+      `flutter_secure_storage`, Dio bearer + refresh interceptor; container tests fake the
+      token store, the real browser dance is a device precondition. *Concept: `Future`/`async`/
+      `await` and what a plugin (platform channel) is.*
+- [ ] **6.7 Documents list + detail** — UC-01's read side, authed, `AsyncValue` states done
+      properly. *Concept: `ConsumerWidget` vs `StatefulWidget` - when local mutable state still
+      earns a `State` object.*
+- [ ] **6.8 Camera capture → create + upload** — `image_picker`, the add-document flow, multipart
+      upload to the attachments endpoint; capture is device-only, the flow below it is tested
+      with a fake picker. *Concept: platform permissions and plugin-backed IO.*
+- [ ] **6.9 Reminders timeline + rule settings** — upcoming list + the offsets/channels/quiet-
+      hours/timezone form against the rule singleton. *Concept: Flutter forms -
+      `TextEditingController`/`Form` vs the portal's hand-rolled signal forms.*
+- [ ] **6.10 Drift offline queue** — queue document-create + photo while offline, sync on
+      reconnect, pending state visible in the UI (photos on bad networks - the D7 rationale).
+      *Concept: streams + Drift as type-safe SQLite (the EF-feel layer).*
+- [ ] **6.11 Push: FCM + the backend Push channel** — backend `Push` reminder channel (FCM HTTP
+      v1, free tier) + device-token registration endpoint + `firebase_messaging` in the app;
+      flips the reminders Push flag from قريبًا. Firebase project setup + delivery are dev-box/
+      device gated. *Concept: app lifecycle - foreground/background/terminated message paths.*
+      *Docs: `srs` (FR-REM-003), `api`, `database` (device-token table).*
+- [ ] **6.12 Mobile test pass + docs loop** — full `flutter test` + analyzer sweep, README run
+      instructions, `architecture.md` mobile section, `user-guide.md` §mobile. *Concept: widget
+      tests vs integration tests - what a headless test can and cannot prove.* *Docs:
+      `architecture`, `user-guide`.*
+- [ ] 6.CP Checkpoint — "Explain the difference between `StatelessWidget`, `StatefulWidget`,
+      and a Riverpod `Notifier`."
 
 ## Phase 7 — Admin app & operations  *(expand at start)*
 
