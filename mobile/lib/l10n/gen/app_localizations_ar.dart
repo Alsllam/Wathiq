@@ -95,4 +95,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noAttachments => 'لا مرفقات.';
+
+  @override
+  String get addDocument => 'إضافة وثيقة';
+
+  @override
+  String get typeLabel => 'نوع الوثيقة';
+
+  @override
+  String get numberLabel => 'رقم الوثيقة (اختياري)';
+
+  @override
+  String get pickExpiry => 'تاريخ الانتهاء (اختياري)';
+
+  @override
+  String get takePhoto => 'التقاط صورة';
+
+  @override
+  String get fromGallery => 'من المعرض';
+
+  @override
+  String get photoAttached => 'الصورة جاهزة للرفع';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get saveError => 'تعذّر الحفظ — حاول مجددًا.';
 }

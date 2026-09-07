@@ -41,5 +41,14 @@
   "expiryDate": "تاريخ الانتهاء",
   "notes": "ملاحظات",
   "attachments": "المرفقات",
-  "noAttachments": "لا مرفقات."
+  "noAttachments": "لا مرفقات.",
+  "addDocument": "إضافة وثيقة",
+  "typeLabel": "نوع الوثيقة",
+  "numberLabel": "رقم الوثيقة (اختياري)",
+  "pickExpiry": "تاريخ الانتهاء (اختياري)",
+  "takePhoto": "التقاط صورة",
+  "fromGallery": "من المعرض",
+  "photoAttached": "الصورة جاهزة للرفع",
+  "save": "حفظ",
+  "saveError": "تعذّر الحفظ — حاول مجددًا."
 }

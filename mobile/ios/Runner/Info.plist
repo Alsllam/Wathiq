@@ -14,6 +14,10 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>NSCameraUsageDescription</key>
+	<string>لتصوير وثيقتك وإرفاقها — الصور لا تغادر خادم وثيق. To photograph your document; photos never leave the Wathiq server.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>لاختيار صورة وثيقة من معرضك. To choose a document photo from your library.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

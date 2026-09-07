@@ -96,4 +96,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noAttachments => 'No attachments.';
+
+  @override
+  String get addDocument => 'Add document';
+
+  @override
+  String get typeLabel => 'Document type';
+
+  @override
+  String get numberLabel => 'Document number (optional)';
+
+  @override
+  String get pickExpiry => 'Expiry date (optional)';
+
+  @override
+  String get takePhoto => 'Take photo';
+
+  @override
+  String get fromGallery => 'From gallery';
+
+  @override
+  String get photoAttached => 'Photo ready to upload';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get saveError => 'Could not save — try again.';
 }

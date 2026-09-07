@@ -339,7 +339,7 @@ exists).
 - [x] **6.7 Documents list + detail** — UC-01's read side, authed, `AsyncValue` states done
       properly. *Concept: `ConsumerWidget` vs `StatefulWidget` - when local mutable state still
       earns a `State` object.*
-- [ ] **6.8 Camera capture → create + upload** — `image_picker`, the add-document flow, multipart
+- [x] **6.8 Camera capture → create + upload** — `image_picker`, the add-document flow, multipart
       upload to the attachments endpoint; capture is device-only, the flow below it is tested
       with a fake picker. *Concept: platform permissions and plugin-backed IO.*
 - [ ] **6.9 Reminders timeline + rule settings** — upcoming list + the offsets/channels/quiet-

@@ -23,7 +23,14 @@ class DocumentsListPage extends ConsumerWidget {
     // The auth gate, exhaustive: documents are owner-scoped, so a signed-out
     // user gets an invitation - not an error and not an empty list.
     return switch (ref.watch(authProvider).value) {
-      SignedIn() => const _DocumentsList(),
+      SignedIn() => Scaffold(
+          body: const _DocumentsList(),
+          floatingActionButton: FloatingActionButton(
+            tooltip: l10n.addDocument,
+            onPressed: () => context.push('/documents/new'),
+            child: const Icon(Icons.add),
+          ),
+        ),
       SignedOut() || null => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,

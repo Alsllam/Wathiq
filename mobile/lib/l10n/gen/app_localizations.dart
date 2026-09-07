@@ -265,6 +265,60 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'لا مرفقات.'**
   String get noAttachments;
+
+  /// No description provided for @addDocument.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة وثيقة'**
+  String get addDocument;
+
+  /// No description provided for @typeLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'نوع الوثيقة'**
+  String get typeLabel;
+
+  /// No description provided for @numberLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم الوثيقة (اختياري)'**
+  String get numberLabel;
+
+  /// No description provided for @pickExpiry.
+  ///
+  /// In ar, this message translates to:
+  /// **'تاريخ الانتهاء (اختياري)'**
+  String get pickExpiry;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In ar, this message translates to:
+  /// **'التقاط صورة'**
+  String get takePhoto;
+
+  /// No description provided for @fromGallery.
+  ///
+  /// In ar, this message translates to:
+  /// **'من المعرض'**
+  String get fromGallery;
+
+  /// No description provided for @photoAttached.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصورة جاهزة للرفع'**
+  String get photoAttached;
+
+  /// No description provided for @save.
+  ///
+  /// In ar, this message translates to:
+  /// **'حفظ'**
+  String get save;
+
+  /// No description provided for @saveError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الحفظ — حاول مجددًا.'**
+  String get saveError;
 }
 
 class _AppLocalizationsDelegate

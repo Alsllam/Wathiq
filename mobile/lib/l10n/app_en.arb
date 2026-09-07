@@ -27,5 +27,14 @@
   "expiryDate": "Expiry date",
   "notes": "Notes",
   "attachments": "Attachments",
-  "noAttachments": "No attachments."
+  "noAttachments": "No attachments.",
+  "addDocument": "Add document",
+  "typeLabel": "Document type",
+  "numberLabel": "Document number (optional)",
+  "pickExpiry": "Expiry date (optional)",
+  "takePhoto": "Take photo",
+  "fromGallery": "From gallery",
+  "photoAttached": "Photo ready to upload",
+  "save": "Save",
+  "saveError": "Could not save — try again."
 }

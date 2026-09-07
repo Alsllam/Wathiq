@@ -17,7 +17,7 @@ class WathiqApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // .router: navigation is delegated to go_router's route table (6.5).
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       // THE BuildContext lesson (6.3): everything below can call Theme.of,
       // AppLocalizations.of, Directionality.of - each walks UP the tree to
