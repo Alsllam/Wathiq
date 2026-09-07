@@ -290,7 +290,7 @@ verify with fakes here; live runs ride `WATHIQ_OLLAMA_SMOKE` on the dev box (the
       `srs.md`; extend `ai-safety.md` with the RAG section (grounding, citation validation,
       refusal, eval method). *Topics: RAG evals, feedback loops.* *Docs: `srs`, `ai-safety`,
       `database`.*
-- [ ] **5.7 Portal: guides list + chat screen** — `libs/guides` feature lib: guide list (public
+- [x] **5.7 Portal: guides list + chat screen** — `libs/guides` feature lib: guide list (public
       read), guide detail rendering steps + freshness, the chat screen showing answers with
       citation links INTO the guide and the "outdated?" button (UC-03 for residents). ar+en keys,
       the established signal patterns. *Topics: chat UX over signals, rendering citations,

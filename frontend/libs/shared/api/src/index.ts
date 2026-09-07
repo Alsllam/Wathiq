@@ -12,6 +12,13 @@ export type ExtractionProposalDto = components['schemas']['Wathiq.Documents.Extr
 export type ReminderDto = components['schemas']['Wathiq.Reminders.Reminders.ReminderDto'];
 export type ReminderRuleDto = components['schemas']['Wathiq.Reminders.Rules.ReminderRuleDto'];
 export type UpdateReminderRuleDto = components['schemas']['Wathiq.Reminders.Rules.UpdateReminderRuleDto'];
+export type GuideDto = components['schemas']['Wathiq.Guides.Guides.GuideDto'];
+export type GuideDetailDto = components['schemas']['Wathiq.Guides.Guides.GuideDetailDto'];
+export type GuideVersionDto = components['schemas']['Wathiq.Guides.Guides.GuideVersionDto'];
+export type GuideChatRequestDto = components['schemas']['Wathiq.Guides.Chat.GuideChatRequestDto'];
+export type GuideChatResponseDto = components['schemas']['Wathiq.Guides.Chat.GuideChatResponseDto'];
+export type GuideChatCitationDto = components['schemas']['Wathiq.Guides.Chat.GuideChatCitationDto'];
+export type CreateGuideFeedbackDto = components['schemas']['Wathiq.Guides.Feedback.CreateGuideFeedbackDto'];
 
 /// ABP's list envelopes, generic the way the wire actually is.
 export interface ListResultDto<T> {

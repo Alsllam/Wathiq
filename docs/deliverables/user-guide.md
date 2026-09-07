@@ -2,7 +2,7 @@
 title: "Wathiq — User Guide"
 subtitle: "وثيق — دليل الاستخدام"
 author: "Abdulsalam"
-version: "0.1"
+version: "0.2"
 date: "2026-08-30"
 status: "Draft"
 ---
@@ -12,6 +12,7 @@ status: "Draft"
 | Version | Date | Author | Change |
 | --- | --- | --- | --- |
 | 0.1 | 2026-08-30 | Abdulsalam | First version covering the web portal's Phase-4 flows (roadmap step 4.9). Screenshots *Planned* once the visual design settles |
+| 0.2 | 2026-09-07 | Abdulsalam | §6 renewal guides + the grounded assistant (roadmap step 5.7); glossary + coming-soon updated |
 
 **Status:** Draft · This guide describes what the portal **does today**. Features marked
 *قريبًا / coming soon* are visible in the app but not yet active.
@@ -77,7 +78,28 @@ In **إعدادات التذكير / Reminder settings** you control:
 - **Quiet hours** — reminders due in this window wait until it ends (set both times, or neither).
 - **Time zone** — reminder days are computed in *your* time zone.
 
-# 6. Glossary — المسرد
+# 6. The renewal guides and the assistant — الأدلة والمساعد
+
+::: {custom-style="RTL"}
+**الأدلة** مقالات موثّقة عن تجديد الوثائق الرسمية — قراءتها متاحة للجميع **دون حساب**. كل دليل
+يعرض المتطلبات والرسوم والمكان والخطوات، وفوق ذلك كله تاريخ **آخر تحقق** حتى تعرف مدى حداثة
+المعلومة. إن بدا لك أن معلومة قديمة فاضغط **«هل المعلومات قديمة؟ أبلغنا»** — يصل بلاغك للمشرف
+دون الحاجة لتسجيل الدخول.
+:::
+
+Press **الأدلة / Guides** in the header — no sign-in needed. Every guide shows its
+requirements, fees, where to go, numbered steps, and — right under the title — the **last
+verified** date. If something looks stale, press **"Outdated? Tell us"**; your report reaches
+the admin anonymously.
+
+**The assistant — المساعد**: from the guide list, **اسأل المساعد / Ask the assistant** opens a
+chat that answers **only from the published guides** (signing in is required here, because the
+assistant uses your daily AI allowance). Every answer lists its **sources** — links straight
+into the guides it used, each with its last-verified date. When the guides don't contain the
+answer, the assistant says so honestly and points you to the guide list instead of guessing —
+**an answer from outside the guides could be wrong**, and it would rather refuse than mislead.
+
+# 7. Glossary — المسرد
 
 | العربية | English |
 | --- | --- |
@@ -87,9 +109,12 @@ In **إعدادات التذكير / Reminder settings** you control:
 | التذكير | Reminder |
 | ساعات الهدوء | Quiet hours |
 | الاستخراج | Extraction (AI reading) |
+| الدليل | Guide |
+| آخر تحقق | Last verified |
+| المصادر | Sources (what the assistant cites) |
 | اقتراح | Proposal (what the AI suggests) |
 
-# 7. Coming soon — قريبًا {-}
+# 8. Coming soon — قريبًا {-}
 
-Mobile app with camera capture and push notifications (Phase 6) · renewal guides with a
-grounded Q&A assistant (Phase 5) · sharing a document securely (Phase 8).
+Mobile app with camera capture and push notifications (Phase 6) · sharing a document securely
+(Phase 8).

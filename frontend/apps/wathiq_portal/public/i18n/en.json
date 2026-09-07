@@ -84,5 +84,28 @@
     "timezone": "Time zone",
     "save": "Save settings",
     "saved": "Saved ✓"
+  },
+  "guides": {
+    "nav": "Guides",
+    "title": "Renewal guides",
+    "subtitle": "Verified guides for renewing your official documents — free to read for everyone.",
+    "empty": "No guides published yet.",
+    "back": "Back to guides",
+    "lastVerified": "Last verified:",
+    "requiredDocuments": "Requirements",
+    "fees": "Fees",
+    "location": "Where",
+    "steps": "Steps",
+    "flagOutdated": "Outdated? Tell us",
+    "flagThanks": "Thank you — an admin will review this guide.",
+    "askButton": "Ask the assistant",
+    "chatTitle": "Guides assistant",
+    "chatSubtitle": "Answers only from the published guides, always citing its sources with their last-verified date.",
+    "chatSignIn": "Sign in to use the assistant — reading the guides needs no account.",
+    "askPlaceholder": "e.g. How much does passport renewal cost?",
+    "send": "Send",
+    "thinking": "Searching the guides…",
+    "sources": "Sources",
+    "citationsDropped": "A source the assistant could not verify was dropped — check the linked guides."
   }
 }
