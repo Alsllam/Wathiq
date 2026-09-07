@@ -320,7 +320,7 @@ exists).
       (guides, documents, reminders, chat), manual `fromJson`/`toJson` (no codegen yet - the
       point is reading Dart), round-trip tests against captured API payloads. *Concept: sound
       null safety - `String?` vs C# NRT, `required`, and why the compiler is stricter.*
-- [ ] **6.3 App shell: theme + ar/en + RTL** — `MaterialApp` with `flutter_localizations`, ARB
+- [x] **6.3 App shell: theme + ar/en + RTL** — `MaterialApp` with `flutter_localizations`, ARB
       files (`ar` default), locale toggle, RTL flowing from the locale (no manual mirroring),
       bottom-nav scaffold matching the portal's structure. *Concept: `BuildContext` and the
       widget tree - where "inherited" things (theme, locale, direction) actually come from.*

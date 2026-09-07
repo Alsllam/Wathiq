@@ -1,0 +1,13 @@
+{
+  "@@locale": "ar",
+  "appName": "وثيق",
+  "tagline": "مساعدك لوثائقك ومواعيدها",
+  "navGuides": "الأدلة",
+  "navDocuments": "الوثائق",
+  "navReminders": "التذكيرات",
+  "switchLang": "English",
+  "comingSoonStep": "تُبنى في الخطوة {step}",
+  "@comingSoonStep": {
+    "placeholders": { "step": { "type": "String" } }
+  }
+}

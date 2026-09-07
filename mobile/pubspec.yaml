@@ -30,6 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # ar/en runtime: localizations delegates + message formatting (6.3).
+  flutter_localizations:
+    sdk: flutter
+  intl: any   # version pinned by flutter_localizations
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -56,6 +60,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true   # runs gen-l10n from l10n.yaml on pub get / build
 
   # To add assets to your application, add an assets section, like this:
   # assets:

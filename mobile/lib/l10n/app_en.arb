@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "appName": "Wathiq",
+  "tagline": "Your documents and their deadlines",
+  "navGuides": "Guides",
+  "navDocuments": "Documents",
+  "navReminders": "Reminders",
+  "switchLang": "العربية",
+  "comingSoonStep": "Built in step {step}"
+}

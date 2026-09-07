@@ -1,0 +1,7 @@
+# Arabic is the TEMPLATE (the product rule since 4.2): a key missing in en
+# falls back to ar, never the other way round.
+arb-dir: lib/l10n
+template-arb-file: app_ar.arb
+output-localization-file: app_localizations.dart
+output-dir: lib/l10n/gen
+nullable-getter: false
