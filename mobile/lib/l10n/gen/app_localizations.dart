@@ -139,6 +139,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تُبنى في الخطوة {step}'**
   String comingSoonStep(String step);
+
+  /// No description provided for @loadError.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر التحميل — تحقق من الاتصال'**
+  String get loadError;
+
+  /// No description provided for @retry.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعادة المحاولة'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate

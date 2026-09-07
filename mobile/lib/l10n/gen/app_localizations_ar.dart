@@ -30,4 +30,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String comingSoonStep(String step) {
     return 'تُبنى في الخطوة $step';
   }
+
+  @override
+  String get loadError => 'تعذّر التحميل — تحقق من الاتصال';
+
+  @override
+  String get retry => 'إعادة المحاولة';
 }

@@ -324,7 +324,7 @@ exists).
       files (`ar` default), locale toggle, RTL flowing from the locale (no manual mirroring),
       bottom-nav scaffold matching the portal's structure. *Concept: `BuildContext` and the
       widget tree - where "inherited" things (theme, locale, direction) actually come from.*
-- [ ] **6.4 Riverpod + Dio: the public guides list** — Dio base client (per-platform base URL,
+- [x] **6.4 Riverpod + Dio: the public guides list** — Dio base client (per-platform base URL,
       `Accept-Language` interceptor - the 5.7 lesson arrives here on day one), guides list
       screen from anonymous `/api/guides/guide`, provider overrides in widget tests. *Concept:
       Riverpod providers as the signals analogue - `FutureProvider` + `AsyncValue`

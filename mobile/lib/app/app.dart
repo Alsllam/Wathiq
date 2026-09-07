@@ -1,39 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/locale_provider.dart';
 import '../l10n/gen/app_localizations.dart';
 import 'home_shell.dart';
 
-/// The root. Now a StatefulWidget because the locale is the app's first piece
-/// of MUTABLE state (a preview - StatefulWidget gets its full treatment in
-/// 6.7; here it is three lines: a field, setState, done).
-class WathiqApp extends StatefulWidget {
+/// Back to stateless - but a ConsumerWidget: the locale moved OUT of the tree
+/// into localeProvider (6.4), and this root simply watches it. State that two
+/// unrelated consumers need (MaterialApp here, the Dio client in core/) never
+/// belongs to a widget.
+class WathiqApp extends ConsumerWidget {
   const WathiqApp({super.key});
 
   @override
-  State<WathiqApp> createState() => _WathiqAppState();
-}
-
-class _WathiqAppState extends State<WathiqApp> {
-  Locale _locale = const Locale('ar'); // Arabic-first (the 4.2 rule, third stack)
-
-  void _toggleLocale() {
-    setState(() {
-      _locale = _locale.languageCode == 'ar'
-          ? const Locale('en')
-          : const Locale('ar');
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
-      // THE BuildContext lesson: everything below can call Theme.of(context),
-      // AppLocalizations.of(context), Directionality.of(context) - each walks
-      // UP the tree to what MaterialApp installs right here. Locale 'ar' is
-      // also what flips the whole app RTL: no manual mirroring anywhere.
-      locale: _locale,
+      // THE BuildContext lesson (6.3): everything below can call Theme.of,
+      // AppLocalizations.of, Directionality.of - each walks UP the tree to
+      // what MaterialApp installs right here. Locale 'ar' also flips the
+      // whole app RTL: no manual mirroring anywhere.
+      locale: ref.watch(localeProvider),
       supportedLocales: const [Locale('ar'), Locale('en')],
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -47,7 +35,7 @@ class _WathiqAppState extends State<WathiqApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF059669)),
         useMaterial3: true,
       ),
-      home: HomeShell(onToggleLocale: _toggleLocale),
+      home: const HomeShell(),
     );
   }
 }

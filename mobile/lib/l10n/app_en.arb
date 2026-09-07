@@ -6,5 +6,7 @@
   "navDocuments": "Documents",
   "navReminders": "Reminders",
   "switchLang": "العربية",
-  "comingSoonStep": "Built in step {step}"
+  "comingSoonStep": "Built in step {step}",
+  "loadError": "Could not load — check your connection",
+  "retry": "Retry"
 }

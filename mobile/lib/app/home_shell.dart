@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/locale_provider.dart';
+import '../features/guides/guides_list_page.dart';
 import '../l10n/gen/app_localizations.dart';
 
-/// The three-tab scaffold mirroring the portal's structure. Tabs hold
-/// placeholders until their steps land (guides 6.4, documents 6.7,
-/// reminders 6.9) - the SHELL is this step's product.
-class HomeShell extends StatefulWidget {
-  const HomeShell({required this.onToggleLocale, super.key});
-
-  final VoidCallback onToggleLocale;
+/// ConsumerStatefulWidget = local state (the selected tab, which nobody else
+/// cares about) PLUS a ref (to reach shared state). Guides is live (6.4);
+/// documents/reminders stay placeholders until 6.7/6.9.
+class HomeShell extends ConsumerStatefulWidget {
+  const HomeShell({super.key});
 
   @override
-  State<HomeShell> createState() => _HomeShellState();
+  ConsumerState<HomeShell> createState() => _HomeShellState();
 }
 
-class _HomeShellState extends State<HomeShell> {
+class _HomeShellState extends ConsumerState<HomeShell> {
   int _index = 0;
 
   @override
   Widget build(BuildContext context) {
-    // ONE lookup, used everywhere below - `l10n` is just the nearest
-    // AppLocalizations that MaterialApp installed above us.
     final l10n = AppLocalizations.of(context);
 
     final pages = [
-      _ComingSoon(label: l10n.navGuides, step: '6.4'),
+      const GuidesListPage(),
       _ComingSoon(label: l10n.navDocuments, step: '6.7'),
       _ComingSoon(label: l10n.navReminders, step: '6.9'),
     ];
@@ -36,7 +35,7 @@ class _HomeShellState extends State<HomeShell> {
           // In RTL `actions` render at the far END (left) automatically -
           // the ms-/me- discipline is simply built into the framework.
           TextButton(
-            onPressed: widget.onToggleLocale,
+            onPressed: () => ref.read(localeProvider.notifier).toggle(),
             child: Text(l10n.switchLang),
           ),
         ],

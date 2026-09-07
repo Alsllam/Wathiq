@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
 
-/// The entire bootstrap: one function handing ONE widget to the engine.
-/// Angular's analogue is bootstrapApplication(AppComponent) - but there is no
-/// separate template/style/router config file waiting anywhere: everything the
-/// app is or does will be widgets composed under this root.
+/// ProviderScope is the container every `ref` resolves against - the
+/// application injector at the very root (and, in tests, the seam where
+/// overrides swap real providers for fakes).
 void main() {
-  runApp(const WathiqApp());
+  runApp(const ProviderScope(child: WathiqApp()));
 }

@@ -30,4 +30,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String comingSoonStep(String step) {
     return 'Built in step $step';
   }
+
+  @override
+  String get loadError => 'Could not load — check your connection';
+
+  @override
+  String get retry => 'Retry';
 }

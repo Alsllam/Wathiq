@@ -8,6 +8,12 @@
   "switchLang": "English",
   "comingSoonStep": "تُبنى في الخطوة {step}",
   "@comingSoonStep": {
-    "placeholders": { "step": { "type": "String" } }
-  }
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "loadError": "تعذّر التحميل — تحقق من الاتصال",
+  "retry": "إعادة المحاولة"
 }
